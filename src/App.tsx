@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ConfigProvider, Button } from 'antd';
+import { ThemeProvider } from 'styled-components';
+
+import ptBR from 'antd/es/locale/pt_BR';
+import { GlobalStyle, theme } from './GlobalStyle';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<ThemeProvider theme={theme}>
+			<ConfigProvider locale={ptBR}>
+				<GlobalStyle />
+				<Button type="primary">Teste</Button>
+			</ConfigProvider>
+		</ThemeProvider>
+	);
 }
 
 export default App;
