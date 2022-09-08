@@ -6,15 +6,15 @@ const passwodIconStyles = css`
 	cursor: pointer;
 `;
 
-export const LoginFormTitle = styled(Typography.Title)`
+export const FormTitle = styled(Typography.Title)`
 	text-align: center;
 `;
 
-export const LoginFormRow = styled(Row)`
+export const FormRow = styled(Row)`
 	margin: 0 16px;
 `;
 
-export const LoginActionsCol = styled(Col)`
+export const FormActionsCol = styled(Col)`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
@@ -27,4 +27,13 @@ export const UnlockIcon = styled(AiOutlineUnlock)`
 
 export const LockIcon = styled(AiOutlineLock)`
 	${passwodIconStyles}
+`;
+
+export const FormContainer = styled.div`
+	display: flex;
+	align-self: stretch;
+	flex-direction: column;
+	justify-content: space-around;
+
+  padding: 16px 12px;
 `;

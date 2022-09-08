@@ -4,7 +4,7 @@ import { Form, Col, Input, Typography, Button } from 'antd';
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-import { LoginFormTitle, LoginFormRow, LoginActionsCol, LockIcon, UnlockIcon } from './styles';
+import { FormTitle, FormRow, FormActionsCol, LockIcon, UnlockIcon, FormContainer } from '../styles';
 
 enum LoginFormInputs {
 	EMAIL = 'email',
@@ -38,40 +38,40 @@ export const LoginForm = () => {
 	};
 
 	return (
-		<Form
-			requiredMark={false}
-			form={form}
-			layout="vertical"
-			autoComplete="off"
-			onFinish={handleSubmit}
-		>
-			<LoginFormRow gutter={16}>
-				<Col span={24}>
-					<LoginFormTitle level={3}>Projeto BioEduca</LoginFormTitle>
-				</Col>
+		<FormContainer>
+			<FormTitle level={3}>Projeto BioEduca</FormTitle>
 
-				<Col span={24}>
-					<Form.Item label="Email" name={LoginFormInputs.EMAIL}>
-						<Input placeholder="luizgustavokobilacz@gmail.com" />
-					</Form.Item>
-				</Col>
+			<Form
+				requiredMark={false}
+				form={form}
+				layout="vertical"
+				autoComplete="off"
+				onFinish={handleSubmit}
+			>
+				<FormRow gutter={16}>
+					<Col span={24}>
+						<Form.Item label="Email" name={LoginFormInputs.EMAIL}>
+							<Input placeholder="luizgustavokobilacz@gmail.com" />
+						</Form.Item>
+					</Col>
 
-				<Col span={24}>
-					<Form.Item label="Senha" name={LoginFormInputs.PASSWORD}>
-						<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
-					</Form.Item>
-				</Col>
+					<Col span={24}>
+						<Form.Item label="Senha" name={LoginFormInputs.PASSWORD}>
+							<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
+						</Form.Item>
+					</Col>
 
-				<LoginActionsCol span={24}>
-					<Link to="/recover-password"  >
-						<Typography.Link disabled={submitting}>Esqueci minha senha</Typography.Link>
-					</Link>
+					<FormActionsCol span={24}>
+						<Link to="/recover-password">
+							<Typography.Link disabled={submitting}>Esqueci minha senha</Typography.Link>
+						</Link>
 
-					<Button type="primary" htmlType="submit" loading={submitting} disabled={submitting}>
-						Entrar
-					</Button>
-				</LoginActionsCol>
-			</LoginFormRow>
-		</Form>
+						<Button type="primary" htmlType="submit" loading={submitting} disabled={submitting}>
+							Entrar
+						</Button>
+					</FormActionsCol>
+				</FormRow>
+			</Form>
+		</FormContainer>
 	);
 };

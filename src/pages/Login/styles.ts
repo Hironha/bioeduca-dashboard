@@ -16,7 +16,6 @@ export const LoginContainer = styled.div`
 export const LoginPageContainer = styled.main`
 	display: flex;
 	flex-direction: row;
-	align-items: center;
 	background-color: white;
 	gap: 36px;
 
@@ -34,7 +33,6 @@ export const ImageContainer = styled.div`
 `;
 
 export const BannerImage = styled.img`
-	margin: 24px;
 	max-width: 100%;
 	max-height: 100%;
 	object-fit: contain;
