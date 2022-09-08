@@ -1,27 +1,28 @@
 import styled from 'styled-components';
 
 export const LoginContainer = styled.div`
-	--margin-bottom: 85px;
+	--padding-bottom: 70px;
 
 	display: flex;
 	align-items: center;
 	justify-content: center;
+	background-color: ${(props) =>`${props.theme.colors.primary}D7` };
 
 	width: 100%;
-	height: calc(100vh - var(--margin-bottom));
-	margin: 0 0 var(--margin-bottom) 0;
-	padding: 0;
+	height: 100vh;
+	padding: 0 0 var(--padding-bottom) 0;
 `;
 
 export const LoginPageContainer = styled.main`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	background-color: white;
 	gap: 36px;
 
 	padding: 32px;
-	max-width: 720px;
-  height: 450px;
+	max-width: 800px;
+	height: 450px;
 	border-radius: ${(props) => props.theme.border.radius};
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 `;
@@ -42,7 +43,6 @@ export const BannerImage = styled.img`
 export const LoginDivider = styled.div`
 	align-self: stretch;
 	height: 100%;
-	width: 2px;
 	border-radius: ${(props) => props.theme.border.radius};
-  border: 1px ${(props) => `${props.theme.colors.primary}55`} solid;
+	border: 1px ${(props) => `${props.theme.colors.primary}55`} solid;
 `;

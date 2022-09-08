@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { Form, Col, Input, Typography, Button } from 'antd';
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
@@ -63,7 +63,10 @@ export const LoginForm = () => {
 				</Col>
 
 				<LoginActionsCol span={24}>
-					<Typography.Link disabled={submitting}>Esqueci minha senha</Typography.Link>
+					<Link to="/recover-password"  >
+						<Typography.Link disabled={submitting}>Esqueci minha senha</Typography.Link>
+					</Link>
+
 					<Button type="primary" htmlType="submit" loading={submitting} disabled={submitting}>
 						Entrar
 					</Button>
