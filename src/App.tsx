@@ -6,7 +6,8 @@ import { ConfigProvider } from 'antd';
 import ptBR from 'antd/es/locale/pt_BR';
 
 import { GlobalStyle, theme } from './GlobalStyle';
-import { PageLayout } from './components/Layout';
+// import { PageLayout } from './components/Layout';
+import { PageRoutes } from './pages/routes';
 
 initializeApp({
 	apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -21,7 +22,7 @@ function App() {
 			<ConfigProvider locale={ptBR}>
 				<GlobalStyle />
 				<BrowserRouter>
-					<PageLayout />
+					<PageRoutes />
 				</BrowserRouter>
 			</ConfigProvider>
 		</ThemeProvider>

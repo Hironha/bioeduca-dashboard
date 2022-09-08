@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Content, Header } from 'antd/lib/layout/layout';
+import { Layout } from 'antd';
 
 export const Logo = styled.div`
 	height: 32px;
@@ -7,12 +7,12 @@ export const Logo = styled.div`
 	background: rgba(255, 255, 255, 0.3);
 `;
 
-export const PageHeader = styled(Header)`
+export const PageHeader = styled(Layout.Header)`
 	background: ${(props) => props.theme.colors.primary};
 	display: flex;
 `;
 
-export const PageContent = styled(Content)`
+export const PageContent = styled(Layout.Content)`
 	margin: 16px;
 	overflow: initial;
 	background: #fff;

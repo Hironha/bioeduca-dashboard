@@ -5,8 +5,13 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Poppins', sans-serif !important;
   }
 
+	html {
+		height: 100%;
+	}
+	
   body{
     font-family: 'Poppins', sans-serif !important;
+		height: 100%;
   }
 `;
 
