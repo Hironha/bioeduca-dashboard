@@ -1,21 +1,32 @@
 import React, { useState } from 'react';
 import { Layout, Menu } from 'antd';
 
-import { Logo, PageHeader, PageContent, PageTrigger } from './styles';
+import {
+	Logo,
+	PageHeader,
+	PageContent,
+	PageTrigger,
+	PageSider,
+	IconImage,
+	ImageContainer,
+	LogoutContainer,
+	IconContainer,
+	ProjectName
+} from './styles';
+
+import BioEducaIcon from '@assets/images/bioeduca-icon.png';
 
 import { AiOutlineHome, AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai';
 import { RiPlantLine } from 'react-icons/ri';
 import { HiOutlineDocumentAdd, HiOutlineFolderAdd } from 'react-icons/hi';
 import { TbEdit } from 'react-icons/tb';
 
-const { Header, Sider, Content } = Layout;
-
 export const PageLayout = () => {
 	const [collapsed, setCollapsed] = useState(false);
 
 	return (
 		<Layout hasSider>
-			<Sider
+			<PageSider
 				// breakpoint="lg"
 				collapsedWidth="80"
 				trigger={null}
@@ -55,7 +66,7 @@ export const PageLayout = () => {
 						},
 					]}
 				/>
-			</Sider>
+			</PageSider>
 			<Layout>
 				<PageHeader>
 					<PageTrigger onClick={() => setCollapsed(!collapsed)}>
@@ -65,6 +76,14 @@ export const PageLayout = () => {
 							<AiOutlineMenuFold size={30} color="#fff" />
 						)}
 					</PageTrigger>
+					<IconContainer>
+						<ProjectName>PROJETO</ProjectName>
+						<ImageContainer>
+							<IconImage src={BioEducaIcon} alt="Ícone do projeto BioEduca" />
+						</ImageContainer>
+						<ProjectName>BIOEDUCA</ProjectName>
+					</IconContainer>
+					<LogoutContainer onClick={() => console.log('Logout')}>Sair</LogoutContainer>
 				</PageHeader>
 				<PageContent>
 					<div

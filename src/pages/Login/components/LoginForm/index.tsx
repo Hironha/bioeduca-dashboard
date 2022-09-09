@@ -51,7 +51,7 @@ export const LoginForm = () => {
 				<FormRow gutter={16}>
 					<Col span={24}>
 						<Form.Item label="Email" name={LoginFormInputs.EMAIL}>
-							<Input placeholder="luizgustavokobilacz@gmail.com" />
+							<Input placeholder="youremail@example.com" />
 						</Form.Item>
 					</Col>
 
