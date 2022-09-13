@@ -19,12 +19,6 @@ export const PageContent = styled(Layout.Content)`
 	background: #fff;
 `;
 
-export const PageTrigger = styled.span`
-	cursor: pointer;
-	align-self: center;
-	color: #fff;
-`;
-
 export const PageSider = styled(Layout.Sider)``;
 
 export const ImageContainer = styled.div`

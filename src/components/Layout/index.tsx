@@ -5,7 +5,6 @@ import {
 	Logo,
 	PageHeader,
 	PageContent,
-	PageTrigger,
 	PageSider,
 	IconImage,
 	ImageContainer,
@@ -27,11 +26,10 @@ export const PageLayout = () => {
 	return (
 		<Layout hasSider>
 			<PageSider
-				// breakpoint="lg"
-				collapsedWidth="80"
-				trigger={null}
 				collapsible
+				collapsedWidth="80"
 				collapsed={collapsed}
+				onCollapse={(value) => setCollapsed(value)}
 			>
 				<Logo />
 				<Menu
@@ -69,14 +67,6 @@ export const PageLayout = () => {
 			</PageSider>
 			<Layout>
 				<PageHeader>
-					<PageTrigger onClick={() => setCollapsed(!collapsed)}>
-						{collapsed ? (
-							<AiOutlineMenuUnfold size={30} color="#fff" />
-						) : (
-							<AiOutlineMenuFold size={30} color="#fff" />
-						)}
-					</PageTrigger>
-
 					<IconContainer>
 						<ProjectName>PROJETO</ProjectName>
 						<ImageContainer>
