@@ -21,10 +21,8 @@ export const PageContent = styled(Layout.Content)`
 
 export const PageTrigger = styled.span`
 	cursor: pointer;
-	display: flex;
-	align-items: center;
-	padding: 0 3px;
-	margin: 14px 0;
+	align-self: center;
+	color: #fff;
 `;
 
 export const PageSider = styled(Layout.Sider)``;
@@ -44,12 +42,11 @@ export const IconImage = styled.img`
 	object-fit: contain;
 `;
 
-export const LogoutContainer = styled.span`
+export const LogoutText = styled.span`
 	cursor: pointer;
-	display: flex;
-	align-items: center;
+	align-self: center;
 	color: #fff;
-	margin: 14px 0;
+	padding: 0;
 `;
 
 export const IconContainer = styled.div`

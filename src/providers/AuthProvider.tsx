@@ -1,8 +1,8 @@
-import { useState, createContext, useEffect, useCallback } from "react";
-import { browserSessionPersistence, getAuth, setPersistence } from "firebase/auth";
+import { useState, createContext, useEffect, useCallback } from 'react';
+import { browserSessionPersistence, getAuth, setPersistence } from 'firebase/auth';
 
-import { Loading } from "../components/Loading";
-import { LoadingContainer } from "./styles";
+import { Loading } from '../components/Loading';
+import { LoadingContainer } from './styles';
 
 interface IAuthContext {
 	verifyAuthentication: () => boolean;

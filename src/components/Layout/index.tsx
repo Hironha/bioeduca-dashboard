@@ -9,9 +9,9 @@ import {
 	PageSider,
 	IconImage,
 	ImageContainer,
-	LogoutContainer,
+	LogoutText,
 	IconContainer,
-	ProjectName
+	ProjectName,
 } from './styles';
 
 import BioEducaIcon from '@assets/images/bioeduca-icon.png';
@@ -76,6 +76,7 @@ export const PageLayout = () => {
 							<AiOutlineMenuFold size={30} color="#fff" />
 						)}
 					</PageTrigger>
+
 					<IconContainer>
 						<ProjectName>PROJETO</ProjectName>
 						<ImageContainer>
@@ -83,8 +84,10 @@ export const PageLayout = () => {
 						</ImageContainer>
 						<ProjectName>BIOEDUCA</ProjectName>
 					</IconContainer>
-					<LogoutContainer onClick={() => console.log('Logout')}>Sair</LogoutContainer>
+
+					<LogoutText onClick={() => console.log('Logout')}>Sair</LogoutText>
 				</PageHeader>
+
 				<PageContent>
 					<div
 						className="site-layout-background"

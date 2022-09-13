@@ -5,6 +5,15 @@ export const GlobalStyle = createGlobalStyle`
     font-family: 'Poppins', sans-serif !important;
   }
 
+	* {
+		padding: 0;
+		margin: 0;	
+	}
+
+	*, *::before, *::after {
+ 		box-sizing: border-box;
+	}
+
 	html {
 		height: 100%;
 	}

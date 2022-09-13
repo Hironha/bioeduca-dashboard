@@ -5,8 +5,8 @@ import { BrowserRouter } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import ptBR from 'antd/es/locale/pt_BR';
 
+import { AuthProvider } from '@providers/AuthProvider';
 import { GlobalStyle, theme } from './GlobalStyle';
-// import { PageLayout } from './components/Layout';
 import { PageRoutes } from './pages/routes';
 
 initializeApp({
@@ -19,10 +19,12 @@ initializeApp({
 function App() {
 	return (
 		<ThemeProvider theme={theme}>
+			<GlobalStyle />
 			<ConfigProvider locale={ptBR}>
-				<GlobalStyle />
 				<BrowserRouter>
-					<PageRoutes />
+					<AuthProvider>
+						<PageRoutes />
+					</AuthProvider>
 				</BrowserRouter>
 			</ConfigProvider>
 		</ThemeProvider>

@@ -6,7 +6,7 @@ export const LoginContainer = styled.div`
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	background-color: ${(props) =>`${props.theme.colors.primary}D7` };
+	background-color: ${(props) => `${props.theme.colors.primary}D7`};
 
 	width: 100%;
 	height: 100vh;
@@ -28,6 +28,7 @@ export const LoginPageContainer = styled.main`
 
 export const ImageContainer = styled.div`
 	display: flex;
+	width: 100%;
 	justify-content: center;
 	align-items: center;
 `;
@@ -39,8 +40,11 @@ export const BannerImage = styled.img`
 `;
 
 export const LoginDivider = styled.div`
+	--color: ${(props) => `${props.theme.colors.primary}55`};
+
 	align-self: stretch;
 	height: 100%;
+	background-color: var(--color);
 	border-radius: ${(props) => props.theme.border.radius};
-	border: 1px ${(props) => `${props.theme.colors.primary}55`} solid;
+	border: 1px var(--color) solid;
 `;

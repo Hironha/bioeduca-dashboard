@@ -14,13 +14,6 @@ export const FormRow = styled(Row)`
 	margin: 0 16px;
 `;
 
-export const FormActionsCol = styled(Col)`
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	gap: 12px;
-`;
-
 export const UnlockIcon = styled(AiOutlineUnlock)`
 	${passwodIconStyles}
 `;
@@ -35,5 +28,12 @@ export const FormContainer = styled.div`
 	flex-direction: column;
 	justify-content: space-around;
 
-  padding: 16px 12px;
+	padding: 16px 12px;
+`;
+
+export const FormActionsCol = styled(Col)`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 12px;
 `;

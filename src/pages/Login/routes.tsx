@@ -1,6 +1,9 @@
+import { useContext } from 'react';
 import { Outlet, type RouteObject } from 'react-router-dom';
 
+import { Redirect } from '@components/Redirect';
 import { LoginForm } from './components/LoginForm';
+import { SignupForm } from './components/SignupForm';
 import {
 	LoginContainer,
 	LoginPageContainer,
@@ -9,26 +12,44 @@ import {
 	LoginDivider,
 } from './styles';
 
+import { AuthContext } from '@providers/AuthProvider';
+import { useLoginRedirect } from './hooks/useLoginRedirect';
 import BioEducaBanner from '@assets/images/bioeduca-banner.jpg';
 
+enum LoginRoutes {
+	LOGIN = '/login',
+	SIGNUP = '/signup',
+}
+
 export const useLoginRoutes = (): RouteObject[] => {
+	const { verifyAuthentication } = useContext(AuthContext);
+	const { redirectTo, validateRedirect } = useLoginRedirect();
+
+	const isAuthenticated = verifyAuthentication();
+
 	return [
 		{
 			element: (
-				<LoginContainer>
-					<LoginPageContainer>
-						<Outlet />
-						<LoginDivider />
-						<ImageContainer>
-							<BannerImage src={BioEducaBanner} alt="BioEduca Banner" />
-						</ImageContainer>
-					</LoginPageContainer>
-				</LoginContainer>
+				<Redirect to={redirectTo} validation={validateRedirect(isAuthenticated)}>
+					<LoginContainer>
+						<LoginPageContainer>
+							<Outlet />
+							<LoginDivider />
+							<ImageContainer>
+								<BannerImage src={BioEducaBanner} alt="BioEduca Banner" />
+							</ImageContainer>
+						</LoginPageContainer>
+					</LoginContainer>
+				</Redirect>
 			),
 			children: [
 				{
-					path: '/login',
+					path: LoginRoutes.LOGIN,
 					element: <LoginForm />,
+				},
+				{
+					path: LoginRoutes.SIGNUP,
+					element: <SignupForm />,
 				},
 			],
 		},

@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Form, Col, Input, Typography, Button } from 'antd';
+import { Form, Col, Input, Button, Space } from 'antd';
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
-import { FormTitle, FormRow, FormActionsCol, LockIcon, UnlockIcon, FormContainer } from '../styles';
+import { ForgotPasswordText } from './styles';
+import { FormTitle, FormRow, LockIcon, UnlockIcon, FormContainer, FormActionsCol } from '../styles';
 
 enum LoginFormInputs {
 	EMAIL = 'email',
@@ -39,7 +40,10 @@ export const LoginForm = () => {
 
 	return (
 		<FormContainer>
-			<FormTitle level={3}>Projeto BioEduca</FormTitle>
+			<Space direction="vertical">
+				<FormTitle level={3}>Projeto BioEduca</FormTitle>
+				<FormTitle level={5}>Login</FormTitle>
+			</Space>
 
 			<Form
 				requiredMark={false}
@@ -48,7 +52,7 @@ export const LoginForm = () => {
 				autoComplete="off"
 				onFinish={handleSubmit}
 			>
-				<FormRow gutter={16}>
+				<FormRow>
 					<Col span={24}>
 						<Form.Item label="Email" name={LoginFormInputs.EMAIL}>
 							<Input placeholder="youremail@example.com" />
@@ -62,9 +66,9 @@ export const LoginForm = () => {
 					</Col>
 
 					<FormActionsCol span={24}>
-						<Link to="/recover-password">
-							<Typography.Link disabled={submitting}>Esqueci minha senha</Typography.Link>
-						</Link>
+						<ForgotPasswordText disabled={submitting}>
+							<Link to="/recover-password">Esqueci minha senha</Link>
+						</ForgotPasswordText>
 
 						<Button type="primary" htmlType="submit" loading={submitting} disabled={submitting}>
 							Entrar
