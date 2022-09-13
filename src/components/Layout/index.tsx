@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Layout, Menu } from 'antd';
+import { useNavigate } from 'react-router-dom';
+import { Layout, Menu, notification } from 'antd';
+import { getAuth, signOut } from 'firebase/auth';
 
 import {
 	Logo,
@@ -15,13 +17,32 @@ import {
 
 import BioEducaIcon from '@assets/images/bioeduca-icon.png';
 
-import { AiOutlineHome, AiOutlineMenuFold, AiOutlineMenuUnfold } from 'react-icons/ai';
+import { AiOutlineHome } from 'react-icons/ai';
 import { RiPlantLine } from 'react-icons/ri';
 import { HiOutlineDocumentAdd, HiOutlineFolderAdd } from 'react-icons/hi';
 import { TbEdit } from 'react-icons/tb';
 
 export const PageLayout = () => {
 	const [collapsed, setCollapsed] = useState(false);
+	const navigate = useNavigate();
+	const auth = getAuth();
+
+	const errorNotification = () => {
+		notification['error']({
+			message: 'Ocorreu algum problema no processo de logout',
+		});
+	};
+
+	const logout = () => {
+		signOut(auth)
+			.then(() => {
+				navigate('/login');
+			})
+			.catch((error) => {
+				errorNotification();
+				console.log(error);
+			});
+	};
 
 	return (
 		<Layout hasSider>
@@ -75,7 +96,7 @@ export const PageLayout = () => {
 						<ProjectName>BIOEDUCA</ProjectName>
 					</IconContainer>
 
-					<LogoutText onClick={() => console.log('Logout')}>Sair</LogoutText>
+					<LogoutText onClick={logout}>Sair</LogoutText>
 				</PageHeader>
 
 				<PageContent>
