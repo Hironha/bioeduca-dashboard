@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Col, Input, Button, Space } from 'antd';
 
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 
 import { FormTitle, FormRow, LockIcon, UnlockIcon, FormContainer, FormActionsCol } from '../styles';
 
@@ -32,7 +32,7 @@ export const SignupForm = () => {
 			const auth = getAuth();
 			setSubmitting(true);
 
-			await signInWithEmailAndPassword(auth, values.email, values.password);
+			await createUserWithEmailAndPassword(auth, values.email, values.password);
 
 			setTimeout(() => {
 				navigate('/');
@@ -82,7 +82,7 @@ export const SignupForm = () => {
 						</Button>
 
 						<Button type="primary" htmlType="submit" loading={submitting} disabled={submitting}>
-							Entrar
+							Criar
 						</Button>
 					</FormActionsCol>
 				</FormRow>

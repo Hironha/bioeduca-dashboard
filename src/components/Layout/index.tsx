@@ -4,15 +4,15 @@ import { Layout, Menu, notification } from 'antd';
 import { getAuth, signOut } from 'firebase/auth';
 
 import {
-	Logo,
 	PageHeader,
 	PageContent,
 	PageSider,
 	IconImage,
 	ImageContainer,
 	LogoutText,
-	IconContainer,
 	ProjectName,
+	LogoContainer,
+	PageHeaderContent,
 } from './styles';
 
 import BioEducaIcon from '@assets/images/bioeduca-icon.png';
@@ -29,7 +29,7 @@ export const PageLayout = () => {
 
 	const errorNotification = () => {
 		notification['error']({
-			message: 'Ocorreu algum problema no processo de logout',
+			message: 'Ocorreu algum problema no processo de logout!',
 		});
 	};
 
@@ -52,7 +52,11 @@ export const PageLayout = () => {
 				collapsed={collapsed}
 				onCollapse={(value) => setCollapsed(value)}
 			>
-				<Logo />
+				<LogoContainer>
+					<ImageContainer>
+						<IconImage src={BioEducaIcon} alt="Ícone do projeto BioEduca" />
+					</ImageContainer>
+				</LogoContainer>
 				<Menu
 					theme="dark"
 					mode="inline"
@@ -88,15 +92,10 @@ export const PageLayout = () => {
 			</PageSider>
 			<Layout>
 				<PageHeader>
-					<IconContainer>
-						<ProjectName>PROJETO</ProjectName>
-						<ImageContainer>
-							<IconImage src={BioEducaIcon} alt="Ícone do projeto BioEduca" />
-						</ImageContainer>
-						<ProjectName>BIOEDUCA</ProjectName>
-					</IconContainer>
-
-					<LogoutText onClick={logout}>Sair</LogoutText>
+					<ProjectName>PROJETO BIOEDUCA</ProjectName>
+					<PageHeaderContent>
+						<LogoutText onClick={logout}>Sair</LogoutText>
+					</PageHeaderContent>
 				</PageHeader>
 
 				<PageContent>
