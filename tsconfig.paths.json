@@ -5,7 +5,10 @@
 			"@components/*": ["./components/*"],
 			"@assets/*": ["./assets/*"],
 			"@pages/*": ["./pages/*"],
-			"@providers/*": ["./providers/*"]
+			"@providers/*": ["./providers/*"],
+			"@services/*": ["./services/*"],
+			"@interfaces/*": ["./interfaces/*"],
+			"@hooks/*": ["./hooks/*"]
 		}
 	}
 }

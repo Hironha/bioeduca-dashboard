@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Col, Input, Button, Space } from 'antd';
-
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { Form, Col, Input, Button, Space, notification } from 'antd';
 
 import { FormTitle, FormRow, LockIcon, UnlockIcon, FormContainer, FormActionsCol } from '../styles';
+
+import { useCreateUser, type CreateUserValues } from './hooks/useCreateUser';
+import { createUserNotifications } from './notifications/createUser';
 
 enum SignupFormInputs {
 	EMAIL = 'email',
@@ -21,26 +21,24 @@ type SignupFormValues = {
 export const SignupForm = () => {
 	const navigate = useNavigate();
 	const [form] = Form.useForm<SignupFormValues>();
-	const [submitting, setSubmitting] = useState(false);
+	const [{ isSubmitting }, createUser] = useCreateUser();
 
 	const handleBackClick = () => {
 		navigate(-1);
 	};
 
 	const handleSubmit = async (values: SignupFormValues) => {
-		try {
-			const auth = getAuth();
-			setSubmitting(true);
+		const handleError = () => {
+			const notificationArgs = createUserNotifications.error.default();
+			notification.error(notificationArgs);
+		};
 
-			await createUserWithEmailAndPassword(auth, values.email, values.password);
+		const payload: CreateUserValues = {
+			email: values.email,
+			password: values.password,
+		};
 
-			setTimeout(() => {
-				navigate('/');
-			}, 500);
-		} catch (err) {
-			console.log(err);
-		}
-		setSubmitting(false);
+		await createUser(payload, { onError: handleError });
 	};
 
 	return (
@@ -81,7 +79,7 @@ export const SignupForm = () => {
 							Voltar
 						</Button>
 
-						<Button type="primary" htmlType="submit" loading={submitting} disabled={submitting}>
+						<Button type="primary" htmlType="submit" loading={isSubmitting} disabled={isSubmitting}>
 							Criar
 						</Button>
 					</FormActionsCol>
