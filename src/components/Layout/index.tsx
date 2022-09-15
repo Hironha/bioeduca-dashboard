@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Layout, Menu, notification } from 'antd';
 import { getAuth, signOut } from 'firebase/auth';
 
@@ -28,7 +28,7 @@ export const PageLayout = () => {
 	const auth = getAuth();
 
 	const errorNotification = () => {
-		notification['error']({
+		notification.error({
 			message: 'Ocorreu algum problema no processo de logout!',
 		});
 	};
@@ -99,6 +99,7 @@ export const PageLayout = () => {
 				</PageHeader>
 
 				<PageContent>
+					<Link to="/signup">Criar conta</Link>
 					<div
 						className="site-layout-background"
 						style={{
