@@ -13,43 +13,34 @@ type RedirectData = {
 export const useLoginRedirect = () => {
 	const { pathname } = useLocation();
 
-	const defaultRedirectData: RedirectData = {
-		redirectTo: '/',
-		validateRedirect: () => false,
-	};
-
-	const redirectData = getRedirectRoutesFactory().getRedirectData(pathname) || defaultRedirectData;
+	const redirectData = getRedirectRoutesFactory().getRedirectData(pathname);
 
 	return redirectData;
 };
 
 const getRedirectRoutesFactory = (() => {
-	const routes: Map<string, RedirectData> = new Map();
+	const loginRedirect: RedirectData = {
+		redirectTo: '/',
+		validateRedirect: (isAuthenticated) => isAuthenticated,
+	};
 
-	const subscribe = (route: LoginRoutes, data: RedirectData) => {
-		routes.set(route, data);
+	const signupRedirect: RedirectData = {
+		redirectTo: '/',
+		validateRedirect: (isAuthenticated) => !isAuthenticated,
+	};
+
+	const defaultRedirectData: RedirectData = {
+		redirectTo: '/',
+		validateRedirect: () => false,
 	};
 
 	const getRedirectData = (route: string) => {
-		return routes.get(route);
+		if (route === LoginRoutes.LOGIN) return loginRedirect;
+		if (route === LoginRoutes.SIGNUP) return signupRedirect;
+		return defaultRedirectData;
 	};
 
 	return () => ({
-		subscribe,
 		getRedirectData,
 	});
-})();
-
-(() => {
-	const validateRedirect = (isAuthenticated: boolean) => {
-		return isAuthenticated;
-	};
-	getRedirectRoutesFactory().subscribe(LoginRoutes.LOGIN, { redirectTo: '/', validateRedirect });
-})();
-
-(() => {
-	const validateRedirect = (isAuthenticated: boolean) => {
-		return !isAuthenticated;
-	};
-	getRedirectRoutesFactory().subscribe(LoginRoutes.SIGNUP, { redirectTo: '/', validateRedirect });
 })();
