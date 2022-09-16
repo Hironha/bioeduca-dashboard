@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Layout, Menu, notification } from 'antd';
 import { getAuth, signOut } from 'firebase/auth';
 
@@ -22,7 +22,11 @@ import { RiPlantLine } from 'react-icons/ri';
 import { HiOutlineDocumentAdd, HiOutlineFolderAdd } from 'react-icons/hi';
 import { TbEdit } from 'react-icons/tb';
 
-export const PageLayout = () => {
+type LayoutProps = {
+	children?: React.ReactNode;
+};
+
+export const PageLayout = ({ children }: LayoutProps) => {
 	const [collapsed, setCollapsed] = useState(false);
 	const navigate = useNavigate();
 	const auth = getAuth();
@@ -90,6 +94,7 @@ export const PageLayout = () => {
 					]}
 				/>
 			</PageSider>
+
 			<Layout>
 				<PageHeader>
 					<ProjectName>PROJETO BIOEDUCA</ProjectName>
@@ -98,32 +103,7 @@ export const PageLayout = () => {
 					</PageHeaderContent>
 				</PageHeader>
 
-				<PageContent>
-					<Link to="/signup">Criar conta</Link>
-					<div
-						className="site-layout-background"
-						style={{
-							padding: 24,
-							textAlign: 'center',
-						}}
-					>
-						<p>long content</p>
-						{
-							// indicates very long content
-							Array.from(
-								{
-									length: 100,
-								},
-								(_, index) => (
-									<React.Fragment key={index}>
-										{index % 20 === 0 && index ? 'more' : '...'}
-										<br />
-									</React.Fragment>
-								)
-							)
-						}
-					</div>
-				</PageContent>
+				<PageContent>{children}</PageContent>
 			</Layout>
 		</Layout>
 	);

@@ -5,25 +5,28 @@ import { PageLayout } from '@components/Layout';
 import { Redirect } from '@components/Redirect';
 import { AuthContext } from '@providers/AuthProvider';
 import { HomeContainer } from './styles';
+import { Home } from './components';
 
 export const useHomeRoutes = (): RouteObject[] => {
 	const { verifyAuthentication } = useContext(AuthContext);
 
-	const isAuthenticated = verifyAuthentication();
+	const homeContainer = (
+		<Redirect to="/login" validation={!verifyAuthentication()}>
+			<PageLayout>
+				<HomeContainer>
+					<Outlet />
+				</HomeContainer>
+			</PageLayout>
+		</Redirect>
+	);
 
 	return [
 		{
-			element: (
-				<Redirect to="/login" validation={!isAuthenticated}>
-					<HomeContainer>
-						<Outlet />
-					</HomeContainer>
-				</Redirect>
-			),
+			element: homeContainer,
 			children: [
 				{
 					path: '/',
-					element: <PageLayout />,
+					element: <Home />,
 				},
 			],
 		},
