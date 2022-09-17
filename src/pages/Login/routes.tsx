@@ -9,6 +9,7 @@ import {
 	LoginPageContainer,
 	ImageContainer,
 	BannerImage,
+	OutletContainer,
 	LoginDivider,
 } from './styles';
 
@@ -33,7 +34,9 @@ export const useLoginRoutes = (): RouteObject[] => {
 				<Redirect to={redirectTo} validation={validateRedirect(isAuthenticated)}>
 					<LoginContainer>
 						<LoginPageContainer>
-							<Outlet />
+							<OutletContainer>
+								<Outlet />
+							</OutletContainer>
 							<LoginDivider />
 							<ImageContainer>
 								<BannerImage src={BioEducaBanner} alt="BioEduca Banner" />

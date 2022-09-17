@@ -17,18 +17,25 @@ export const LoginPageContainer = styled.main`
 	display: flex;
 	flex-direction: row;
 	background-color: white;
-	gap: 36px;
+	gap: 24px;
 
-	padding: 32px;
-	max-width: 800px;
-	height: 450px;
+	padding: 18px;
+	max-width: 820px;
+	height: 460px;
 	border-radius: ${(props) => props.theme.border.radius};
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 `;
 
+export const OutletContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	flex: 1;
+`;
+
 export const ImageContainer = styled.div`
 	display: flex;
-	width: 100%;
+	width: 300px;
 	justify-content: center;
 	align-items: center;
 `;

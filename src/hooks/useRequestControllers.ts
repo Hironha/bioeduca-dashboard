@@ -1,8 +1,14 @@
+import type { CanceledRequest, ErrorRequest, SuccessRequest } from '@interfaces/api/requestData';
+
 import { useRef, useEffect } from 'react';
 
 type Controller = {
 	get isMounted(): boolean;
 	get abortController(): AbortController;
+	get isAborted(): boolean;
+	createError<E>(error: E): ErrorRequest<E>;
+	createSuccess<T>(data: T): SuccessRequest<T>;
+	createCanceled(): CanceledRequest;
 };
 
 export const useRequestControlers = () => {
@@ -25,6 +31,18 @@ export const useRequestControlers = () => {
 				},
 				get abortController() {
 					return getAbortController();
+				},
+				get isAborted() {
+					return getAbortController().signal.aborted;
+				},
+				createCanceled() {
+					return { isCanceled: true };
+				},
+				createError(err) {
+					return { error: err, isCanceled: false, isError: true };
+				},
+				createSuccess(data) {
+					return { data, isCanceled: false, isError: false };
 				},
 			};
 		}

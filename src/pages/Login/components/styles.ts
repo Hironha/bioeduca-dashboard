@@ -10,9 +10,7 @@ export const FormTitle = styled(Typography.Title)`
 	text-align: center;
 `;
 
-export const FormRow = styled(Row)`
-	margin: 0 16px;
-`;
+export const FormRow = styled(Row)``;
 
 export const UnlockIcon = styled(AiOutlineUnlock)`
 	${passwodIconStyles}
@@ -23,12 +21,10 @@ export const LockIcon = styled(AiOutlineLock)`
 `;
 
 export const FormContainer = styled.div`
+	flex: 1;
 	display: flex;
-	align-self: stretch;
 	flex-direction: column;
 	justify-content: space-around;
-
-	padding: 16px 12px;
 `;
 
 export const FormActionsCol = styled(Col)`

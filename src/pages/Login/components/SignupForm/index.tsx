@@ -3,16 +3,19 @@ import { Form, Col, Input, Button, Space, notification } from 'antd';
 
 import { FormTitle, FormRow, LockIcon, UnlockIcon, FormContainer, FormActionsCol } from '../styles';
 
-import { useCreateUser, type CreateUserValues } from './hooks/useCreateUser';
-import { createUserNotifications } from './notifications/createUser';
+import { useCreateUser, type CreateUserValues } from './utils/hooks/useCreateUser';
+import { createUserNotifications } from './utils/notifications/createUser';
+import { signupFormRules } from './utils/validations';
 
-enum SignupFormInputs {
+import type { IApiError } from '@interfaces/api/error';
+
+export enum SignupFormInputs {
 	EMAIL = 'email',
 	PASSWORD = 'password',
 	PASSWORD_CONFIRM = 'passwordConfirm',
 }
 
-type SignupFormValues = {
+export type SignupFormValues = {
 	[SignupFormInputs.EMAIL]: string;
 	[SignupFormInputs.PASSWORD]: string;
 	[SignupFormInputs.PASSWORD_CONFIRM]: string;
@@ -21,24 +24,27 @@ type SignupFormValues = {
 export const SignupForm = () => {
 	const navigate = useNavigate();
 	const [form] = Form.useForm<SignupFormValues>();
-	const [{ isSubmitting }, createUser] = useCreateUser();
+	const [isSubmitting, createUser] = useCreateUser();
 
 	const handleBackClick = () => {
 		navigate(-1);
 	};
 
-	const handleSubmit = async (values: SignupFormValues) => {
-		const handleError = () => {
-			const notificationArgs = createUserNotifications.error.default();
-			notification.error(notificationArgs);
-		};
+	const handleSubmitError = (err: IApiError) => {
+		notification.error(createUserNotifications.error());
+	};
 
+	const handleSubmit = async (values: SignupFormValues) => {
 		const payload: CreateUserValues = {
 			email: values.email,
 			password: values.password,
 		};
-
-		await createUser(payload, { onError: handleError });
+		const requestData = await createUser(payload);
+		if (requestData.isCanceled) return;
+		if (requestData.isError) {
+			handleSubmitError(requestData.error.response?.data as IApiError);
+			return;
+		}
 	};
 
 	return (
@@ -57,20 +63,7 @@ export const SignupForm = () => {
 			>
 				<FormRow>
 					<Col span={24}>
-						<Form.Item
-							label="Email"
-							name={SignupFormInputs.EMAIL}
-							rules={[
-								{
-									required: true,
-									message: 'Insira seu email!',
-								},
-								{
-									type: 'email',
-									message: 'Insira um email válido!',
-								},
-							]}
-						>
+						<Form.Item label="Email" name={SignupFormInputs.EMAIL} rules={signupFormRules.email}>
 							<Input placeholder="youremail@example.com" />
 						</Form.Item>
 					</Col>
@@ -79,16 +72,7 @@ export const SignupForm = () => {
 						<Form.Item
 							label="Senha"
 							name={SignupFormInputs.PASSWORD}
-							rules={[
-								{
-									required: true,
-									message: 'Insira sua senha!',
-								},
-								{
-									min: 8,
-									message: 'Sua senha deve conter, no mínimo, 8 caracteres!',
-								},
-							]}
+							rules={signupFormRules.password}
 						>
 							<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
 						</Form.Item>
@@ -99,20 +83,7 @@ export const SignupForm = () => {
 							label="Confirmação de senha"
 							name={SignupFormInputs.PASSWORD_CONFIRM}
 							dependencies={[SignupFormInputs.PASSWORD]}
-							rules={[
-								{
-									required: true,
-									message: 'Confirme sua senha!',
-								},
-								({ getFieldValue }) => ({
-									validator(_, value) {
-										if (!value || getFieldValue(SignupFormInputs.PASSWORD) == value) {
-											return Promise.resolve();
-										}
-										return Promise.reject('As senhas devem ser iguais!');
-									},
-								}),
-							]}
+							rules={signupFormRules.passwordConfirm}
 						>
 							<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
 						</Form.Item>
