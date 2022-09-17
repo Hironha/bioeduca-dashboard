@@ -13,9 +13,9 @@ export type LoadingProps = {
 
 export const Loading = ({ className, size = "medium" }: LoadingProps) => {
 	const sizes: { [key in LoadingSize]: string } = {
-		[LoadingSize.SMALL]: "1.6rem",
-		[LoadingSize.MEDIUM]: "3.2rem",
-		[LoadingSize.LARGE]: "4.8rem",
+		[LoadingSize.SMALL]: "16px",
+		[LoadingSize.MEDIUM]: "32px",
+		[LoadingSize.LARGE]: "48px",
 	};
 
 	return (

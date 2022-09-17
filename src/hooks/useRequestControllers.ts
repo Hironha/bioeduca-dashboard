@@ -6,9 +6,9 @@ type Controller = {
 	get isMounted(): boolean;
 	get abortController(): AbortController;
 	get isAborted(): boolean;
-	createError<E>(error: E): ErrorRequest<E>;
-	createSuccess<T>(data: T): SuccessRequest<T>;
-	createCanceled(): CanceledRequest;
+	createErrorData<E>(error: E): ErrorRequest<E>;
+	createSuccessData<T>(data: T): SuccessRequest<T>;
+	createCanceledData(): CanceledRequest;
 };
 
 export const useRequestControlers = () => {
@@ -35,13 +35,13 @@ export const useRequestControlers = () => {
 				get isAborted() {
 					return getAbortController().signal.aborted;
 				},
-				createCanceled() {
+				createCanceledData() {
 					return { isCanceled: true };
 				},
-				createError(err) {
+				createErrorData(err) {
 					return { error: err, isCanceled: false, isError: true };
 				},
-				createSuccess(data) {
+				createSuccessData(data) {
 					return { data, isCanceled: false, isError: false };
 				},
 			};

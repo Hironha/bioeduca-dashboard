@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
-import { Form, Col, Input, Button, Space, notification } from 'antd';
+import { Form, Input, Button, Space, notification } from 'antd';
 
-import { FormTitle, FormRow, LockIcon, UnlockIcon, FormContainer, FormActionsCol } from '../styles';
+import { FormTitle, LockIcon, UnlockIcon, FormContainer, FormActionsWrapper } from '../styles';
 
 import { useCreateUser, type CreateUserValues } from './utils/hooks/useCreateUser';
 import { createUserNotifications } from './utils/notifications/createUser';
@@ -61,35 +61,29 @@ export const SignupForm = () => {
 				autoComplete="off"
 				onFinish={handleSubmit}
 			>
-				<FormRow>
-					<Col span={24}>
-						<Form.Item label="Email" name={SignupFormInputs.EMAIL} rules={signupFormRules.email}>
-							<Input placeholder="youremail@example.com" />
-						</Form.Item>
-					</Col>
+				<Space direction="vertical">
+					<Form.Item label="Email" name={SignupFormInputs.EMAIL} rules={signupFormRules.email}>
+						<Input placeholder="youremail@example.com" />
+					</Form.Item>
 
-					<Col span={24}>
-						<Form.Item
-							label="Senha"
-							name={SignupFormInputs.PASSWORD}
-							rules={signupFormRules.password}
-						>
-							<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
-						</Form.Item>
-					</Col>
+					<Form.Item
+						label="Senha"
+						name={SignupFormInputs.PASSWORD}
+						rules={signupFormRules.password}
+					>
+						<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
+					</Form.Item>
 
-					<Col span={24}>
-						<Form.Item
-							label="Confirmação de senha"
-							name={SignupFormInputs.PASSWORD_CONFIRM}
-							dependencies={[SignupFormInputs.PASSWORD]}
-							rules={signupFormRules.passwordConfirm}
-						>
-							<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
-						</Form.Item>
-					</Col>
+					<Form.Item
+						label="Confirmação de senha"
+						name={SignupFormInputs.PASSWORD_CONFIRM}
+						dependencies={[SignupFormInputs.PASSWORD]}
+						rules={signupFormRules.passwordConfirm}
+					>
+						<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
+					</Form.Item>
 
-					<FormActionsCol span={24}>
+					<FormActionsWrapper>
 						<Button type="primary" ghost htmlType="button" onClick={handleBackClick}>
 							Voltar
 						</Button>
@@ -97,8 +91,8 @@ export const SignupForm = () => {
 						<Button type="primary" htmlType="submit" loading={isSubmitting} disabled={isSubmitting}>
 							Criar
 						</Button>
-					</FormActionsCol>
-				</FormRow>
+					</FormActionsWrapper>
+				</Space>
 			</Form>
 		</FormContainer>
 	);

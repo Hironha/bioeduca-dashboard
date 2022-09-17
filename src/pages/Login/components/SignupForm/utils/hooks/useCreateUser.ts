@@ -21,14 +21,14 @@ export const useCreateUser = () => {
 				await api.post('/users', values, {
 					signal: controllers.abortController.signal,
 				});
-				if (!controllers.isMounted) return controllers.createCanceled();
+				if (!controllers.isMounted) return controllers.createCanceledData();
 
-				return controllers.createSuccess(null);
+				return controllers.createSuccessData(null);
 			} catch (err) {
 				if (!controllers.isMounted || controllers.isAborted) {
-					return controllers.createCanceled();
+					return controllers.createCanceledData();
 				}
-				return controllers.createError(err as AxiosError);
+				return controllers.createErrorData(err as AxiosError);
 			}
 		},
 		[controllers]

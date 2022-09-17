@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Form, Col, Input, Button, Space } from 'antd';
+import { Form, Input, Button, Space } from 'antd';
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import { ForgotPasswordText } from './styles';
-import { FormTitle, FormRow, LockIcon, UnlockIcon, FormContainer, FormActionsCol } from '../styles';
+import { FormTitle, LockIcon, UnlockIcon, FormContainer, FormActionsWrapper } from '../styles';
 
 enum LoginFormInputs {
 	EMAIL = 'email',
@@ -52,29 +52,25 @@ export const LoginForm = () => {
 				autoComplete="off"
 				onFinish={handleSubmit}
 			>
-				<FormRow>
-					<Col span={24}>
-						<Form.Item label="Email" name={LoginFormInputs.EMAIL}>
-							<Input placeholder="youremail@example.com" />
-						</Form.Item>
-					</Col>
+				<Space direction="vertical">
+					<Form.Item label="Email" name={LoginFormInputs.EMAIL}>
+						<Input placeholder="youremail@example.com" />
+					</Form.Item>
 
-					<Col span={24}>
-						<Form.Item label="Senha" name={LoginFormInputs.PASSWORD}>
-							<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
-						</Form.Item>
-					</Col>
+					<Form.Item label="Senha" name={LoginFormInputs.PASSWORD}>
+						<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
+					</Form.Item>
 
-					<FormActionsCol span={24}>
+					<FormActionsWrapper>
 						<ForgotPasswordText disabled={submitting}>
-							<Link to="/recover-password">Esqueci minha senha</Link>
+							<Link to="/reset-password">Esqueci minha senha</Link>
 						</ForgotPasswordText>
 
 						<Button type="primary" htmlType="submit" loading={submitting} disabled={submitting}>
 							Entrar
 						</Button>
-					</FormActionsCol>
-				</FormRow>
+					</FormActionsWrapper>
+				</Space>
 			</Form>
 		</FormContainer>
 	);

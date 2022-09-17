@@ -4,6 +4,7 @@ import { Outlet, type RouteObject } from 'react-router-dom';
 import { Redirect } from '@components/Redirect';
 import { LoginForm } from './components/LoginForm';
 import { SignupForm } from './components/SignupForm';
+import { ResetPasswordForm } from './components/ResetPassword';
 import {
 	LoginContainer,
 	LoginPageContainer,
@@ -14,13 +15,8 @@ import {
 } from './styles';
 
 import { AuthContext } from '@providers/AuthProvider';
-import { useLoginRedirect } from './hooks/useLoginRedirect';
+import { useLoginRedirect, LoginRoutes } from './hooks/useLoginRedirect';
 import BioEducaBanner from '@assets/images/bioeduca-banner.jpg';
-
-enum LoginRoutes {
-	LOGIN = '/login',
-	SIGNUP = '/signup',
-}
 
 export const useLoginRoutes = (): RouteObject[] => {
 	const { verifyAuthentication } = useContext(AuthContext);
@@ -53,6 +49,10 @@ export const useLoginRoutes = (): RouteObject[] => {
 				{
 					path: LoginRoutes.SIGNUP,
 					element: <SignupForm />,
+				},
+				{
+					path: LoginRoutes.RESET_PASSWORD,
+					element: <ResetPasswordForm />,
 				},
 			],
 		},

@@ -1,8 +1,9 @@
 import { useLocation } from 'react-router-dom';
 
-enum LoginRoutes {
+export enum LoginRoutes {
 	LOGIN = '/login',
 	SIGNUP = '/signup',
+	RESET_PASSWORD = '/reset-password',
 }
 
 type RedirectData = {
@@ -25,8 +26,13 @@ const getRedirectRoutesFactory = (() => {
 	};
 
 	const signupRedirect: RedirectData = {
-		redirectTo: '/',
+		redirectTo: '/login',
 		validateRedirect: (isAuthenticated) => !isAuthenticated,
+	};
+
+	const resetPasswordRedirect: RedirectData = {
+		redirectTo: '/',
+		validateRedirect: (isAuthenticated) => isAuthenticated,
 	};
 
 	const defaultRedirectData: RedirectData = {
@@ -37,6 +43,7 @@ const getRedirectRoutesFactory = (() => {
 	const getRedirectData = (route: string) => {
 		if (route === LoginRoutes.LOGIN) return loginRedirect;
 		if (route === LoginRoutes.SIGNUP) return signupRedirect;
+		if (route === LoginRoutes.RESET_PASSWORD) return resetPasswordRedirect;
 		return defaultRedirectData;
 	};
 
