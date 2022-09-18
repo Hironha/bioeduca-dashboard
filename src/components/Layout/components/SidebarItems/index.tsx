@@ -1,7 +1,6 @@
 import { Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
-import { TbEdit } from 'react-icons/tb';
 import { RiPlantLine } from 'react-icons/ri';
 import { AiOutlineHome } from 'react-icons/ai';
 import { HiOutlineDocumentAdd, HiOutlineFolderAdd } from 'react-icons/hi';
@@ -35,11 +34,6 @@ export const SidebarItems = () => {
 					key: '4',
 					icon: <RiPlantLine />,
 					label: 'Todas as plantas',
-				},
-				{
-					key: '5',
-					icon: <TbEdit />,
-					label: 'Editar uma planta',
 				},
 			]}
 		/>

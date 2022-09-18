@@ -11,7 +11,6 @@ import {
 	ImageContainer,
 	BannerImage,
 	OutletContainer,
-	LoginDivider,
 } from './styles';
 
 import { AuthContext } from '@providers/AuthProvider';
@@ -33,7 +32,6 @@ export const useLoginRoutes = (): RouteObject[] => {
 							<OutletContainer>
 								<Outlet />
 							</OutletContainer>
-							<LoginDivider />
 							<ImageContainer>
 								<BannerImage src={BioEducaBanner} alt="BioEduca Banner" />
 							</ImageContainer>

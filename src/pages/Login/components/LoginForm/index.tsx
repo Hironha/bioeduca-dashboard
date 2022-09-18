@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Form, Input, Button, Space } from 'antd';
-
+import { Form, Input, Button, Space, notification } from 'antd';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import { ForgotPasswordText } from './styles';
@@ -14,7 +13,10 @@ import {
 	InputsSpace,
 } from '../styles';
 
-enum LoginFormInputs {
+import { loginFormRules } from './utils/validations';
+import { loginNotifications } from './utils/notifications/login';
+
+export enum LoginFormInputs {
 	EMAIL = 'email',
 	PASSWORD = 'password',
 }
@@ -40,7 +42,7 @@ export const LoginForm = () => {
 				navigate('/');
 			}, 500);
 		} catch (err) {
-			console.log(err);
+			notification.error(loginNotifications.error());
 		}
 		setSubmitting(false);
 	};
@@ -60,11 +62,11 @@ export const LoginForm = () => {
 				onFinish={handleSubmit}
 			>
 				<InputsSpace direction="vertical">
-					<Form.Item label="Email" name={LoginFormInputs.EMAIL}>
+					<Form.Item label="Email" name={LoginFormInputs.EMAIL} rules={loginFormRules.email}>
 						<Input placeholder="youremail@example.com" />
 					</Form.Item>
 
-					<Form.Item label="Senha" name={LoginFormInputs.PASSWORD}>
+					<Form.Item label="Senha" name={LoginFormInputs.PASSWORD} rules={loginFormRules.password}>
 						<Input.Password iconRender={(visible) => (visible ? <UnlockIcon /> : <LockIcon />)} />
 					</Form.Item>
 
