@@ -11,6 +11,9 @@ export const ContentDescription = styled(Typography.Text)`
 `;
 
 export const ContentContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
 	width: 100%;
 `;
 
