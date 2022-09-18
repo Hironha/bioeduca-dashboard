@@ -1,5 +1,5 @@
 import styled, { css } from 'styled-components';
-import { Typography, Row, Space } from 'antd';
+import { Typography, Space } from 'antd';
 import { AiOutlineUnlock, AiOutlineLock } from 'react-icons/ai';
 
 const passwodIconStyles = css`
@@ -9,8 +9,6 @@ const passwodIconStyles = css`
 export const FormTitle = styled(Typography.Title)`
 	text-align: center;
 `;
-
-export const FormRow = styled(Row)``;
 
 export const UnlockIcon = styled(AiOutlineUnlock)`
 	${passwodIconStyles}
@@ -34,4 +32,8 @@ export const FormActionsWrapper = styled(Space)`
 	justify-content: space-between;
 	align-items: center;
 	gap: 12px;
+`;
+
+export const InputsSpace = styled(Space)`
+	width: 100%;
 `;

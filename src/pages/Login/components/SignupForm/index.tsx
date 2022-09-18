@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Space, notification } from 'antd';
 
-import { FormTitle, LockIcon, UnlockIcon, FormContainer, FormActionsWrapper } from '../styles';
+import { FormTitle, LockIcon, UnlockIcon, FormContainer, FormActionsWrapper, InputsSpace } from '../styles';
 
 import { useCreateUser, type CreateUserValues } from './utils/hooks/useCreateUser';
 import { createUserNotifications } from './utils/notifications/createUser';
@@ -61,7 +61,7 @@ export const SignupForm = () => {
 				autoComplete="off"
 				onFinish={handleSubmit}
 			>
-				<Space direction="vertical">
+				<InputsSpace direction="vertical">
 					<Form.Item label="Email" name={SignupFormInputs.EMAIL} rules={signupFormRules.email}>
 						<Input placeholder="youremail@example.com" />
 					</Form.Item>
@@ -92,7 +92,7 @@ export const SignupForm = () => {
 							Criar
 						</Button>
 					</FormActionsWrapper>
-				</Space>
+				</InputsSpace>
 			</Form>
 		</FormContainer>
 	);

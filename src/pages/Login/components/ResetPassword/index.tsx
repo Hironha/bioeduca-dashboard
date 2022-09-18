@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Space, notification } from 'antd';
 
-import { FormTitle, FormContainer, FormActionsWrapper } from '../styles';
+import { FormTitle, FormContainer, FormActionsWrapper, InputsSpace } from '../styles';
 
 import { useSendResetPasswordEmail } from './utils/hooks/useResetPassword';
 import { resetPasswordFormRules } from './utils/validations';
@@ -53,7 +53,7 @@ export const ResetPasswordForm = () => {
 				autoComplete="off"
 				onFinish={handleSubmit}
 			>
-				<Space direction="vertical">
+				<InputsSpace direction="vertical">
 					<Form.Item
 						label="Email"
 						name={ResetPasswordFormInputs.EMAIL}
@@ -71,7 +71,7 @@ export const ResetPasswordForm = () => {
 							Enviar email
 						</Button>
 					</FormActionsWrapper>
-				</Space>
+				</InputsSpace>
 			</Form>
 		</FormContainer>
 	);

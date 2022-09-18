@@ -20,7 +20,7 @@ export const LoginPageContainer = styled.main`
 	gap: 24px;
 
 	padding: 18px;
-	max-width: 820px;
+	width: 700px;
 	height: 460px;
 	border-radius: ${(props) => props.theme.border.radius};
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;

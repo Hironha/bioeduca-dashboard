@@ -5,7 +5,14 @@ import { Form, Input, Button, Space } from 'antd';
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 
 import { ForgotPasswordText } from './styles';
-import { FormTitle, LockIcon, UnlockIcon, FormContainer, FormActionsWrapper } from '../styles';
+import {
+	FormTitle,
+	LockIcon,
+	UnlockIcon,
+	FormContainer,
+	FormActionsWrapper,
+	InputsSpace,
+} from '../styles';
 
 enum LoginFormInputs {
 	EMAIL = 'email',
@@ -52,7 +59,7 @@ export const LoginForm = () => {
 				autoComplete="off"
 				onFinish={handleSubmit}
 			>
-				<Space direction="vertical">
+				<InputsSpace direction="vertical">
 					<Form.Item label="Email" name={LoginFormInputs.EMAIL}>
 						<Input placeholder="youremail@example.com" />
 					</Form.Item>
@@ -70,7 +77,7 @@ export const LoginForm = () => {
 							Entrar
 						</Button>
 					</FormActionsWrapper>
-				</Space>
+				</InputsSpace>
 			</Form>
 		</FormContainer>
 	);
