@@ -1,5 +1,5 @@
 import { cloneElement } from 'react';
-import { Button, Form, Input, Select, Space, type ButtonProps } from 'antd';
+import { Button, Form, Input, Select, Space, type ButtonProps, type FormInstance } from 'antd';
 
 import { SubmitSpace } from './styles';
 
@@ -24,16 +24,17 @@ export type PlantInformationValues = {
 };
 
 type PlantInformationFormProps = {
+	form: FormInstance<PlantInformationValues>;
+	resetOnSubmit?: boolean;
 	onSubmit?: (values: PlantInformationValues) => void | Promise<void>;
 	submitButton?: React.ReactElement<ButtonProps>;
 };
 
 export const PlantInformationForm = ({
+	form,
 	onSubmit,
 	submitButton = <Button>Criar</Button>,
 }: PlantInformationFormProps) => {
-	const [form] = Form.useForm<PlantInformationValues>();
-
 	const validationOptions: DefaultOptionType[] = [
 		{ label: 'Texto', value: PlantInformationValidations.STRING },
 	];
