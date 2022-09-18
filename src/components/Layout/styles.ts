@@ -11,7 +11,8 @@ export const PageContent = styled(Layout.Content)`
 	margin: 16px;
 	overflow: initial;
 	background: #fff;
-	height: calc(100vh);
+	padding: 36px;
+	height: 100vh;
 `;
 
 export const PageSider = styled(Layout.Sider)``;
