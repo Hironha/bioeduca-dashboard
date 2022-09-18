@@ -51,6 +51,7 @@ export const PageLayout = ({ children }: LayoutProps) => {
 				collapsedWidth="80"
 				collapsed={collapsed}
 				onCollapse={(value) => setCollapsed(value)}
+				width={'265px'}
 			>
 				<LogoContainer>
 					<ImageContainer>

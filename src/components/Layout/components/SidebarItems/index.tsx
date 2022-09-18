@@ -22,18 +22,18 @@ export const SidebarItems = () => {
 				{
 					key: '2',
 					icon: <HiOutlineFolderAdd />,
-					label: 'Cadastrar uma planta',
+					label: 'Criar planta',
 				},
 				{
 					key: '3',
 					icon: <HiOutlineDocumentAdd />,
 					onClick: () => navigate('/plant-informations/create'),
-					label: 'Cadastrar informações sobre as plantas',
+					label: 'Informações das plantas',
 				},
 				{
 					key: '4',
 					icon: <RiPlantLine />,
-					label: 'Todas as plantas',
+					label: 'Plantas',
 				},
 			]}
 		/>

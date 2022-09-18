@@ -1,6 +1,23 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
+import { Button } from 'antd';
+
+import { Container, ButtonContainer } from './styles';
 
 export const Home = () => {
-	return <Link to="/signup">Criar conta</Link>;
+	const navigate = useNavigate();
+
+	return (
+		<Container>
+			<ButtonContainer>
+				<Button type="primary" onClick={() => navigate('/signup')}>
+					Criar conta
+				</Button>
+				<Button type="primary" onClick={() => navigate('/signup')}>
+					Criar conta
+				</Button>
+			</ButtonContainer>
+		</Container>
+	);
 };
