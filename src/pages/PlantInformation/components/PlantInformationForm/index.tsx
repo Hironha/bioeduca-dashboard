@@ -17,7 +17,7 @@ enum PlantInformationValidations {
 	STRING = 'string',
 }
 
-type PlantInformationValues = {
+export type PlantInformationValues = {
 	[PlantInformationInputs.FIELD_NAME]: string;
 	[PlantInformationInputs.DESCRIPTION]: string;
 	[PlantInformationInputs.VALIDATION]: PlantInformationValidations;
@@ -71,15 +71,19 @@ export const PlantInformationForm = ({
 				<Form.Item noStyle shouldUpdate>
 					{({ getFieldsError, getFieldsValue }) => {
 						const disabled = (() => {
-							const hasErrors = getFieldsError().length > 0;
+							const hasErrors = getFieldsError()?.some(({ errors }) => errors.length > 0);
 							const isFieldsFilled = Object.values(getFieldsValue()).every(
 								(value) => value !== undefined && value !== null
 							);
-							return hasErrors && !isFieldsFilled;
+							return hasErrors || !isFieldsFilled;
 						})();
 						return (
 							<SubmitSpace>
-								{cloneElement(submitButton, { type: 'primary', htmlType: 'submit', disabled })}
+								{cloneElement(submitButton, {
+									type: 'primary',
+									htmlType: 'submit',
+									...(disabled && { disabled }),
+								})}
 							</SubmitSpace>
 						);
 					}}
