@@ -29,7 +29,7 @@ export const PageLayout = ({ children }: LayoutProps) => {
 
 	const errorNotification = () => {
 		notification.error({
-			message: 'Ocorreu algum problema no processo de logout!',
+			message: 'Ocorreu algum problema no processo de logout',
 		});
 	};
 

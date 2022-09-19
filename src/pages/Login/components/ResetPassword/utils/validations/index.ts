@@ -4,11 +4,11 @@ import { ResetPasswordFormInputs } from '../..';
 const emailRules: Rule[] = [
 	{
 		required: true,
-		message: 'Insira seu email!',
+		message: 'Insira seu email',
 	},
 	{
 		type: 'email',
-		message: 'Insira um email válido!',
+		message: 'Insira um email válido',
 	},
 ];
 

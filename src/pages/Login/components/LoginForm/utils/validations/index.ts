@@ -4,14 +4,14 @@ import { LoginFormInputs } from '../..';
 const emailRules: Rule[] = [
 	{
 		required: true,
-		message: 'Insira seu email!',
+		message: 'Insira seu email',
 	},
 ];
 
 const passwordRules: Rule[] = [
 	{
 		required: true,
-		message: 'Insira sua senha!',
+		message: 'Insira sua senha',
 	},
 ];
 

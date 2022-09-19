@@ -4,22 +4,22 @@ import { SignupFormInputs } from '../..';
 const emailRules: Rule[] = [
 	{
 		required: true,
-		message: 'Insira seu email!',
+		message: 'Insira seu email',
 	},
 	{
 		type: 'email',
-		message: 'Insira um email válido!',
+		message: 'Insira um email válido',
 	},
 ];
 
 const passwordRules: Rule[] = [
 	{
 		required: true,
-		message: 'Insira sua senha!',
+		message: 'Insira sua senha',
 	},
 	{
 		min: 8,
-		message: 'Sua senha deve conter, no mínimo, 8 caracteres!',
+		message: 'Sua senha deve conter, no mínimo, 8 caracteres',
 	},
 ];
 
@@ -33,7 +33,7 @@ const passwordConfirmRules: Rule[] = [
 			if (!value || getFieldValue(SignupFormInputs.PASSWORD) === value) {
 				return Promise.resolve();
 			}
-			return Promise.reject('As senhas devem ser iguais!');
+			return Promise.reject('As senhas devem ser iguais');
 		},
 	}),
 ];
