@@ -17,6 +17,7 @@ export const SidebarItems = () => {
 				{
 					key: '1',
 					icon: <AiOutlineHome />,
+					onClick: () => navigate('/'),
 					label: 'Home',
 				},
 				{
