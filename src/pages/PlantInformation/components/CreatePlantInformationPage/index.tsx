@@ -38,12 +38,11 @@ export const CreatePlantInformationPage = () => {
 		<Content.Container>
 			<Content.Header level={3}>Cadastrar Informação das Plantas</Content.Header>
 			<Content.Description>
-				Ao criar uma informação de planta, essa informação estará disponível na criação e edição de
-				uma planta em forma de campo de entrada de valor, que permitará especificar o valor para
-				cada planta cadastrada. Por exemplo, ao cadastrar a informação <strong>Bioma</strong>, as
-				plantas terão o respectivo campo, e cada planta pode possuir um valor diferente, isto é,
-				caso cadastre a planta <strong>Araçazeiro</strong>, esta poderá ter o campo{' '}
-				<strong>Bioma</strong> preenchido com o valor <strong>Cerrado</strong>.
+				Ao criar uma informação de planta, esta estará disponível na criação e edição de uma planta
+				em forma de campo de entrada de dados. Por exemplo, ao cadastrar a informação{' '}
+				<strong>Bioma</strong>, as plantas terão o respectivo campo e cada planta pode possuir um
+				valor diferente, isto é, caso cadastre a planta <strong>Araçazeiro</strong>, esta poderá ter
+				o campo <strong>Bioma</strong> preenchido com o valor <strong>Cerrado</strong>.
 			</Content.Description>
 			<Content.Body>
 				<Content.Header level={5}>Formulário para cadastro</Content.Header>
