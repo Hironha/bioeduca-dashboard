@@ -11,5 +11,6 @@ declare module "styled-components" {
     border: {
       radius: string,
     },
+    boxShadow: string
 	}
 }

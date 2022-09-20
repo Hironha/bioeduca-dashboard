@@ -34,4 +34,5 @@ export const theme = {
 	border: {
 		radius: '5px',
 	},
+	boxShadow: 'rgba(0, 0, 0, 0.16) 0px 1px 4px',
 };
