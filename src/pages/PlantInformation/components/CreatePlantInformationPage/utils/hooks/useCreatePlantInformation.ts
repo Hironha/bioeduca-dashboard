@@ -8,7 +8,6 @@ import type { IApiError } from '@interfaces/api/error';
 export type CreatePlantInformationValues = {
 	field_name: string;
 	description: string;
-	validation: 'string';
 };
 
 export const useCreatePlantInformation = () => {

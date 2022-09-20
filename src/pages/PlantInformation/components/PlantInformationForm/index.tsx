@@ -10,17 +10,11 @@ import { type DefaultOptionType } from 'antd/lib/select';
 export enum PlantInformationInputs {
 	FIELD_NAME = 'fieldName',
 	DESCRIPTION = 'description',
-	VALIDATION = 'validation',
-}
-
-enum PlantInformationValidations {
-	STRING = 'string',
 }
 
 export type PlantInformationValues = {
 	[PlantInformationInputs.FIELD_NAME]: string;
 	[PlantInformationInputs.DESCRIPTION]: string;
-	[PlantInformationInputs.VALIDATION]: PlantInformationValidations;
 };
 
 type PlantInformationFormProps = {
@@ -35,10 +29,6 @@ export const PlantInformationForm = ({
 	onSubmit,
 	submitButton = <Button>Criar</Button>,
 }: PlantInformationFormProps) => {
-	const validationOptions: DefaultOptionType[] = [
-		{ label: 'Texto', value: PlantInformationValidations.STRING },
-	];
-
 	return (
 		<Form form={form} layout="vertical" requiredMark={false} onFinish={onSubmit}>
 			<Space direction="vertical" style={{ width: '100%' }}>
@@ -59,14 +49,6 @@ export const PlantInformationForm = ({
 						autoSize={{ minRows: 3 }}
 						placeholder="Ex: Bioma é um conjunto de vida vegetal e animal, constituído pelo agrupamento de tipos de vegetação que são próximos"
 					/>
-				</Form.Item>
-
-				<Form.Item
-					name={PlantInformationInputs.VALIDATION}
-					label="Tipo da informação"
-					rules={plantInformationFormRules.validation}
-				>
-					<Select options={validationOptions} allowClear />
 				</Form.Item>
 
 				<Form.Item noStyle shouldUpdate>

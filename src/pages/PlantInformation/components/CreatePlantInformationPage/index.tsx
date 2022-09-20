@@ -26,7 +26,6 @@ export const CreatePlantInformationPage = () => {
 		const payload: CreatePlantInformationValues = {
 			description: values.description.trim(),
 			field_name: values.fieldName.trim(),
-			validation: values.validation,
 		};
 		const requestData = await createPlantInformation(payload);
 		if (requestData.isCanceled) return;
