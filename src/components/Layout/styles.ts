@@ -12,7 +12,7 @@ export const PageContent = styled(Layout.Content)`
 	overflow: initial;
 	background: #fff;
 	padding: 36px;
-	min-height: 100vh;
+	min-height: calc(100vh - 60px - 2 * 16px - 5px);
 `;
 
 export const PageSider = styled(Layout.Sider)``;

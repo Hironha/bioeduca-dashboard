@@ -13,6 +13,7 @@ module.exports = {
 							'@success-color': '#1a73e8',
 							'@warning-color': '#ffbd2e',
 							'@error-color': '#ff5f56',
+							'@info-color': '#A44CFC',
 							'@font-size-base': '16px',
 							// '@heading-color': rgba(0, 0, 0, 0.85),
 							// '@text-color': rgba(0, 0, 0, 0.65),

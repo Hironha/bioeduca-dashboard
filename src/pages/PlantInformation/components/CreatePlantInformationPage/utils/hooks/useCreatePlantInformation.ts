@@ -3,7 +3,7 @@ import { api } from '@services/api';
 import { useRequestControlers } from '@hooks/useRequestControllers';
 
 import type { RequestData } from '@interfaces/api/requestData';
-import { IApiError } from '@interfaces/api/error';
+import type { IApiError } from '@interfaces/api/error';
 
 export type CreatePlantInformationValues = {
 	field_name: string;
