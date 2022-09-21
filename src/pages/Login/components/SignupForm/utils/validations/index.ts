@@ -26,7 +26,7 @@ const passwordRules: Rule[] = [
 const passwordConfirmRules: Rule[] = [
 	{
 		required: true,
-		message: 'Confirme sua senha!',
+		message: 'Confirme sua senha',
 	},
 	({ getFieldValue }) => ({
 		validator(_, value) {
