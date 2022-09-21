@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { RiPlantLine } from 'react-icons/ri';
 import { AiOutlineHome } from 'react-icons/ai';
-import { HiOutlineDocumentAdd, HiOutlineFolderAdd } from 'react-icons/hi';
+import { BsFileEarmarkText } from 'react-icons/bs';
 
 export const SidebarItems = () => {
 	const navigate = useNavigate();
@@ -22,19 +22,15 @@ export const SidebarItems = () => {
 				},
 				{
 					key: '2',
-					icon: <HiOutlineFolderAdd />,
-					label: 'Criar planta',
+					icon: <RiPlantLine />,
+					onClick: () => navigate('/plants'),
+					label: 'Plantas',
 				},
 				{
 					key: '3',
-					icon: <HiOutlineDocumentAdd />,
-					onClick: () => navigate('/plant-informations/create'),
+					icon: <BsFileEarmarkText />,
+					onClick: () => navigate('/plant-informations'),
 					label: 'Informações das plantas',
-				},
-				{
-					key: '4',
-					icon: <RiPlantLine />,
-					label: 'Plantas',
 				},
 			]}
 		/>
