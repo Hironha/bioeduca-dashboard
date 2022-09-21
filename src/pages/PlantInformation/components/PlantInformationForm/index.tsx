@@ -1,11 +1,10 @@
 import { cloneElement } from 'react';
-import { Button, Form, Input, Select, Space, type ButtonProps, type FormInstance } from 'antd';
+import { Button, Form, Input, Space, type ButtonProps, type FormInstance } from 'antd';
+import { Row, Col, notification } from 'antd';
 
 import { SubmitSpace } from './styles';
 
 import { plantInformationFormRules } from './utils/validations';
-
-import { type DefaultOptionType } from 'antd/lib/select';
 
 export enum PlantInformationInputs {
 	FIELD_NAME = 'fieldName',
@@ -37,7 +36,7 @@ export const PlantInformationForm = ({
 					label="Nome da informação"
 					rules={plantInformationFormRules.fieldName}
 				>
-					<Input placeholder="Ex: Bioma" />
+					<Input placeholder="Ex: Bioma" style={{ maxWidth: '600px' }} />
 				</Form.Item>
 
 				<Form.Item
@@ -48,6 +47,7 @@ export const PlantInformationForm = ({
 					<Input.TextArea
 						autoSize={{ minRows: 3 }}
 						placeholder="Ex: Bioma é um conjunto de vida vegetal e animal, constituído pelo agrupamento de tipos de vegetação que são próximos"
+						style={{ maxWidth: '600px' }}
 					/>
 				</Form.Item>
 
