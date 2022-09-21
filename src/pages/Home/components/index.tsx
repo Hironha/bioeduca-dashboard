@@ -1,23 +1,14 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { QuickAccess } from './QuickAccess';
 
-import { Button } from 'antd';
-
-import { Container, ButtonContainer } from './styles';
+import { Content } from '@components/Content';
 
 export const Home = () => {
-	const navigate = useNavigate();
-
 	return (
-		<Container>
-			<ButtonContainer>
-				<Button type="primary" onClick={() => navigate('/signup')}>
-					Criar conta
-				</Button>
-				<Button type="primary" onClick={() => navigate('/signup')}>
-					Criar conta
-				</Button>
-			</ButtonContainer>
-		</Container>
+		<Content.Container>
+			<QuickAccess />
+			<Content.Body>
+				<Content.Header level={3}>Últimas plantas inseridas</Content.Header>
+			</Content.Body>
+		</Content.Container>
 	);
 };
