@@ -1,6 +1,5 @@
 import { cloneElement } from 'react';
 import { Button, Form, Input, Space, type ButtonProps, type FormInstance } from 'antd';
-import { Row, Col, notification } from 'antd';
 
 import { SubmitSpace } from './styles';
 
@@ -17,26 +16,34 @@ export type PlantInformationValues = {
 };
 
 type PlantInformationFormProps = {
-	form: FormInstance<PlantInformationValues>;
+	className?: string;
 	resetOnSubmit?: boolean;
+	form: FormInstance<PlantInformationValues>;
 	onSubmit?: (values: PlantInformationValues) => void | Promise<void>;
 	submitButton?: React.ReactElement<ButtonProps>;
 };
 
 export const PlantInformationForm = ({
+	className,
 	form,
 	onSubmit,
 	submitButton = <Button>Criar</Button>,
 }: PlantInformationFormProps) => {
 	return (
-		<Form form={form} layout="vertical" requiredMark={false} onFinish={onSubmit}>
+		<Form
+			className={className}
+			form={form}
+			layout="vertical"
+			requiredMark={false}
+			onFinish={onSubmit}
+		>
 			<Space direction="vertical" style={{ width: '100%' }}>
 				<Form.Item
 					name={PlantInformationInputs.FIELD_NAME}
 					label="Nome da informação"
 					rules={plantInformationFormRules.fieldName}
 				>
-					<Input placeholder="Ex: Bioma" style={{ maxWidth: '600px' }} />
+					<Input placeholder="Ex: Bioma" />
 				</Form.Item>
 
 				<Form.Item
@@ -47,7 +54,6 @@ export const PlantInformationForm = ({
 					<Input.TextArea
 						autoSize={{ minRows: 3 }}
 						placeholder="Ex: Bioma é um conjunto de vida vegetal e animal, constituído pelo agrupamento de tipos de vegetação que são próximos"
-						style={{ maxWidth: '600px' }}
 					/>
 				</Form.Item>
 

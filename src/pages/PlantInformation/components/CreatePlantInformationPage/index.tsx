@@ -1,7 +1,8 @@
 import { notification, Button, Form } from 'antd';
 
 import { Content } from '@components/Content';
-import { PlantInformationForm, type PlantInformationValues } from '../PlantInformationForm';
+import { type PlantInformationValues } from '../PlantInformationForm';
+import { StyledPlantInformationForm } from './styles';
 
 import {
 	useCreatePlantInformation,
@@ -45,7 +46,7 @@ export const CreatePlantInformationPage = () => {
 			</Content.Description>
 			<Content.Body>
 				<Content.Header level={5}>Formulário para cadastro</Content.Header>
-				<PlantInformationForm
+				<StyledPlantInformationForm
 					form={form}
 					onSubmit={handleFormSubmit}
 					submitButton={

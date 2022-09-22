@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Typography } from 'antd';
+import { Typography, Space } from 'antd';
 
 export const ContentHeader = styled(Typography.Title)`
 	width: 100%;
@@ -10,14 +10,17 @@ export const ContentDescription = styled(Typography.Text)`
 	width: 100%;
 `;
 
-export const ContentContainer = styled.div`
+export const ContentContainer = styled(Space)`
 	display: flex;
 	flex-direction: column;
-	gap: 16px;
+	align-items: stretch;
 	width: 100%;
 `;
 
-export const ContentBody = styled.div`  
-  width: 100%;
-  margin-top: 36px;
+export const ContentBody = styled(Space)`
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	width: 100%;
+	margin-top: 36px;
 `;
