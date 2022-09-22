@@ -5,7 +5,7 @@ import { DeletePlantInformationAlert, CreatePlantInformationLink } from './style
 export const ListPlantInformationsPage = () => {
 	return (
 		<Content.Container>
-			<Content.Header level={3}>Informações das Plantas</Content.Header>
+			<Content.Header>Informações das Plantas</Content.Header>
 			<Content.Description>
 				Informações das plantas são todas as informações que uma planta pode possuir. Elas são
 				gerenciadas pelo usuário, onde o mesmo pode{' '}

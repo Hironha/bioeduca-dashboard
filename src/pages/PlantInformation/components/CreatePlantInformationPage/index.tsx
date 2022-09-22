@@ -36,7 +36,7 @@ export const CreatePlantInformationPage = () => {
 
 	return (
 		<Content.Container>
-			<Content.Header level={3}>Cadastrar Informação das Plantas</Content.Header>
+			<Content.Header>Cadastrar Informação das Plantas</Content.Header>
 			<Content.Description>
 				Ao criar uma informação de planta, esta estará disponível na criação e edição de uma planta
 				em forma de campo de entrada de dados. Por exemplo, ao cadastrar a informação{' '}

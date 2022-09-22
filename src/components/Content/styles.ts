@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { Typography, Space } from 'antd';
 
-export const ContentHeader = styled(Typography.Title)`
+export const ContentHeader = styled(Typography.Title).attrs(({ level }) => ({ level: level || 3 }))`
 	width: 100%;
 	text-align: center;
 `;
