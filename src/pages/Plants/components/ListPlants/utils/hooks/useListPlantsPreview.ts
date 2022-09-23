@@ -21,6 +21,7 @@ export const useListPlantsPreview = () => {
 			try {
 				const response = await api.get<ListPlantsPreviewResponse>('/plants/preview', {
 					params: { perPage: 10, lastKey },
+					signal: controllers.abortController.signal,
 				});
 
 				if (!controllers.isMounted) {
