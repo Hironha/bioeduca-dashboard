@@ -3,5 +3,5 @@ import { Space } from 'antd';
 
 export const SubmitSpace = styled(Space)`
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 `;
