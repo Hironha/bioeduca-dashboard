@@ -1,4 +1,5 @@
 import { cloneElement } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Input, Space, type ButtonProps, type FormInstance } from 'antd';
 
 import { SubmitSpace } from './styles';
@@ -29,6 +30,12 @@ export const PlantInformationForm = ({
 	onSubmit,
 	submitButton = <Button>Criar</Button>,
 }: PlantInformationFormProps) => {
+	const navigate = useNavigate();
+
+	const handleBackClick = () => {
+		navigate(-1);
+	};
+
 	return (
 		<Form
 			className={className}
@@ -68,6 +75,9 @@ export const PlantInformationForm = ({
 						})();
 						return (
 							<SubmitSpace>
+								<Button type="primary" ghost htmlType="button" onClick={handleBackClick}>
+									Voltar
+								</Button>
 								{cloneElement(submitButton, {
 									type: 'primary',
 									htmlType: 'submit',
