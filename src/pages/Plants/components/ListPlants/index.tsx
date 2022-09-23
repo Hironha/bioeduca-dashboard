@@ -13,7 +13,7 @@ import {
 export const ListPlants = () => {
 	const [plantsPreviewData, setPlantsPreviewData] = useState<ListPlantsPreviewResponse>({
 		data: [],
-		hasMore: false,
+		hasMore: true,
 	});
 	const [loadingPlants, fetchPlantsPreview] = useListPlantsPreview();
 
@@ -27,14 +27,16 @@ export const ListPlants = () => {
 		};
 
 		const _fetchPlantsPreview = async () => {
-			const responseData = await fetchPlantsPreview();
+			const responseData = await fetchPlantsPreview(plantsPreviewData.lastKey);
 			if (responseData.isCanceled) return;
 			else if (responseData.isError) handleFetchError();
 			else handleFetchSuccess(responseData.data);
 		};
 
-		_fetchPlantsPreview();
-	}, [fetchPlantsPreview]);
+		if (plantsPreviewData.hasMore) {
+			_fetchPlantsPreview();
+		}
+	}, [fetchPlantsPreview, plantsPreviewData.lastKey, plantsPreviewData.hasMore]);
 
 	if (loadingPlants && plantsPreviewData.data.length === 0) {
 		return (
@@ -47,7 +49,7 @@ export const ListPlants = () => {
 	return (
 		<Row gutter={[24, 16]}>
 			{plantsPreviewData.data.map((plantPreview) => (
-				<Col span={6} xs={24} sm={24} md={8} lg={6} key={plantPreview.id}>
+				<Col span={8} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6} key={plantPreview.id}>
 					<PlantCard
 						popularName={plantPreview.popular_name}
 						scientificName={plantPreview.scientific_name}
