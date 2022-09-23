@@ -16,7 +16,9 @@ export const QuickAccessCard = ({ icon, description, path }: QuickAccessCardProp
 		<CardContainer onClick={() => navigate(path)}>
 			<IconContainer>{icon}</IconContainer>
 			<DescriptionContainer>
-				<Typography.Paragraph>{description}</Typography.Paragraph>
+				<Typography.Paragraph ellipsis={{ rows: 2, symbol: '...' }}>
+					{description}
+				</Typography.Paragraph>
 			</DescriptionContainer>
 		</CardContainer>
 	);
