@@ -47,8 +47,8 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 
 	return (
 		<Row className={className} gutter={[24, 24]}>
-			{plantInformations.map((plantInformation, index) => (
-				<Col span={8} xs={24} sm={24} md={12} lg={8} key={index}>
+			{plantInformations.map((plantInformation) => (
+				<Col span={8} xs={24} sm={24} md={12} lg={8} key={plantInformation.id}>
 					<PlantInformationCard
 						fieldName={plantInformation.field_name}
 						description={plantInformation.description}
