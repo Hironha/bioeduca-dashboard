@@ -28,6 +28,7 @@ export const CardTitle = styled.span`
 
 export const CardSubtitle = styled.span`
 	font-size: 14px;
+	font-style: italic;
 `;
 
 export const CardImageContainer = styled.div`

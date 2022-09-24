@@ -18,10 +18,11 @@ export const useListPlantsPreview = () => {
 
 	const requestListPlantsPreview = useCallback(
 		async (lastKey?: string): Promise<RequestData<ListPlantsPreviewResponse, IApiError>> => {
+			const signal = controllers.abortController.signal;
 			try {
 				const response = await api.get<ListPlantsPreviewResponse>('/plants/preview', {
 					params: { perPage: 10, lastKey },
-					signal: controllers.abortController.signal,
+					signal: signal,
 				});
 
 				if (!controllers.isMounted) {

@@ -19,7 +19,9 @@ export const useFetchPlantInformations = () => {
 		RequestData<IPlantInformation[], IApiError>
 	> => {
 		try {
-			const response = await api.get<PlantInformationData>('/plant-informations');
+			const response = await api.get<PlantInformationData>('/plant-informations', {
+				signal: controllers.abortController.signal,
+			});
 			if (!controllers.isMounted) return controllers.createCanceledData();
 			return controllers.createSuccessData(response.data.data);
 		} catch (err: any) {

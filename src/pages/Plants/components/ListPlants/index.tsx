@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Col, notification, Row } from 'antd';
 
+import { Observer } from '@components/Observer';
 import { Loading } from '@components/Loading';
 import { PlantCard } from './components/PlantCard';
 import { LoadingContainer } from './styles';
+
+import { listPlantsPreviewNotifications } from './utils/notifications/listPlantsPreview';
 
 import {
 	useListPlantsPreview,
@@ -11,23 +14,33 @@ import {
 } from './utils/hooks/useListPlantsPreview';
 
 export const ListPlants = () => {
+	const [lastKeySearched, setLastKeySearched] = useState<string>();
 	const [plantsPreviewData, setPlantsPreviewData] = useState<ListPlantsPreviewResponse>({
 		data: [],
 		hasMore: true,
 	});
 	const [loadingPlants, fetchPlantsPreview] = useListPlantsPreview();
 
+	const handleLastItemOnView: IntersectionObserverCallback = (entries) => {
+		const [entry] = entries;
+		if (!entry || !entry.isIntersecting) return;
+		setLastKeySearched(plantsPreviewData.lastKey);
+	};
+
 	useEffect(() => {
 		const handleFetchSuccess = (responseData: ListPlantsPreviewResponse) => {
-			setPlantsPreviewData(responseData);
+			setPlantsPreviewData((prevState) => ({
+				...responseData,
+				data: prevState.data.concat(responseData.data),
+			}));
 		};
 
 		const handleFetchError = () => {
-			notification.error({ message: 'Error' });
+			notification.error(listPlantsPreviewNotifications.error());
 		};
 
 		const _fetchPlantsPreview = async () => {
-			const responseData = await fetchPlantsPreview(plantsPreviewData.lastKey);
+			const responseData = await fetchPlantsPreview(lastKeySearched);
 			if (responseData.isCanceled) return;
 			else if (responseData.isError) handleFetchError();
 			else handleFetchSuccess(responseData.data);
@@ -36,7 +49,7 @@ export const ListPlants = () => {
 		if (plantsPreviewData.hasMore) {
 			_fetchPlantsPreview();
 		}
-	}, [fetchPlantsPreview, plantsPreviewData.lastKey, plantsPreviewData.hasMore]);
+	}, [fetchPlantsPreview, lastKeySearched, plantsPreviewData.hasMore]);
 
 	if (loadingPlants && plantsPreviewData.data.length === 0) {
 		return (
@@ -48,15 +61,39 @@ export const ListPlants = () => {
 
 	return (
 		<Row gutter={[24, 16]}>
-			{plantsPreviewData.data.map((plantPreview) => (
-				<Col span={8} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6} key={plantPreview.id}>
-					<PlantCard
-						popularName={plantPreview.popular_name}
-						scientificName={plantPreview.scientific_name}
-						imageURL={plantPreview.images[0] as string}
-					/>
+			{plantsPreviewData.data.map((plantPreview, index) => {
+				const isLastElement = index === plantsPreviewData.data.length - 1;
+				return (
+					<Col span={8} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6} key={plantPreview.id}>
+						{isLastElement ? (
+							<Observer
+								callback={handleLastItemOnView}
+								options={{ root: null, rootMargin: '-10px', threshold: 1 }}
+							>
+								<PlantCard
+									popularName={plantPreview.popular_name}
+									scientificName={plantPreview.scientific_name}
+									imageURL={plantPreview.images[0] as string}
+								/>
+							</Observer>
+						) : (
+							<PlantCard
+								popularName={plantPreview.popular_name}
+								scientificName={plantPreview.scientific_name}
+								imageURL={plantPreview.images[0] as string}
+							/>
+						)}
+					</Col>
+				);
+			})}
+
+			{loadingPlants && (
+				<Col span={24}>
+					<LoadingContainer>
+						<Loading size="medium" />
+					</LoadingContainer>
 				</Col>
-			))}
+			)}
 		</Row>
 	);
 };
