@@ -13,15 +13,8 @@ type Controller = {
 
 export const useRequestControlers = () => {
 	const isMounted = useRef(true);
-	const abortController = useRef<AbortController | null>(null);
+	const abortController = useRef<AbortController>(new AbortController());
 	const controllers = useRef<Controller | null>(null);
-
-	const getAbortController = () => {
-		if (abortController.current === null) {
-			abortController.current = new AbortController();
-		}
-		return abortController.current;
-	};
 
 	const getControllers = () => {
 		if (controllers.current === null) {
@@ -30,10 +23,10 @@ export const useRequestControlers = () => {
 					return isMounted.current;
 				},
 				get abortController() {
-					return getAbortController();
+					return abortController.current;
 				},
 				get isAborted() {
-					return getAbortController().signal.aborted;
+					return abortController.current.signal.aborted;
 				},
 				createCanceledData() {
 					return { isCanceled: true };
@@ -50,12 +43,11 @@ export const useRequestControlers = () => {
 	};
 
 	useEffect(() => {
-		isMounted.current = true;
-		abortController.current = new AbortController();
+		const controller = abortController.current;
 
 		return () => {
 			isMounted.current = false;
-			if (abortController.current) abortController.current.abort();
+			if (controller) controller.abort();
 		};
 	}, []);
 
