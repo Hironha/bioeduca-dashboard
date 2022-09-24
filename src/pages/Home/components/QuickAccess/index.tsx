@@ -13,7 +13,7 @@ import { ContentBody } from './styles';
 export const QuickAccess = () => {
 	return (
 		<Content.Container>
-			<Content.Header level={4}>Acesso rápido</Content.Header>
+			<Content.Header level={3}>Acesso rápido</Content.Header>
 			<ContentBody>
 				<Row gutter={[24, 24]}>
 					<Col span={6} xs={24} sm={12} md={8} lg={6}>
