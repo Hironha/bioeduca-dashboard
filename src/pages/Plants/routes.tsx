@@ -6,6 +6,7 @@ import { AuthContext } from '@providers/AuthProvider';
 
 import { PageLayout } from '@components/Layout';
 import { ListPlantsPage } from './components/ListPlantsPage';
+import { CreatePlantPage } from './components/CreatePlantPage';
 
 export const usePlantsRoutes = (): RouteObject[] => {
 	const { verifyAuthentication } = useContext(AuthContext);
@@ -19,7 +20,10 @@ export const usePlantsRoutes = (): RouteObject[] => {
 					</PageLayout>
 				</Redirect>
 			),
-			children: [{ path: '/plants', element: <ListPlantsPage /> }],
+			children: [
+				{ path: '/plants', element: <ListPlantsPage /> },
+				{ path: '/plants/create', element: <CreatePlantPage /> },
+			],
 		},
 	];
 };

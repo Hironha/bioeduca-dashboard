@@ -4,3 +4,9 @@ export interface IPlantPreview {
 	popular_name: string;
 	images: string[];
 }
+
+export interface IPlant extends IPlantPreview {
+	additional_informations: {
+		[key: string]: string;
+	}[];
+}

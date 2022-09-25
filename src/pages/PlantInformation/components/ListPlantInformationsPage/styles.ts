@@ -7,6 +7,9 @@ export const DeletePlantInformationAlert = styled(Alert)`
 `;
 
 export const CreatePlantInformationLink = styled(Link)`
-	color: ${(props) => props.theme.colors.success} !important;
-	font-weight: bold;
+	& > span {
+		color: ${(props) => props.theme.colors.success};
+		font-weight: bold;
+		text-decoration: underline;
+	}
 `;

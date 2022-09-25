@@ -9,11 +9,8 @@ export const ListPlantInformationsPage = () => {
 			<Content.Description>
 				Informações das plantas são todas as informações que uma planta pode possuir. Elas são
 				gerenciadas pelo usuário, onde o mesmo pode{' '}
-				<CreatePlantInformationLink
-					to={'/plant-informations/create'}
-					style={{ textDecoration: 'underline' }}
-				>
-					cadastrar
+				<CreatePlantInformationLink to={'/plant-informations/create'}>
+					<span>cadastrar</span>
 				</CreatePlantInformationLink>
 				, editar ou excuir uma informação. Ao cadastrar uma nova informação, as plantas poderão ter
 				essa informação vinculada a elas, por exemplo, caso cadastre a informação{' '}
