@@ -5,8 +5,8 @@ import { Redirect } from '@components/Redirect';
 import { AuthContext } from '@providers/AuthProvider';
 
 import { PageLayout } from '@components/Layout';
-import { ListPlantsPage } from './components/ListPlantsPage';
-import { CreatePlantPage } from './components/CreatePlantPage';
+import { ListPlantsPage } from './outlets/ListPlantsPage';
+import { CreatePlantPage } from './outlets/CreatePlantPage';
 
 export const usePlantsRoutes = (): RouteObject[] => {
 	const { verifyAuthentication } = useContext(AuthContext);
