@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { Col, notification, Row } from 'antd';
 
 import { Observer } from '@components/Observer';
@@ -19,46 +19,52 @@ type ListPlantsProps = {
 };
 
 export const ListPlants = ({ limit, perPage = 12 }: ListPlantsProps) => {
-	const [lastKeySearched, setLastKeySearched] = useState<string>();
 	const [plantsPreviewData, setPlantsPreviewData] = useState<ListPlantsPreviewResponse>({
 		data: [],
 		hasMore: true,
 	});
-	const [loadingPlants, fetchPlantsPreview] = useListPlantsPreview({ plantsPerPage: perPage });
+	const [loadingPlants, listPlantsPreview] = useListPlantsPreview({ plantsPerPage: perPage });
 
-	const handleLastItemOnView: IntersectionObserverCallback = (entries) => {
+	const handleListPlantsSuccess = useCallback((responseData: ListPlantsPreviewResponse) => {
+		setPlantsPreviewData((prevState) => ({
+			...responseData,
+			data: prevState.data.concat(responseData.data),
+		}));
+	}, []);
+
+	const handleListPlantsError = useCallback(() => {
+		notification.error(listPlantsPreviewNotifications.error());
+	}, []);
+
+	const fetchPlantsPreview = useCallback(
+		async (lastKey?: string) => {
+			const responseData = await listPlantsPreview(lastKey);
+			if (responseData.isCanceled) return;
+			else if (responseData.isError) handleListPlantsError();
+			else handleListPlantsSuccess(responseData.data);
+		},
+		[listPlantsPreview, handleListPlantsError, handleListPlantsSuccess]
+	);
+
+	const handleInfinitePlantsFetch = () => {
+		const plantsAmount = plantsPreviewData.data.length;
+		const hasReachedLimit = limit ? limit <= plantsAmount : false;
+		if (!hasReachedLimit && plantsPreviewData.hasMore) {
+			fetchPlantsPreview(plantsPreviewData.lastKey);
+		}
+	};
+
+	const handleLastItemOnView: IntersectionObserverCallback = async (entries) => {
 		const [entry] = entries;
-		if (!entry || !entry.isIntersecting) return;
-		setLastKeySearched(plantsPreviewData.lastKey);
+		const isItemOnView = entry && entry.isIntersecting;
+		if (!isItemOnView) return;
+
+		handleInfinitePlantsFetch();
 	};
 
 	useEffect(() => {
-		const handleFetchSuccess = (responseData: ListPlantsPreviewResponse) => {
-			setPlantsPreviewData((prevState) => ({
-				...responseData,
-				data: prevState.data.concat(responseData.data),
-			}));
-		};
-
-		const handleFetchError = () => {
-			notification.error(listPlantsPreviewNotifications.error());
-		};
-
-		const _fetchPlantsPreview = async () => {
-			const responseData = await fetchPlantsPreview(lastKeySearched);
-			if (responseData.isCanceled) return;
-			else if (responseData.isError) handleFetchError();
-			else handleFetchSuccess(responseData.data);
-		};
-
-		if (limit) {
-			if (plantsPreviewData.hasMore && plantsPreviewData.data.length < limit) {
-				_fetchPlantsPreview();
-			}
-		} else if (plantsPreviewData.hasMore) {
-			_fetchPlantsPreview();
-		}
-	}, [fetchPlantsPreview, lastKeySearched, plantsPreviewData.hasMore, limit]);
+		fetchPlantsPreview();
+	}, [fetchPlantsPreview]);
 
 	if (loadingPlants && plantsPreviewData.data.length === 0) {
 		return (
