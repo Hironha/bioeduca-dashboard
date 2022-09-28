@@ -16,11 +16,28 @@ export const SelectedImageContainer = styled.div`
 export const SelectedImageName = styled.span`
 	cursor: pointer;
 	color: ${(props) => props.theme.colors.success};
+	&:hover {
+		text-decoration: underline;
+	}
 `;
 
 export const DeleteIcon = styled(BsTrash).attrs(() => ({ size: 20 }))`
 	color: ${(props) => props.theme.colors.error};
 	cursor: pointer;
+`;
+
+export const ModalImageContainer = styled.div`
+	max-width: 700px;
+	max-height: 450px;
+	padding: 16px;
+`;
+
+export const ModalImage = styled.img`
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+	object-position: center;
+	border-radius: ${(props) => props.theme.border.radius};
 `;
 
 export const TooltipText = styled.span`

@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { Tooltip } from 'antd';
+import { Modal, Tooltip } from 'antd';
 
 import { ImageSelector } from '@components/ImageSelector';
 import {
@@ -8,6 +8,8 @@ import {
 	ImagesSelectorContainer,
 	DeleteIcon,
 	TooltipText,
+	ModalImage,
+	ModalImageContainer,
 } from './styles';
 
 import { imageSelectorHelpers } from './utils/imageSelectorHelpers';
@@ -31,6 +33,7 @@ export const ImagesSelector = ({
 	onChange,
 }: ImagesSelectorProps) => {
 	const onChangeRef = useRef(onChange);
+	const [selectedImageURL, setSelectedImageURL] = useState<string | null>(null);
 	const [imagesValue, setImagesValue] = useState<Image[]>(() => {
 		if (value) return value.map((file) => ({ key: imageSelectorHelpers.generateKey(file), file }));
 		return [];
@@ -49,6 +52,18 @@ export const ImagesSelector = ({
 		};
 	};
 
+	const createViewImageHandler = (imageFile: File) => {
+		return () => {
+			imageSelectorHelpers.readFileURL(imageFile, (url) => {
+				setSelectedImageURL(url);
+			});
+		};
+	};
+
+	const handleModalCancel = () => {
+		setSelectedImageURL(null);
+	};
+
 	useEffect(() => {
 		const onChange = onChangeRef.current;
 		if (onChange) {
@@ -60,13 +75,30 @@ export const ImagesSelector = ({
 		<ImagesSelectorContainer className={className}>
 			{imagesValue.map((image) => (
 				<SelectedImageContainer key={image.key}>
-					<SelectedImageName>{image.file.name}</SelectedImageName>
+					<SelectedImageName onClick={createViewImageHandler(image.file)}>
+						{image.file.name}
+					</SelectedImageName>
+
 					<Tooltip title={<TooltipText>Remover imagem</TooltipText>}>
 						<DeleteIcon onClick={createRemoveImageHandler(image.key)} />
 					</Tooltip>
 				</SelectedImageContainer>
 			))}
 			{imagesValue.length < maxImages && <ImageSelector onChange={addImage} clearOnChange />}
+
+			<Modal
+				centered
+				destroyOnClose
+				visible={selectedImageURL !== null}
+				footer={null}
+				onCancel={handleModalCancel}
+			>
+				{selectedImageURL !== null && (
+					<ModalImageContainer>
+						<ModalImage src={selectedImageURL} />
+					</ModalImageContainer>
+				)}
+			</Modal>
 		</ImagesSelectorContainer>
 	);
 };
