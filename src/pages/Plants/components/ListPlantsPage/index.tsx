@@ -1,6 +1,6 @@
 import { Content } from '@components/Content';
 
-import { ListPlants } from '../ListPlants';
+import { ListPlants } from '@components/ListPlants';
 
 import { RedirectLink } from './styles';
 
@@ -18,8 +18,8 @@ export const ListPlantsPage = () => {
 				<RedirectLink to={'/plant-informations/create'} style={{ textDecoration: 'underline' }}>
 					criar uma nova informação
 				</RedirectLink>
-				, a qual poderá ser utilizada por todas as outras plantas. Além disso, é possível visualizar,
-				editar e excluir as plantas já cadastradas.
+				, a qual poderá ser utilizada por todas as outras plantas. Além disso, é possível
+				visualizar, editar e excluir as plantas já cadastradas.
 			</Content.Description>
 			<Content.Body>
 				<ListPlants />

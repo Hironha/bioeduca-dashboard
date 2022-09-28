@@ -13,13 +13,18 @@ import {
 	type ListPlantsPreviewResponse,
 } from './utils/hooks/useListPlantsPreview';
 
-export const ListPlants = () => {
+type ListPlantsProps = {
+	limit?: number;
+	perPage?: number;
+};
+
+export const ListPlants = ({ limit, perPage = 12 }: ListPlantsProps) => {
 	const [lastKeySearched, setLastKeySearched] = useState<string>();
 	const [plantsPreviewData, setPlantsPreviewData] = useState<ListPlantsPreviewResponse>({
 		data: [],
 		hasMore: true,
 	});
-	const [loadingPlants, fetchPlantsPreview] = useListPlantsPreview();
+	const [loadingPlants, fetchPlantsPreview] = useListPlantsPreview({ plantsPerPage: perPage });
 
 	const handleLastItemOnView: IntersectionObserverCallback = (entries) => {
 		const [entry] = entries;
@@ -46,10 +51,14 @@ export const ListPlants = () => {
 			else handleFetchSuccess(responseData.data);
 		};
 
-		if (plantsPreviewData.hasMore) {
+		if (limit) {
+			if (plantsPreviewData.hasMore && plantsPreviewData.data.length < limit) {
+				_fetchPlantsPreview();
+			}
+		} else if (plantsPreviewData.hasMore) {
 			_fetchPlantsPreview();
 		}
-	}, [fetchPlantsPreview, lastKeySearched, plantsPreviewData.hasMore]);
+	}, [fetchPlantsPreview, lastKeySearched, plantsPreviewData.hasMore, limit]);
 
 	if (loadingPlants && plantsPreviewData.data.length === 0) {
 		return (

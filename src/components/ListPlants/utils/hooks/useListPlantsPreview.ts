@@ -12,7 +12,11 @@ export type ListPlantsPreviewResponse = {
 	data: IPlantPreview[];
 };
 
-export const useListPlantsPreview = () => {
+type ListPlantsPreviewProps = {
+	plantsPerPage: number;
+};
+
+export const useListPlantsPreview = ({ plantsPerPage }: ListPlantsPreviewProps) => {
 	const controllers = useRequestControlers();
 	const [loading, setLoading] = useState(false);
 
@@ -21,7 +25,7 @@ export const useListPlantsPreview = () => {
 			const signal = controllers.abortController.signal;
 			try {
 				const response = await api.get<ListPlantsPreviewResponse>('/plants/preview', {
-					params: { perPage: 10, lastKey },
+					params: { perPage: plantsPerPage, lastKey },
 					signal: signal,
 				});
 
@@ -39,7 +43,7 @@ export const useListPlantsPreview = () => {
 				return controllers.createErrorData(error);
 			}
 		},
-		[controllers]
+		[controllers, plantsPerPage]
 	);
 
 	const listPlantsPreview = useCallback(
