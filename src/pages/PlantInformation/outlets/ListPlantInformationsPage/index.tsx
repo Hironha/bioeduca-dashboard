@@ -1,5 +1,5 @@
 import { Content } from '@components/Content';
-import { ListPlantInformations } from '../ListPlantInformations';
+import { ListPlantInformations } from '../../components/ListPlantInformations';
 import { DeletePlantInformationAlert, CreatePlantInformationLink } from './styles';
 
 export const ListPlantInformationsPage = () => {

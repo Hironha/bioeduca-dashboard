@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { PlantInformationForm } from '../PlantInformationForm';
+import { PlantInformationForm } from '../../components/PlantInformationForm';
 
 export const StyledPlantInformationForm = styled(PlantInformationForm)`
 	margin: 0 auto;

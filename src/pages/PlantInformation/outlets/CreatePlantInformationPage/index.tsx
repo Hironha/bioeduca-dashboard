@@ -1,7 +1,7 @@
 import { notification, Button, Form } from 'antd';
 
 import { Content } from '@components/Content';
-import { type PlantInformationValues } from '../PlantInformationForm';
+import { type PlantInformationValues } from '../../components/PlantInformationForm';
 import { StyledPlantInformationForm } from './styles';
 
 import {
