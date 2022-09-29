@@ -1,12 +1,13 @@
 import { useRef, useState, useEffect } from 'react';
 import { Modal, Tooltip } from 'antd';
+import { useTheme } from 'styled-components';
+import { BsTrash } from 'react-icons/bs';
 
 import { ImageSelector } from '@components/ImageSelector';
 import {
 	SelectedImageContainer,
 	SelectedImageName,
 	ImagesSelectorContainer,
-	DeleteIcon,
 	TooltipText,
 	ModalImage,
 	ModalImageContainer,
@@ -33,6 +34,7 @@ export const ImagesSelector = ({
 	onChange,
 }: ImagesSelectorProps) => {
 	const onChangeRef = useRef(onChange);
+	const { colors } = useTheme();
 	const [selectedImageURL, setSelectedImageURL] = useState<string | null>(null);
 	const [imagesValue, setImagesValue] = useState<Image[]>(() => {
 		if (value) return value.map((file) => ({ key: imageSelectorHelpers.generateKey(file), file }));
@@ -80,7 +82,12 @@ export const ImagesSelector = ({
 					</SelectedImageName>
 
 					<Tooltip title={<TooltipText>Remover imagem</TooltipText>}>
-						<DeleteIcon onClick={createRemoveImageHandler(image.key)} />
+						<BsTrash
+							size={20}
+							style={{ cursor: 'pointer' }}
+							color={colors.error}
+							onClick={createRemoveImageHandler(image.key)}
+						/>
 					</Tooltip>
 				</SelectedImageContainer>
 			))}

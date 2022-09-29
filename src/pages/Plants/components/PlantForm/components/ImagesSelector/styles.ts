@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import { Space } from 'antd';
-import { BsTrash } from 'react-icons/bs';
 
 export const SelectedImageContainer = styled.div`
 	display: flex;
@@ -19,11 +18,6 @@ export const SelectedImageName = styled.span`
 	&:hover {
 		text-decoration: underline;
 	}
-`;
-
-export const DeleteIcon = styled(BsTrash).attrs(() => ({ size: 20 }))`
-	color: ${(props) => props.theme.colors.error};
-	cursor: pointer;
 `;
 
 export const ModalImageContainer = styled.div`
