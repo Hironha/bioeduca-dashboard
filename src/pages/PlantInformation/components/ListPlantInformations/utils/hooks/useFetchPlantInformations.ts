@@ -12,7 +12,7 @@ type PlantInformationData = {
 };
 
 export const useFetchPlantInformations = () => {
-	const controllers = useRequestControlers();
+	const [controllers] = useRequestControlers();
 	const [loading, setLoading] = useState(false);
 
 	const requestPlantInformations = useCallback(async (): Promise<

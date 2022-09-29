@@ -7,7 +7,7 @@ import type { RequestData } from '@interfaces/api/requestData';
 import type { IApiError } from '@interfaces/api/error';
 
 export const useDeletePlantInformation = () => {
-	const controllers = useRequestControlers();
+	const [controllers] = useRequestControlers();
 	const [loading, setLoading] = useState(false);
 
 	const requestDeletePlantInformation = useCallback(

@@ -12,7 +12,7 @@ export type CreateUserValues = {
 };
 
 export const useCreateUser = () => {
-	const controllers = useRequestControlers();
+	const [controllers] = useRequestControlers();
 	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const requestCreateUser = useCallback(

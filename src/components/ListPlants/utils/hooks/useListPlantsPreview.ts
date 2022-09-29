@@ -17,7 +17,7 @@ type ListPlantsPreviewProps = {
 };
 
 export const useListPlantsPreview = ({ plantsPerPage }: ListPlantsPreviewProps) => {
-	const controllers = useRequestControlers();
+	const [controllers] = useRequestControlers();
 	const [loading, setLoading] = useState(false);
 
 	const requestListPlantsPreview = useCallback(

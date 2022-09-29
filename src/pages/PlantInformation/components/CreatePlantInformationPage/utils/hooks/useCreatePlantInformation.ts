@@ -11,7 +11,7 @@ export type CreatePlantInformationValues = {
 };
 
 export const useCreatePlantInformation = () => {
-	const controllers = useRequestControlers();
+	const [controllers] = useRequestControlers();
 	const [loading, setLoading] = useState(false);
 
 	const requestCreatePlantInformation = useCallback(

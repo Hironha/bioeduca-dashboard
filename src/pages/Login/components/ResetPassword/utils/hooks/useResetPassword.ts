@@ -6,7 +6,7 @@ import { useRequestControlers } from '@hooks/useRequestControllers';
 import type { RequestData } from '@interfaces/api/requestData';
 
 export const useSendResetPasswordEmail = () => {
-	const controllers = useRequestControlers();
+	const [controllers] = useRequestControlers();
 	const [loading, setLoading] = useState(false);
 
 	const requestSendResetPasswordEmail = useCallback(
