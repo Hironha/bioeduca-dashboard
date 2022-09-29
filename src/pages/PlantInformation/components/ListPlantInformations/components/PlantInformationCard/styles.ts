@@ -19,5 +19,5 @@ export const DescriptionContainer = styled.div`
 
 export const ButtonContainer = styled.div`
 	display: flex;
-	justify-content: flex-end;
+	justify-content: space-between;
 `;

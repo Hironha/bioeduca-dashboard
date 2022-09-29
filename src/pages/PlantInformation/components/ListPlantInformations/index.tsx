@@ -52,6 +52,7 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 					<PlantInformationCard
 						fieldName={plantInformation.field_name}
 						description={plantInformation.description}
+						id={plantInformation.id}
 					/>
 				</Col>
 			))}
