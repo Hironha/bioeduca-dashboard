@@ -1,38 +1,34 @@
+import { useEffect } from 'react';
 import { notification, Button, Form } from 'antd';
 
 import { Content } from '@components/Content';
-import { type PlantInformationValues } from '../../components/PlantInformationForm';
 import { StyledPlantInformationForm } from './styles';
 
-import {
-	useCreatePlantInformation,
-	type CreatePlantInformationValues,
-} from './utils/hooks/useCreatePlantInformation';
+import { useCreatePlantInformation } from '@services/hooks/plantInformation/useCreatePlantInformation';
 import { createPlantInformationNotifications as notifications } from './utils/notifications/createPlantInformations';
+
+import { type PlantInformationValues } from '../../components/PlantInformationForm';
 
 export const CreatePlantInformationPage = () => {
 	const [form] = Form.useForm<PlantInformationValues>();
-	const [isFormSubmitting, createPlantInformation] = useCreatePlantInformation();
+	const createPlantInformation = useCreatePlantInformation({ retry: false });
 
-	const handleSubmitError = () => {
-		notification.error(notifications.error());
-	};
-
-	const handleSubmitSuccess = () => {
-		notification.success(notifications.success());
-		form.resetFields();
-	};
-
-	const handleFormSubmit = async (values: PlantInformationValues) => {
-		const payload: CreatePlantInformationValues = {
+	const handleFormSubmit = (values: PlantInformationValues) => {
+		const payload = {
 			description: values.description.trim(),
 			field_name: values.fieldName.trim(),
 		};
-		const requestData = await createPlantInformation(payload);
-		if (requestData.isCanceled) return;
-		else if (requestData.isError) handleSubmitError();
-		else handleSubmitSuccess();
+		createPlantInformation.mutate(payload);
 	};
+
+	useEffect(() => {
+		if (createPlantInformation.isError) {
+			notification.error(notifications.error());
+		} else if (createPlantInformation.isSuccess) {
+			notification.success(notifications.success());
+			form.resetFields();
+		}
+	}, [form, createPlantInformation.isError, createPlantInformation.isSuccess]);
 
 	return (
 		<Content.Container>
@@ -50,7 +46,11 @@ export const CreatePlantInformationPage = () => {
 					form={form}
 					onSubmit={handleFormSubmit}
 					submitButton={
-						<Button type="primary" disabled={isFormSubmitting} loading={isFormSubmitting}>
+						<Button
+							type="primary"
+							disabled={createPlantInformation.isLoading}
+							loading={createPlantInformation.isLoading}
+						>
 							Cadastrar
 						</Button>
 					}
