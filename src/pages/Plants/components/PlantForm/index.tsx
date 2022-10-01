@@ -14,7 +14,8 @@ import { ImagesSelector } from './components/ImagesSelector';
 import { AdditionalInformationsModal } from './components/AdditionalInformationsModal';
 import { FormInputsSpacer, ActionsContainer } from './styles';
 
-import { useFetchPlantInformations } from './hooks/useFetchPlantInformations';
+import { useFetchPlantInformations } from './utils//hooks/useFetchPlantInformations';
+import { plantFormRules } from './utils/validations';
 
 import { type IPlant } from '@interfaces/models/plant';
 import { type IPlantInformation } from '@interfaces/models/plantInformation';
@@ -101,12 +102,21 @@ export const PlantForm = ({
 			<FormInputsSpacer>
 				<Row gutter={24}>
 					<Col sm={24} md={12}>
-						<Form.Item name={PlantFormInputs.POPULAR_NAME} label="Nome popular">
+						<Form.Item
+							name={PlantFormInputs.POPULAR_NAME}
+							label="Nome popular"
+							rules={plantFormRules.popularName}
+						>
 							<Input placeholder="Ex: Araçazeiro" />
 						</Form.Item>
 					</Col>
+
 					<Col sm={24} md={12}>
-						<Form.Item name={PlantFormInputs.SCIENTIFIC_NAME} label="Nome científico">
+						<Form.Item
+							name={PlantFormInputs.SCIENTIFIC_NAME}
+							label="Nome científico"
+							rules={plantFormRules.scientificName}
+						>
 							<Input placeholder="Ex: Psidium cattleianum" />
 						</Form.Item>
 					</Col>
@@ -119,6 +129,7 @@ export const PlantForm = ({
 								<Form.Item
 									label={plantInformation.field_name}
 									name={[PlantFormInputs.ADDITIONAL_INFORMATIONS, plantInformation.field_name]}
+									rules={plantFormRules.additionalInformations}
 								>
 									<Input.TextArea autoSize={{ minRows: 1 }} />
 								</Form.Item>
@@ -137,11 +148,22 @@ export const PlantForm = ({
 					<ImagesSelector />
 				</Form.Item>
 
-				<Form.Item>
-					<ActionsContainer>
-						{cloneElement(cancelButton, { type: 'primary', ghost: true, danger: true })}
-						{cloneElement(submitButton, { htmlType: 'submit', type: 'primary' })}
-					</ActionsContainer>
+				<Form.Item noStyle shouldUpdate>
+					{({ getFieldsError }) => {
+						const hasErrors = getFieldsError()?.some(({ errors }) => errors.length > 0);
+						return (
+							<Form.Item>
+								<ActionsContainer>
+									{cloneElement(cancelButton, { type: 'primary', ghost: true, danger: true })}
+									{cloneElement(submitButton, {
+										htmlType: 'submit',
+										type: 'primary',
+										...(hasErrors && { disabled: hasErrors }),
+									})}
+								</ActionsContainer>
+							</Form.Item>
+						);
+					}}
 				</Form.Item>
 			</FormInputsSpacer>
 
