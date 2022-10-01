@@ -9,4 +9,6 @@ export interface IPlant extends IPlantPreview {
 	additional_informations: {
 		[key: string]: string;
 	}[];
+	created_at: number;
+	updated_at: number;
 }
