@@ -15,6 +15,7 @@ import { AdditionalInformationsModal } from './components/AdditionalInformations
 import { FormInputsSpacer, ActionsContainer } from './styles';
 
 import { useFetchPlantInformations } from './utils//hooks/useFetchPlantInformations';
+import { usePlantInformationsSelector } from './utils/hooks/usePlantInformationsSelector';
 import { plantFormRules } from './utils/validations';
 
 import { type IPlant } from '@interfaces/models/plant';
@@ -52,10 +53,12 @@ export const PlantForm = ({
 	cancelButton = <Button>Voltar</Button>,
 }: PlantFormProps) => {
 	const [fetchingPlantInformations, fetchPlantInformations] = useFetchPlantInformations();
-	const [plantInformations, setPlantInformations] = useState<IPlantInformation[]>([]);
-	const [selectedPlantInformations, setSelectedPlantInformations] = useState<IPlantInformation[]>(
-		[]
-	);
+	const {
+		plantInformations,
+		selectedPlantInformations,
+		setPlantInformations,
+		setSelectedPlantInformations,
+	} = usePlantInformationsSelector();
 	const [plantInformationModalVisible, setPlantInformationModalVisible] = useState(false);
 
 	const handleAddPlantInformations = (selectedInformations: IPlantInformation[]) => {
@@ -88,7 +91,7 @@ export const PlantForm = ({
 		};
 
 		_fetchPlantInformations();
-	}, [fetchPlantInformations]);
+	}, [fetchPlantInformations, setPlantInformations]);
 
 	return (
 		<Form
@@ -122,7 +125,8 @@ export const PlantForm = ({
 					</Col>
 
 					{selectedPlantInformations.map((plantInformation, index) => {
-						const isLastIndex = selectedPlantInformations.length - 1 === index;
+						const totalSelectedPlantInformations = selectedPlantInformations.length;
+						const isLastIndex = totalSelectedPlantInformations - 1 === index;
 						const isIndexOdd = index % 2 === 0;
 						return (
 							<Col sm={24} md={isLastIndex && isIndexOdd ? 24 : 12} key={plantInformation.id}>
