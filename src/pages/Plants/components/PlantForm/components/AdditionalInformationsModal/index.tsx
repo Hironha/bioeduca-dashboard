@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Modal, Checkbox, type ModalProps, Spin, Col } from 'antd';
 
 import { type IPlantInformation } from '@interfaces/models/plantInformation';
@@ -28,10 +28,7 @@ export const AdditionalInformationsModal = ({
 	onAddInformations,
 	...modalProps
 }: AdditionalInformationsModalProps) => {
-	const [selectedOptions, setSelectedOptions] = useState<string[]>(() => {
-		if (initialSelected) return initialSelected.map(({ id }) => id);
-		return [];
-	});
+	const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
 
 	const handleOptionSelect = (options: CheckboxValueType[]) => {
 		setSelectedOptions(options as string[]);
@@ -43,6 +40,14 @@ export const AdditionalInformationsModal = ({
 		});
 		onAddInformations(selectedPlantInformations);
 	};
+
+	useEffect(() => {
+		if (modalProps.visible) {
+			setSelectedOptions(initialSelected?.map(({ field_name }) => field_name) ?? []);
+		} else {
+			setSelectedOptions([]);
+		}
+	}, [modalProps.visible, initialSelected]);
 
 	return (
 		<Modal {...modalProps} footer={null}>
