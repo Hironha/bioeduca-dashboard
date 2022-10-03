@@ -158,7 +158,7 @@ export const PlantForm = ({
 						return (
 							<Form.Item>
 								<ActionsContainer>
-									{cloneElement(cancelButton, { type: 'primary', ghost: true, danger: true })}
+									{cloneElement(cancelButton, { type: 'primary', ghost: true, danger: false })}
 									{cloneElement(submitButton, {
 										htmlType: 'submit',
 										type: 'primary',

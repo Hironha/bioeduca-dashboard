@@ -21,7 +21,7 @@ export const DeletePlantInformationModal = ({
 			{plantInformationName && <ModalTitle>Excluir {plantInformationName}</ModalTitle>}
 			<Typography.Text>
 				A exclusão da informação resultará na exclusão dessa informação em todas as plantas que
-				possuem ela.
+				possuem ela
 			</Typography.Text>
 
 			<ModalFooterContainer>

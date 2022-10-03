@@ -5,7 +5,7 @@ const popularNameRules: Rule[] = [{ required: true, message: 'Insira o nome popu
 
 const scientificNameRules: Rule[] = [{ required: true, message: 'Insira o nome científico' }];
 
-const additionalInformationFieldRules: Rule[] = [{ required: true, message: 'Insira o {label}' }];
+const additionalInformationFieldRules: Rule[] = [{ required: true, message: 'Insira um valor para esta informação adicional' }];
 
 export const plantFormRules: { [key in keyof PlantFormValues]?: Rule[] } = {
 	popularName: popularNameRules,
