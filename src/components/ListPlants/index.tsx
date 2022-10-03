@@ -9,12 +9,15 @@ import { LoadingContainer } from './styles';
 import { listPlantsPreviewNotifications } from './utils/notifications/listPlantsPreview';
 import { useListPaginatedPlantsPreview } from '@services/hooks/plant/useListPaginatedPlantsPreview';
 
+import { type IPlantPreview } from '@interfaces/models/plant';
+
 type ListPlantsProps = {
 	limit?: number;
 	perPage?: number;
+	onDelete?: (plantPreview: IPlantPreview) => void;
 };
 
-export const ListPlants = ({ limit, perPage = 12 }: ListPlantsProps) => {
+export const ListPlants = ({ limit, perPage = 12, onDelete }: ListPlantsProps) => {
 	const listPaginatedPlantsPreviewResult = useListPaginatedPlantsPreview({
 		retry: false,
 		staleTime: Infinity,
@@ -30,6 +33,12 @@ export const ListPlants = ({ limit, perPage = 12 }: ListPlantsProps) => {
 	const plantsPreview = useMemo(() => {
 		return listPaginatedPlantsPreviewPages?.map((response) => response.data).flat();
 	}, [listPaginatedPlantsPreviewPages]);
+
+	const handleDelete = (plantPrview: IPlantPreview) => {
+		if (onDelete) {
+			onDelete(plantPrview);
+		}
+	};
 
 	const handleLastItemOnView: IntersectionObserverCallback = async (entries) => {
 		const [entry] = entries;
@@ -68,6 +77,7 @@ export const ListPlants = ({ limit, perPage = 12 }: ListPlantsProps) => {
 									popularName={plantPreview.popular_name}
 									scientificName={plantPreview.scientific_name}
 									imageURL={plantPreview.images[0] as string}
+									onDelete={() => handleDelete(plantPreview)}
 								/>
 							</Observer>
 						) : (
@@ -75,6 +85,7 @@ export const ListPlants = ({ limit, perPage = 12 }: ListPlantsProps) => {
 								popularName={plantPreview.popular_name}
 								scientificName={plantPreview.scientific_name}
 								imageURL={plantPreview.images[0] as string}
+								onDelete={() => handleDelete(plantPreview)}
 							/>
 						)}
 					</Col>

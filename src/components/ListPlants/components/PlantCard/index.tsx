@@ -13,9 +13,10 @@ type PlantCardProps = {
 	scientificName: string;
 	popularName: string;
 	imageURL: string;
+	onDelete: () => void;
 };
 
-export const PlantCard = ({ imageURL, popularName, scientificName }: PlantCardProps) => {
+export const PlantCard = ({ imageURL, popularName, scientificName, onDelete }: PlantCardProps) => {
 	return (
 		<CardContainer>
 			<CardHeaderContainer>
@@ -28,7 +29,7 @@ export const PlantCard = ({ imageURL, popularName, scientificName }: PlantCardPr
 			</CardImageContainer>
 
 			<CardActionsContainer>
-				<Button type="primary" ghost danger>
+				<Button ghost danger type="primary" onClick={onDelete}>
 					Excluir
 				</Button>
 				<Button type="primary">Editar</Button>

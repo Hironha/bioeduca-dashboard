@@ -11,8 +11,8 @@ type UseDeletePlantInformationProps = Omit<
 >;
 
 const deletePlantInformation = async (id: IPlantInformation['id']) => {
-	const response = await api.delete<{ data: IPlantInformation[] }>(`/plant-informations/${id}`);
-	return response.data.data;
+	const response = await api.delete<{ }>(`/plant-informations/${id}`);
+	return response.data;
 };
 
 export const useDeletePlantInformation = (props?: UseDeletePlantInformationProps) => {
