@@ -1,4 +1,5 @@
 export enum PlantQueryKeys {
 	LIST_PAGINATED_PREVIEW = 'list-paginated-plants-preview',
-	DELETE = 'delete-plant'
+	DELETE = 'delete-plant',
+	CREATE = 'create-plant'
 }

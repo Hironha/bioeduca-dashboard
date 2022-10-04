@@ -20,6 +20,7 @@ type ListPlantInformationsProps = {
 export const ListPlantInformations = ({ className }: ListPlantInformationsProps) => {
 	const listPlantInformationsResult = useListPlantInformations({
 		staleTime: Infinity,
+		refetchOnWindowFocus: false,
 		retry: false,
 		cacheTime: 24 * 60 * 1000,
 	});

@@ -21,7 +21,7 @@ export const ListPlants = ({ limit, perPage = 12, onDelete }: ListPlantsProps) =
 	const listPaginatedPlantsPreviewResult = useListPaginatedPlantsPreview({
 		retry: false,
 		staleTime: Infinity,
-		refetchOnMount: false,
+		refetchOnWindowFocus: false,
 		cacheTime: 24 * 60 * 1000,
 		meta: { perPage, limit },
 	});

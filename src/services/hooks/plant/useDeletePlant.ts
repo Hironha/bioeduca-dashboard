@@ -25,8 +25,8 @@ export const useDeletePlant = (props?: UseDeletePlantProps) => {
 		variables: string,
 		context: [PlantQueryKeys] | undefined
 	): void => {
-		queryClient.invalidateQueries([PlantQueryKeys.LIST_PAGINATED_PREVIEW]);
 		if (onSuccess) onSuccess(data, variables, context);
+		queryClient.invalidateQueries([PlantQueryKeys.LIST_PAGINATED_PREVIEW]);
 	};
 
 	return useMutation(queryKey, deletePlant, {
