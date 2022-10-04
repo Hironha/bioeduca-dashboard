@@ -1,13 +1,20 @@
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, Space, notification } from 'antd';
 
-import { FormTitle, LockIcon, UnlockIcon, FormContainer, FormActionsWrapper, InputsSpace } from '../styles';
+import {
+	FormTitle,
+	LockIcon,
+	UnlockIcon,
+	FormContainer,
+	FormActionsWrapper,
+	InputsSpace,
+} from '../styles';
 
-import { useCreateUser, type CreateUserValues } from './utils/hooks/useCreateUser';
+import { useCreateUser, type CreateUserPayload } from '@services/hooks/user/useCreateUser';
 import { createUserNotifications } from './utils/notifications/createUser';
 import { signupFormRules } from './utils/validations';
 
-import type { IApiError } from '@interfaces/api/error';
+import { type AxiosError } from 'axios';
 
 export enum SignupFormInputs {
 	EMAIL = 'email',
@@ -24,27 +31,28 @@ export type SignupFormValues = {
 export const SignupForm = () => {
 	const navigate = useNavigate();
 	const [form] = Form.useForm<SignupFormValues>();
-	const [isSubmitting, createUser] = useCreateUser();
+	const createUser = useCreateUser({ retry: false, cacheTime: 0 });
 
 	const handleBackClick = () => {
 		navigate(-1);
 	};
 
-	const handleSubmitError = (err: IApiError) => {
-		notification.error(createUserNotifications.error());
+	const handleSubmitError = (err?: AxiosError<any>) => {
+		const errCode = err?.response?.data?.code;
+		notification.error(createUserNotifications.error(errCode));
+	};
+
+	const handleSubmitSuccess = () => {
+		notification.success(createUserNotifications.success());
+		form.resetFields();
 	};
 
 	const handleSubmit = async (values: SignupFormValues) => {
-		const payload: CreateUserValues = {
+		const payload: CreateUserPayload = {
 			email: values.email,
 			password: values.password,
 		};
-		const requestData = await createUser(payload);
-		if (requestData.isCanceled) return;
-		if (requestData.isError) {
-			handleSubmitError(requestData.error.response?.data as IApiError);
-			return;
-		}
+		createUser.mutate(payload, { onError: handleSubmitError, onSuccess: handleSubmitSuccess });
 	};
 
 	return (
@@ -88,7 +96,12 @@ export const SignupForm = () => {
 							Voltar
 						</Button>
 
-						<Button type="primary" htmlType="submit" loading={isSubmitting} disabled={isSubmitting}>
+						<Button
+							type="primary"
+							htmlType="submit"
+							loading={createUser.isLoading}
+							disabled={createUser.isLoading}
+						>
 							Criar
 						</Button>
 					</FormActionsWrapper>

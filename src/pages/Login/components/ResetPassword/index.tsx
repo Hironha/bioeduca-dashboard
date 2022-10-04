@@ -3,7 +3,7 @@ import { Form, Input, Button, Space, notification } from 'antd';
 
 import { FormTitle, FormContainer, FormActionsWrapper, InputsSpace } from '../styles';
 
-import { useSendResetPasswordEmail } from './utils/hooks/useResetPassword';
+import { useSendResetPasswordEmail } from '@services/hooks/user/useSendPasswordResetEmail';
 import { resetPasswordFormRules } from './utils/validations';
 import { resetPasswordNotifications } from './utils/notifications/resetPassword';
 
@@ -18,7 +18,7 @@ export type ResetPasswordValues = {
 export const ResetPasswordForm = () => {
 	const navigate = useNavigate();
 	const [form] = Form.useForm<ResetPasswordValues>();
-	const [isLoading, sendResetPasswordEmail] = useSendResetPasswordEmail();
+	const sendResetPasswordEmail = useSendResetPasswordEmail({ retry: false, cacheTime: 0 });
 
 	const handleBackClick = () => {
 		navigate(-1);
@@ -30,13 +30,14 @@ export const ResetPasswordForm = () => {
 
 	const handleSubmitSuccess = () => {
 		notification.success(resetPasswordNotifications.success());
+		form.resetFields();
 	};
 
 	const handleSubmit = async (values: ResetPasswordValues) => {
-		const requestData = await sendResetPasswordEmail(values.email);
-		if (requestData.isCanceled) return;
-		if (requestData.isError) return handleSubmitError();
-		handleSubmitSuccess();
+		sendResetPasswordEmail.mutate(values.email, {
+			onError: handleSubmitError,
+			onSuccess: handleSubmitSuccess,
+		});
 	};
 
 	return (
@@ -67,7 +68,12 @@ export const ResetPasswordForm = () => {
 							Voltar
 						</Button>
 
-						<Button type="primary" htmlType="submit" loading={isLoading} disabled={isLoading}>
+						<Button
+							type="primary"
+							htmlType="submit"
+							loading={sendResetPasswordEmail.isLoading}
+							disabled={sendResetPasswordEmail.isLoading}
+						>
 							Enviar email
 						</Button>
 					</FormActionsWrapper>
