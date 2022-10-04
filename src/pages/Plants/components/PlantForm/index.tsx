@@ -1,21 +1,11 @@
-import { cloneElement, useEffect, useState } from 'react';
-import {
-	Button,
-	Col,
-	Form,
-	Input,
-	notification,
-	Row,
-	type ButtonProps,
-	type FormInstance,
-} from 'antd';
+import { cloneElement, useState } from 'react';
+import { Button, Col, Form, Input, Row, type ButtonProps, type FormInstance } from 'antd';
 
 import { ImagesSelector } from './components/ImagesSelector';
 import { AdditionalInformationsModal } from './components/AdditionalInformationsModal';
 import { FormInputsSpacer, ActionsContainer } from './styles';
 
-import { useFetchPlantInformations } from './utils//hooks/useFetchPlantInformations';
-import { usePlantInformationsSelector } from './utils/hooks/usePlantInformationsSelector';
+import { useListPlantInformations } from '@services/hooks/plantInformation/useListPlantInformations';
 import { plantFormRules } from './utils/validations';
 
 import { type IPlant } from '@interfaces/models/plant';
@@ -52,14 +42,16 @@ export const PlantForm = ({
 	submitButton = <Button>Cadastrar</Button>,
 	cancelButton = <Button>Voltar</Button>,
 }: PlantFormProps) => {
-	const [fetchingPlantInformations, fetchPlantInformations] = useFetchPlantInformations();
-	const {
-		plantInformations,
-		selectedPlantInformations,
-		setPlantInformations,
-		setSelectedPlantInformations,
-	} = usePlantInformationsSelector();
+	const [selectedPlantInformations, setSelectedPlantInformations] = useState<IPlantInformation[]>(
+		[]
+	);
 	const [plantInformationModalVisible, setPlantInformationModalVisible] = useState(false);
+	const listPlantInformationsResult = useListPlantInformations({
+		retry: false,
+		refetchOnMount: true,
+		staleTime: Infinity,
+		cacheTime: 24 * 60 * 1000,
+	});
 
 	const handleAddPlantInformations = (selectedInformations: IPlantInformation[]) => {
 		setSelectedPlantInformations(selectedInformations);
@@ -73,25 +65,6 @@ export const PlantForm = ({
 	const closePlantInformationModal = () => {
 		setPlantInformationModalVisible(false);
 	};
-
-	useEffect(() => {
-		const handleFetchPlantInformationsError = () => {
-			notification.error({ message: 'Erro' });
-		};
-
-		const handleFetchPlantInformationsSuccess = (plantInformations: IPlantInformation[]) => {
-			setPlantInformations(plantInformations);
-		};
-
-		const _fetchPlantInformations = async () => {
-			const responseValues = await fetchPlantInformations();
-			if (responseValues.isCanceled) return;
-			else if (responseValues.isError) handleFetchPlantInformationsError();
-			else handleFetchPlantInformationsSuccess(responseValues.data);
-		};
-
-		_fetchPlantInformations();
-	}, [fetchPlantInformations, setPlantInformations]);
 
 	return (
 		<Form
@@ -176,8 +149,8 @@ export const PlantForm = ({
 				destroyOnClose
 				initialSelected={selectedPlantInformations}
 				visible={plantInformationModalVisible}
-				plantInformations={plantInformations}
-				loading={fetchingPlantInformations}
+				plantInformations={listPlantInformationsResult.data ?? []}
+				loading={listPlantInformationsResult.isLoading}
 				onCancel={closePlantInformationModal}
 				onAddInformations={handleAddPlantInformations}
 			/>
