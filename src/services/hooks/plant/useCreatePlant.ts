@@ -42,7 +42,7 @@ export const useCreatePlant = (props?: UseCreatePlantProps) => {
 		context: [PlantQueryKeys] | undefined
 	): void => {
 		if (onSuccess) onSuccess(data, variables, context);
-		queryClient.invalidateQueries([PlantQueryKeys.LIST_PAGINATED_PREVIEW]);
+		queryClient.removeQueries([PlantQueryKeys.LIST_PAGINATED_PREVIEW]);
 	};
 
 	return useMutation(queryKey, createPlant, {
