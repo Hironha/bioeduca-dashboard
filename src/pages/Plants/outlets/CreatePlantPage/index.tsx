@@ -4,6 +4,7 @@ import { notification, Button, Form } from 'antd';
 
 import { Content } from '@components/Content';
 import { PlantForm, type PlantFormValues } from '@pages/Plants/components/PlantForm';
+import { FormContainer } from './styles';
 
 import { useCreatePlant } from '@services/hooks/plant/useCreatePlant';
 
@@ -44,16 +45,22 @@ export const CreatePlantPage = () => {
 		<Content.Container>
 			<Content.Header>Criação de Planta</Content.Header>
 			<Content.Body>
-				<PlantForm
-					form={form}
-					onSubmit={handleFormSubmit}
-					cancelButton={<Button onClick={() => navigate(-1)}>Voltar</Button>}
-					submitButton={
-						<Button type="primary" disabled={createPlant.isLoading} loading={createPlant.isLoading}>
-							Criar
-						</Button>
-					}
-				/>
+				<FormContainer>
+					<PlantForm
+						form={form}
+						onSubmit={handleFormSubmit}
+						cancelButton={<Button onClick={() => navigate(-1)}>Voltar</Button>}
+						submitButton={
+							<Button
+								type="primary"
+								disabled={createPlant.isLoading}
+								loading={createPlant.isLoading}
+							>
+								Criar
+							</Button>
+						}
+					/>
+				</FormContainer>
 			</Content.Body>
 		</Content.Container>
 	);
