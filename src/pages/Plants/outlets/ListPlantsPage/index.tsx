@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { notification } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 import { Content } from '@components/Content';
 import { ListPlants } from '@components/ListPlants';
@@ -11,6 +12,7 @@ import { useDeletePlant } from '@services/hooks/plant/useDeletePlant';
 import { type IPlantPreview } from '@interfaces/models/plant';
 
 export const ListPlantsPage = () => {
+	const navigate = useNavigate();
 	const deletePlant = useDeletePlant({ retry: false });
 	const [plantToDelete, setPlantToDelete] = useState<IPlantPreview | null>(null);
 
@@ -45,7 +47,11 @@ export const ListPlantsPage = () => {
 				visualizar, editar e excluir as plantas já cadastradas.
 			</Content.Description>
 			<Content.Body>
-				<ListPlants perPage={12} onDelete={(plantPreview) => setPlantToDelete(plantPreview)} />
+				<ListPlants
+					perPage={12}
+					onDelete={(plantPreview) => setPlantToDelete(plantPreview)}
+					onUpdate={(plantpreview) => navigate(`/plants/${plantpreview.id}`)}
+				/>
 			</Content.Body>
 
 			<DeletePlantModal

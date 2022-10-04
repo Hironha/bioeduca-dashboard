@@ -15,9 +15,10 @@ type ListPlantsProps = {
 	limit?: number;
 	perPage?: number;
 	onDelete?: (plantPreview: IPlantPreview) => void;
+	onUpdate?: (plantPreview: IPlantPreview) => void;
 };
 
-export const ListPlants = ({ limit, perPage = 12, onDelete }: ListPlantsProps) => {
+export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlantsProps) => {
 	const listPaginatedPlantsPreviewResult = useListPaginatedPlantsPreview({
 		retry: false,
 		staleTime: Infinity,
@@ -33,12 +34,6 @@ export const ListPlants = ({ limit, perPage = 12, onDelete }: ListPlantsProps) =
 	const plantsPreview = useMemo(() => {
 		return listPaginatedPlantsPreviewPages?.map((response) => response.data).flat();
 	}, [listPaginatedPlantsPreviewPages]);
-
-	const handleDelete = (plantPrview: IPlantPreview) => {
-		if (onDelete) {
-			onDelete(plantPrview);
-		}
-	};
 
 	const handleLastItemOnView: IntersectionObserverCallback = async (entries) => {
 		const [entry] = entries;
@@ -77,7 +72,8 @@ export const ListPlants = ({ limit, perPage = 12, onDelete }: ListPlantsProps) =
 									popularName={plantPreview.popular_name}
 									scientificName={plantPreview.scientific_name}
 									imageURL={plantPreview.images[0] as string}
-									onDelete={onDelete && (() => handleDelete(plantPreview))}
+									onDelete={onDelete && (() => onDelete(plantPreview))}
+									onUpdate={onUpdate && (() => onUpdate(plantPreview))}
 								/>
 							</Observer>
 						) : (
@@ -85,7 +81,8 @@ export const ListPlants = ({ limit, perPage = 12, onDelete }: ListPlantsProps) =
 								popularName={plantPreview.popular_name}
 								scientificName={plantPreview.scientific_name}
 								imageURL={plantPreview.images[0] as string}
-								onDelete={onDelete && (() => handleDelete(plantPreview))}
+								onDelete={onDelete && (() => onDelete(plantPreview))}
+								onUpdate={onUpdate && (() => onUpdate(plantPreview))}
 							/>
 						)}
 					</Col>

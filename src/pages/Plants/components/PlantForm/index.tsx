@@ -1,4 +1,4 @@
-import { cloneElement, useState } from 'react';
+import { cloneElement, useEffect, useState } from 'react';
 import { Button, Col, Form, Input, Row, type ButtonProps, type FormInstance } from 'antd';
 
 import { ImagesSelector } from './components/ImagesSelector';
@@ -66,6 +66,20 @@ export const PlantForm = ({
 		setPlantInformationModalVisible(false);
 	};
 
+	useEffect(() => {
+		const plantInformations = listPlantInformationsResult.data;
+		const additionalInformations = initialValues?.additionalInformations;
+
+		if (additionalInformations && plantInformations) {
+			const selectedPlantInformations = plantInformations.filter((plantInformation) => {
+				const additionalInformationKey = plantInformation.field_name;
+				return additionalInformations[additionalInformationKey] !== undefined;
+			});
+
+			setSelectedPlantInformations(selectedPlantInformations);
+		}
+	}, [listPlantInformationsResult.data, initialValues?.additionalInformations]);
+
 	return (
 		<Form
 			layout="vertical"
@@ -116,7 +130,12 @@ export const PlantForm = ({
 				</Row>
 
 				<Form.Item>
-					<Button type="primary" onClick={showPlantInformationsModal}>
+					<Button
+						type="primary"
+						onClick={showPlantInformationsModal}
+						disabled={listPlantInformationsResult.isLoading}
+						loading={listPlantInformationsResult.isLoading}
+					>
 						Incluir informações adicionais
 					</Button>
 				</Form.Item>
