@@ -1,7 +1,7 @@
 import { Row, Col } from 'antd';
 
 import { Content } from '@components/Content';
-import { QuickAccessCard } from './components';
+import { QuickAccessCard } from './components/QuickAccessCard';
 
 import { RiPlantLine } from 'react-icons/ri';
 import { BsFileEarmarkText } from 'react-icons/bs';
