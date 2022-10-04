@@ -13,10 +13,17 @@ type PlantCardProps = {
 	scientificName: string;
 	popularName: string;
 	imageURL: string;
-	onDelete: () => void;
+	onDelete?: () => void;
+	onUpdate?: () => void;
 };
 
-export const PlantCard = ({ imageURL, popularName, scientificName, onDelete }: PlantCardProps) => {
+export const PlantCard = ({
+	imageURL,
+	popularName,
+	scientificName,
+	onDelete,
+	onUpdate,
+}: PlantCardProps) => {
 	return (
 		<CardContainer>
 			<CardHeaderContainer>
@@ -29,10 +36,17 @@ export const PlantCard = ({ imageURL, popularName, scientificName, onDelete }: P
 			</CardImageContainer>
 
 			<CardActionsContainer>
-				<Button ghost danger type="primary" onClick={onDelete}>
-					Excluir
-				</Button>
-				<Button type="primary">Editar</Button>
+				{onDelete !== undefined && (
+					<Button ghost danger type="primary" onClick={onDelete}>
+						Excluir
+					</Button>
+				)}
+
+				{onUpdate !== undefined && (
+					<Button type="primary" onClick={onUpdate}>
+						Editar
+					</Button>
+				)}
 			</CardActionsContainer>
 		</CardContainer>
 	);

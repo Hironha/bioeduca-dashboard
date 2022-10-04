@@ -77,7 +77,7 @@ export const ListPlants = ({ limit, perPage = 12, onDelete }: ListPlantsProps) =
 									popularName={plantPreview.popular_name}
 									scientificName={plantPreview.scientific_name}
 									imageURL={plantPreview.images[0] as string}
-									onDelete={() => handleDelete(plantPreview)}
+									onDelete={onDelete && (() => handleDelete(plantPreview))}
 								/>
 							</Observer>
 						) : (
@@ -85,7 +85,7 @@ export const ListPlants = ({ limit, perPage = 12, onDelete }: ListPlantsProps) =
 								popularName={plantPreview.popular_name}
 								scientificName={plantPreview.scientific_name}
 								imageURL={plantPreview.images[0] as string}
-								onDelete={() => handleDelete(plantPreview)}
+								onDelete={onDelete && (() => handleDelete(plantPreview))}
 							/>
 						)}
 					</Col>
