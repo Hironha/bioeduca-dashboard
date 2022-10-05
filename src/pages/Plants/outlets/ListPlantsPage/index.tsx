@@ -8,6 +8,7 @@ import { DeletePlantModal } from './components/DeletePlantModal';
 import { RedirectLink } from './styles';
 
 import { useDeletePlant } from '@services/hooks/plant/useDeletePlant';
+import { deletePlantNotifications } from './utils/notifications/deletePlant';
 
 import { type IPlantPreview } from '@interfaces/models/plant';
 
@@ -24,9 +25,10 @@ export const ListPlantsPage = () => {
 
 	useEffect(() => {
 		if (deletePlant.isError) {
-			notification.error({ message: 'Aconteceu um erro ao excluir a planta' });
+			notification.error(deletePlantNotifications.error());
 		} else if (deletePlant.isSuccess) {
 			setPlantToDelete(null);
+			notification.success(deletePlantNotifications.success());
 		}
 	}, [deletePlant.isSuccess, deletePlant.isError]);
 

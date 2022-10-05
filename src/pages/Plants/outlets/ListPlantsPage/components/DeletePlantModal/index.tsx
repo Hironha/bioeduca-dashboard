@@ -21,8 +21,8 @@ export const DeletePlantModal = ({
 			{plantPopularName && <ModalTitle>Excluir {plantPopularName}</ModalTitle>}
 
 			<Typography.Text>
-				A exclusão da planta resultará na invalidação da leitura dos QR's code gerados para essa
-				planta e nas exlcusão das imagens da mesma salvas no banco de dados.
+				A exclusão da planta resultará na invalidação da leitura dos códigos QR gerados para essa
+				planta e nas exclusão das imagens da mesma salvas no banco de dados
 			</Typography.Text>
 
 			<ModalFooterContainer>
