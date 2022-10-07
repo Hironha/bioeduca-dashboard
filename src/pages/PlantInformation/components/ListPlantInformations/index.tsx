@@ -49,7 +49,7 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 		}
 	}, [deletePlantInformation.isError, deletePlantInformation.isSuccess]);
 
-	if (listPlantInformationsResult.isLoading) {
+	if (listPlantInformationsResult.isLoading || listPlantInformationsResult.isFetching) {
 		return (
 			<LoadingContainer>
 				<Loading size="medium" />

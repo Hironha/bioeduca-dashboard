@@ -12,7 +12,11 @@ import { useListPaginatedPlantsPreview } from '@services/hooks/plant/useListPagi
 import { type IPlantPreview } from '@interfaces/models/plant';
 
 type ListPlantsProps = {
+	/** Amount of pages to show */
 	limit?: number;
+	/** Amount of items per page
+	 * @default 12
+	 */
 	perPage?: number;
 	onDelete?: (plantPreview: IPlantPreview) => void;
 	onUpdate?: (plantPreview: IPlantPreview) => void;

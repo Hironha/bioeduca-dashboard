@@ -57,32 +57,30 @@ const listPaginatedPlantsPreview = async ({
 	return result.data;
 };
 
+const selectLimitedPagesData = (
+	data: InfiniteData<ListPaginatedPlantsPreviewResponse>,
+	limit: number
+) => {
+	const pages = data.pages.slice(0, limit);
+	return { pageParams: data.pageParams, pages };
+};
+
 export const useListPaginatedPlantsPreview = (props?: UseListPaginatedPlantsPreviewProps) => {
 	const queryKey = [PlantQueryKeys.LIST_PAGINATED_PREVIEW] as [PlantQueryKeys];
-
-	const selectLimitedData = (
-		data: InfiniteData<ListPaginatedPlantsPreviewResponse>,
-		limit: number,
-		perPage: number
-	) => {
-		const sliceAmount = Math.floor(perPage / limit);
-		const pages = data.pages.slice(0, sliceAmount);
-
-		if (pages.length > 1) {
-			return { pageParams: data.pageParams, pages: data.pages.slice(sliceAmount).slice(limit) };
-		}
-
-		const limitedPage = pages.map((page) => ({ ...page, data: page.data.slice(0, limit) }));
-		return { pageParams: data.pageParams, pages: limitedPage };
-	};
 
 	const handleSelect = (data: InfiniteData<ListPaginatedPlantsPreviewResponse>) => {
 		const limit = props?.meta?.limit;
 		const perPage = props?.meta?.perPage;
 
 		if (!limit || !perPage) return data;
+		return selectLimitedPagesData(data, limit);
+	};
 
-		return selectLimitedData(data, limit, perPage);
+	const createParams = (perPage?: number, lastKey?: string): ListPaginatedPlantsPreviewParams => {
+		return {
+			perPage: perPage || 10,
+			lastKey,
+		};
 	};
 
 	const handleGetNextPageParam = (
@@ -90,19 +88,13 @@ export const useListPaginatedPlantsPreview = (props?: UseListPaginatedPlantsPrev
 		pages: ListPaginatedPlantsPreviewResponse[]
 	): ListPaginatedPlantsPreviewParams | undefined => {
 		const limit = props?.meta?.limit;
-		const params: ListPaginatedPlantsPreviewParams = {
-			perPage: props?.meta?.perPage || 10,
-			lastKey: lastPage.lastKey,
-		};
+		const params = createParams(props?.meta?.perPage, lastPage.lastKey);
 
 		if (limit === undefined) {
 			return lastPage.hasMore ? params : undefined;
 		}
 
-		const fetchedDataLength = pages.reduce((acc, curr) => {
-			return acc + curr.data.length;
-		}, 0);
-		return fetchedDataLength < limit ? params : undefined;
+		return pages.length < limit ? params : undefined;
 	};
 
 	return useInfiniteQuery(queryKey, listPaginatedPlantsPreview, {
