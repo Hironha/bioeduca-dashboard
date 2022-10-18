@@ -13,6 +13,8 @@ import {
 	CardImageContainer,
 	MenuButton,
 	MenuContainer,
+	QRCodeContainer,
+	QRCodeModalTitle,
 } from './styles';
 
 type PlantCardProps = {
@@ -79,11 +81,11 @@ export const PlantCard = ({
 				onCancel={() => setShowQRCode(false)}
 				footer={null}
 			>
-				<div
-					style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-				>
+				<QRCodeModalTitle>QRCode para {popularName}</QRCodeModalTitle>
+
+				<QRCodeContainer>
 					<QRCode value={plantId} renderAs="canvas" />
-				</div>
+				</QRCodeContainer>
 			</Modal>
 		</CardContainer>
 	);
