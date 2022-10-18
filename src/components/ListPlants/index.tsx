@@ -73,6 +73,7 @@ export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlan
 								options={{ root: null, rootMargin: '-10px', threshold: 1 }}
 							>
 								<PlantCard
+									plantId={plantPreview.id}
 									popularName={plantPreview.popular_name}
 									scientificName={plantPreview.scientific_name}
 									imageURL={plantPreview.images[0] as string}
@@ -82,6 +83,7 @@ export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlan
 							</Observer>
 						) : (
 							<PlantCard
+								plantId={plantPreview.id}
 								popularName={plantPreview.popular_name}
 								scientificName={plantPreview.scientific_name}
 								imageURL={plantPreview.images[0] as string}

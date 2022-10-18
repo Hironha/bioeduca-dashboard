@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Space } from 'antd';
+import { Space, Button } from 'antd';
 
 export const CardContainer = styled.div`
 	display: flex;
@@ -7,12 +7,30 @@ export const CardContainer = styled.div`
 	flex-direction: column;
 	align-items: stretch;
 
+	position: relative;
 	padding: 16px 24px;
 	width: 100%;
 	height: 100%;
 	border-radius: ${(props) => props.theme.border.radius};
 	border-top: 4px ${(props) => props.theme.colors.primary} solid;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+`;
+
+export const MenuContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	position: absolute;
+	right: -8px;
+	top: -8px;
+	z-index: 2;
+`;
+
+export const MenuButton = styled(Button)`
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 
 export const CardHeaderContainer = styled.div`
