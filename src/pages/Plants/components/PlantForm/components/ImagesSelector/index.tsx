@@ -19,13 +19,13 @@ import { imageSelectorHelpers } from './utils/imageSelectorHelpers';
 
 type ImageData = {
 	key: string;
-	file: File;
+	file: File | string;
 };
 
 export type ImagesSelectorProps = {
 	className?: string;
-	value?: File[];
-	onChange?: (value?: File[]) => void;
+	value?: File[] | string[];
+	onChange?: (value?: (File | string)[]) => void;
 	maxImages?: number;
 };
 
