@@ -31,7 +31,7 @@ export const UpdatePlant = ({ plantId }: UpdatePlantProps) => {
 			additionalInformations: consultPlantResult.data.additional_informations,
 			popularName: consultPlantResult.data.popular_name,
 			scientificName: consultPlantResult.data.scientific_name,
-			images: consultPlantResult.data.images,
+			images: [],
 		} as PlantFormValues;
 	}, [consultPlantResult.data]);
 

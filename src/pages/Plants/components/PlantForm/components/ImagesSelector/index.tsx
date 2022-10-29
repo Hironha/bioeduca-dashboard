@@ -19,13 +19,13 @@ import { imageSelectorHelpers } from './utils/imageSelectorHelpers';
 
 type ImageData = {
 	key: string;
-	file: File | string;
+	file: File;
 };
 
 export type ImagesSelectorProps = {
 	className?: string;
-	value?: File[] | string[];
-	onChange?: (value?: (File | string)[]) => void;
+	value?: File[];
+	onChange?: (value?: File[]) => void;
 	maxImages?: number;
 };
 
@@ -40,7 +40,7 @@ export const ImagesSelector = ({
 	const [imagesValue, setImagesValue] = useState<ImageData[]>(() => {
 		if (!value) return [];
 		return value.map((file) => ({
-			key: typeof file === 'string' ? file : imageSelectorHelpers.generateKey(file),
+			key: imageSelectorHelpers.generateKey(file),
 			file,
 		}));
 	});
@@ -61,14 +61,10 @@ export const ImagesSelector = ({
 		};
 	};
 
-	const handleViewImage = (imageFile: File | string) => {
-		if (typeof imageFile === 'string') {
-			setSelectedImageURL(imageFile);
-		} else {
-			imageSelectorHelpers.readFileURL(imageFile, (url) => {
-				setSelectedImageURL(url);
-			});
-		}
+	const handleViewImage = (imageFile: File) => {
+		imageSelectorHelpers.readFileURL(imageFile, (url) => {
+			setSelectedImageURL(url);
+		});
 	};
 
 	useEffect(() => {
