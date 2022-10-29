@@ -1,23 +1,26 @@
 import styled from 'styled-components';
 import { Space } from 'antd';
+import { Image } from './components/Image';
 
 export const SelectedImageContainer = styled.div`
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	gap: 16px;
-
-	padding: 6px 12px;
+	position: relative;
+	padding: 16px;
 	border-radius: ${(props) => props.theme.border.radius};
-	border: 1px ${(props) => props.theme.colors.primary} solid;
+	box-shadow: ${(props) => props.theme.boxShadow};
+	border: 1px lightgray solid;
 `;
 
-export const SelectedImageName = styled.span`
-	cursor: pointer;
-	color: ${(props) => props.theme.colors.success};
-	&:hover {
-		text-decoration: underline;
-	}
+export const ImagesSelectorContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+`;
+
+export const SelectedImage = styled(Image)`
+	padding: 12px;
+	width: 120px;
+	height: 120px;
+	border-radius: ${(props) => props.theme.border.radius};
 `;
 
 export const ModalImageContainer = styled.div`
@@ -38,8 +41,15 @@ export const TooltipText = styled.span`
 	font-size: 14px;
 `;
 
-export const ImagesSelectorContainer = styled(Space).attrs(() => ({
-	direction: 'vertical',
+export const DeleteIconContainer = styled.div`
+	position: absolute;
+	top: 8px;
+	right: 8px;
+`;
+
+export const SelectedImagesSpacer = styled(Space).attrs(() => ({
+	direction: 'horizontal',
+	wrap: true,
 	size: 'middle',
 }))`
 	width: 100%;
