@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react';
 
 export type ImageProps = Omit<
 	React.DetailedHTMLProps<React.ImgHTMLAttributes<HTMLImageElement>, HTMLImageElement>,
-	'src'
+	'src' | 'alt'
 > & {
 	src: string | File;
+	alt: string;
 };
 
 const readFileURL = (file: File, onLoadedURL: (url: string) => void) => {
@@ -21,7 +22,7 @@ const readFileURL = (file: File, onLoadedURL: (url: string) => void) => {
 };
 
 export const Image = (props: ImageProps) => {
-	const { src, ...imageProps } = props;
+	const { src, alt, ...imageProps } = props;
 	const [imageSRC, setImageSRC] = useState<string>();
 
 	useEffect(() => {
@@ -32,5 +33,5 @@ export const Image = (props: ImageProps) => {
 		}
 	}, [props.src]);
 
-	return <img {...imageProps} src={imageSRC} />;
+	return <img {...imageProps} alt={alt} src={imageSRC} />;
 };

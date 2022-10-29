@@ -35,13 +35,18 @@ export const ImagesSelector = ({
 	maxImages = 5,
 	onChange,
 }: ImagesSelectorProps) => {
-	const onChangeRef = useRef(onChange);
 	const { colors } = useTheme();
 	const [selectedImageURL, setSelectedImageURL] = useState<string | null>(null);
 	const [imagesValue, setImagesValue] = useState<ImageData[]>(() => {
-		if (value) return value.map((file) => ({ key: imageSelectorHelpers.generateKey(file), file }));
-		return [];
+		if (!value) return [];
+		return value.map((file) => ({
+			key: typeof file === 'string' ? file : imageSelectorHelpers.generateKey(file),
+			file,
+		}));
 	});
+
+	const onChangeRef = useRef(onChange);
+	onChangeRef.current = onChange;
 
 	const addImage = useCallback((file: File | null) => {
 		if (file) {
@@ -56,10 +61,14 @@ export const ImagesSelector = ({
 		};
 	};
 
-	const handleViewImage = (imageFile: File) => {
-		imageSelectorHelpers.readFileURL(imageFile, (url) => {
-			setSelectedImageURL(url);
-		});
+	const handleViewImage = (imageFile: File | string) => {
+		if (typeof imageFile === 'string') {
+			setSelectedImageURL(imageFile);
+		} else {
+			imageSelectorHelpers.readFileURL(imageFile, (url) => {
+				setSelectedImageURL(url);
+			});
+		}
 	};
 
 	useEffect(() => {
@@ -72,11 +81,11 @@ export const ImagesSelector = ({
 	return (
 		<ImagesSelectorContainer>
 			<SelectedImagesSpacer className={className}>
-				{imagesValue.map((image) => (
+				{imagesValue.map((image, index) => (
 					<SelectedImageContainer key={image.key}>
 						<SelectedImage
 							src={image.file}
-							alt={image.file.name}
+							alt={typeof image.file === 'string' ? `${index}` : image.file.name}
 							onClick={() => handleViewImage(image.file)}
 						/>
 
