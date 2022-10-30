@@ -1,8 +1,12 @@
 const getCurrentTimestamp = () => new Date().getTime();
 
-const generateKey = (file: File) => {
+const generateKey = (src: File | string) => {
+	if (typeof src === 'string') {
+		return src.split('.').slice(-2).join();
+	}
+
 	const timestamp = getCurrentTimestamp().toString(32);
-	const fileSize = file.size.toString(32);
+	const fileSize = src.size.toString(32);
 
 	return `${timestamp}${fileSize}`;
 };

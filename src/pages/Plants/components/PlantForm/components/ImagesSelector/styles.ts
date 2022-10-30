@@ -3,11 +3,18 @@ import { Space } from 'antd';
 import { Image } from './components/Image';
 
 export const SelectedImageContainer = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	position: relative;
 	padding: 16px;
+	width: 160px;
+	height: 140px;
 	border-radius: ${(props) => props.theme.border.radius};
 	box-shadow: ${(props) => props.theme.boxShadow};
 	border: 1px lightgray solid;
+	cursor: pointer;
 `;
 
 export const ImagesSelectorContainer = styled.div`
@@ -18,9 +25,11 @@ export const ImagesSelectorContainer = styled.div`
 
 export const SelectedImage = styled(Image)`
 	padding: 12px;
-	width: 120px;
-	height: 120px;
-	border-radius: ${(props) => props.theme.border.radius};
+	max-height: 100%;
+	object-fit: contain;
+	object-position: center;
+	max-width: 100%;
+	border-radius: 15px;
 `;
 
 export const ModalImageContainer = styled.div`
@@ -43,8 +52,8 @@ export const TooltipText = styled.span`
 
 export const DeleteIconContainer = styled.div`
 	position: absolute;
-	top: 8px;
-	right: 8px;
+	top: 6px;
+	right: 6px;
 `;
 
 export const SelectedImagesSpacer = styled(Space).attrs(() => ({

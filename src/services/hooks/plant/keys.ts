@@ -3,4 +3,5 @@ export enum PlantQueryKeys {
 	DELETE = 'delete-plant',
 	CREATE = 'create-plant',
 	CONSULT = 'consult-plant',
+	UPDATE = 'update-plant'
 }

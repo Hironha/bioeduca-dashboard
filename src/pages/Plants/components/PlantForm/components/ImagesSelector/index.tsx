@@ -17,15 +17,17 @@ import {
 
 import { imageSelectorHelpers } from './utils/imageSelectorHelpers';
 
+type ImageSRC = File | string;
+
 type ImageData = {
 	key: string;
-	file: File;
+	src: ImageSRC;
 };
 
 export type ImagesSelectorProps = {
 	className?: string;
-	value?: File[];
-	onChange?: (value?: File[]) => void;
+	value?: ImageSRC[];
+	onChange?: (value?: ImageSRC[]) => void;
 	maxImages?: number;
 };
 
@@ -39,9 +41,9 @@ export const ImagesSelector = ({
 	const [selectedImageURL, setSelectedImageURL] = useState<string | null>(null);
 	const [imagesValue, setImagesValue] = useState<ImageData[]>(() => {
 		if (!value) return [];
-		return value.map((file) => ({
-			key: imageSelectorHelpers.generateKey(file),
-			file,
+		return value.map((src) => ({
+			key: imageSelectorHelpers.generateKey(src),
+			src,
 		}));
 	});
 
@@ -50,27 +52,29 @@ export const ImagesSelector = ({
 
 	const addImage = useCallback((file: File | null) => {
 		if (file) {
-			const image: ImageData = { key: imageSelectorHelpers.generateKey(file), file };
+			const image: ImageData = { key: imageSelectorHelpers.generateKey(file), src: file };
 			setImagesValue((prevState) => prevState.concat(image));
 		}
 	}, []);
 
-	const createRemoveImageHandler = (key: string) => {
-		return () => {
-			setImagesValue((prevState) => prevState.filter((image) => image.key !== key));
-		};
-	};
+	const handleRemoveImage = useCallback((key: string) => {
+		setImagesValue((prevState) => prevState.filter((image) => image.key !== key));
+	}, []);
 
-	const handleViewImage = (imageFile: File) => {
-		imageSelectorHelpers.readFileURL(imageFile, (url) => {
-			setSelectedImageURL(url);
-		});
+	const handleViewImage = (imageSRC: ImageSRC) => {
+		if (typeof imageSRC === 'string') {
+			setSelectedImageURL(imageSRC);
+		} else {
+			imageSelectorHelpers.readFileURL(imageSRC, (url) => {
+				setSelectedImageURL(url);
+			});
+		}
 	};
 
 	useEffect(() => {
 		const onChange = onChangeRef.current;
 		if (onChange) {
-			onChange(imagesValue.map((value) => value.file));
+			onChange(imagesValue.map((value) => value.src));
 		}
 	}, [imagesValue]);
 
@@ -80,9 +84,9 @@ export const ImagesSelector = ({
 				{imagesValue.map((image, index) => (
 					<SelectedImageContainer key={image.key}>
 						<SelectedImage
-							src={image.file}
-							alt={typeof image.file === 'string' ? `${index}` : image.file.name}
-							onClick={() => handleViewImage(image.file)}
+							src={image.src}
+							alt={typeof image.src === 'string' ? `${index}` : image.src.name}
+							onClick={() => handleViewImage(image.src)}
 						/>
 
 						<DeleteIconContainer>
@@ -91,7 +95,7 @@ export const ImagesSelector = ({
 									size={20}
 									style={{ cursor: 'pointer' }}
 									color={colors.error}
-									onClick={createRemoveImageHandler(image.key)}
+									onClick={() => handleRemoveImage(image.key)}
 								/>
 							</Tooltip>
 						</DeleteIconContainer>

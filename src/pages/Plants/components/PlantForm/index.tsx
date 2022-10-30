@@ -21,7 +21,7 @@ enum PlantFormInputs {
 export type PlantFormValues = {
 	[PlantFormInputs.SCIENTIFIC_NAME]: string;
 	[PlantFormInputs.POPULAR_NAME]: string;
-	[PlantFormInputs.IMAGES]: File[];
+	[PlantFormInputs.IMAGES]: (string | File)[];
 	[PlantFormInputs.ADDITIONAL_INFORMATIONS]: IPlant['additional_informations'];
 };
 

@@ -31,8 +31,8 @@ export const CreatePlantPage = () => {
 			{
 				popular_name: values.popularName,
 				scientific_name: values.scientificName,
-				images: values.images as File[],
-				additional_informations: values.additionalInformations,
+				images: (values.images as File[]),
+				additional_informations: values.additionalInformations ?? {},
 			},
 			{
 				onError: handleCreatePlantError,
