@@ -1,5 +1,6 @@
 export enum PlantInformationQueryKeys {
   CREATE = 'create-plant-information',
   DELETE = 'delete-plant-information',
-  LIST = 'list-plant-informations'
+  LIST = 'list-plant-informations',
+  UPDATE = 'update-plant-information'
 }

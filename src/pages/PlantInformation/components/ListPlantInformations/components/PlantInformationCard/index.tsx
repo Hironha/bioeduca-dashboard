@@ -1,21 +1,23 @@
 import { Typography, Button } from 'antd';
 import { CardContainer, ButtonContainer, DescriptionContainer } from './styles';
+import { type IPlantInformation } from '@interfaces/models/plantInformation';
 
 type PlantInformationCardProps = {
-	id: string;
-	fieldName: string;
-	description: string;
+	plantInformation: IPlantInformation;
 	onDelete: () => void | Promise<void>;
+	onUpdate: (plantInformation: IPlantInformation) => void;
 };
 
 export const PlantInformationCard = ({
-	description,
-	fieldName,
+	plantInformation,
+	onUpdate,
 	onDelete,
 }: PlantInformationCardProps) => {
+	const { field_name, description } = plantInformation;
+
 	return (
 		<CardContainer>
-			<Typography.Title level={4}>{fieldName}</Typography.Title>
+			<Typography.Title level={4}>{field_name}</Typography.Title>
 
 			<DescriptionContainer>
 				<Typography.Paragraph ellipsis={{ rows: 3, expandable: false, symbol: '...' }}>
@@ -27,7 +29,9 @@ export const PlantInformationCard = ({
 				<Button type="primary" ghost danger onClick={onDelete}>
 					Excluir
 				</Button>
-				<Button type="primary">Editar</Button>
+				<Button type="primary" onClick={() => onUpdate(plantInformation)}>
+					Editar
+				</Button>
 			</ButtonContainer>
 		</CardContainer>
 	);

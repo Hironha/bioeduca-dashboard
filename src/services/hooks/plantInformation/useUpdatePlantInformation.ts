@@ -1,42 +1,44 @@
+import { api } from '@services/api';
 import { useMutation, useQueryClient, type UseMutationOptions } from '@tanstack/react-query';
 
-import { api } from '@services/api';
 import { PlantInformationQueryKeys } from './keys';
 
 import { type IPlantInformation } from '@interfaces/models/plantInformation';
 
-export type CreatePlantInformationPayload = Pick<IPlantInformation, 'field_name' | 'description'>;
+export type UpdatePlantInformationPayload = Pick<IPlantInformation, 'description' | 'id'>;
 
-type UseCreatePlantInformationProps = Omit<
+type UseUpdatePlantInformationProps = Omit<
 	UseMutationOptions<
 		IPlantInformation,
 		unknown,
-		CreatePlantInformationPayload,
+		UpdatePlantInformationPayload,
 		[PlantInformationQueryKeys]
 	>,
 	'mutationKey' | 'mutationFn'
 >;
 
-const createPlantInformation = async (payload: CreatePlantInformationPayload) => {
-	const response = await api.post<IPlantInformation>('/plant-informations', payload);
+const updatePlantInformation = async (payload: UpdatePlantInformationPayload) => {
+	const response = await api.put<IPlantInformation>(`/plant-informations/${payload.id}`, {
+		description: payload.description,
+	});
 	return response.data;
 };
 
-export const useCreatePlantInformation = (props?: UseCreatePlantInformationProps) => {
+export const useUpdatePlantInformation = (props?: UseUpdatePlantInformationProps) => {
 	const queryClient = useQueryClient();
-	const queryKey = [PlantInformationQueryKeys.CREATE] as [PlantInformationQueryKeys];
+	const queryKey = [PlantInformationQueryKeys.UPDATE] as [PlantInformationQueryKeys];
 	const onSuccess = props?.onSuccess;
 
 	const handleSuccess = (
 		data: IPlantInformation,
-		variables: CreatePlantInformationPayload,
+		variables: UpdatePlantInformationPayload,
 		context: [PlantInformationQueryKeys] | undefined
 	): void => {
 		queryClient.invalidateQueries([PlantInformationQueryKeys.LIST]);
 		if (onSuccess) onSuccess(data, variables, context);
 	};
 
-	return useMutation(queryKey, createPlantInformation, {
+	return useMutation(queryKey, updatePlantInformation, {
 		...props,
 		onSuccess: handleSuccess,
 	});

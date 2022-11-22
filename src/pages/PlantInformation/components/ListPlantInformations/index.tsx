@@ -1,5 +1,6 @@
 import { Row, Col, notification } from 'antd';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { Loading } from '@components/Loading';
 import { PlantInformationCard } from './components/PlantInformationCard';
@@ -18,6 +19,7 @@ type ListPlantInformationsProps = {
 };
 
 export const ListPlantInformations = ({ className }: ListPlantInformationsProps) => {
+	const navigate = useNavigate();
 	const listPlantInformationsResult = useListPlantInformations({
 		staleTime: Infinity,
 		refetchOnWindowFocus: false,
@@ -62,9 +64,10 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 			{listPlantInformationsResult.data?.map((plantInformation) => (
 				<Col span={8} xs={24} sm={24} md={12} lg={8} key={plantInformation.id}>
 					<PlantInformationCard
-						fieldName={plantInformation.field_name}
-						description={plantInformation.description}
-						id={plantInformation.id}
+						plantInformation={plantInformation}
+						onUpdate={() =>
+							navigate(`/plant-informations/${plantInformation.id}`, { state: plantInformation })
+						}
 						onDelete={() => setPlantInformationToDelete(plantInformation)}
 					/>
 				</Col>

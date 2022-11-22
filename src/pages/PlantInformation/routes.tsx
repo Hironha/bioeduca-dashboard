@@ -5,6 +5,7 @@ import { Redirect } from '@components/Redirect';
 import { AuthContext } from '@providers/AuthProvider';
 
 import { PageLayout } from '@components/Layout';
+import { UpdatePlantInformationPage } from './outlets/UpdatePlantInformationPage';
 import { CreatePlantInformationPage } from './outlets/CreatePlantInformationPage';
 import { ListPlantInformationsPage } from './outlets/ListPlantInformationsPage';
 
@@ -23,6 +24,10 @@ export const usePlantInformationRoutes = (): RouteObject[] => {
 			children: [
 				{ path: '/plant-informations', element: <ListPlantInformationsPage /> },
 				{ path: '/plant-informations/create', element: <CreatePlantInformationPage /> },
+				{
+					path: '/plant-informations/:plantInformationId',
+					element: <UpdatePlantInformationPage />,
+				},
 			],
 		},
 	];

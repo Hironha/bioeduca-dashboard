@@ -1,4 +1,7 @@
 {
+	"include": ["src"],
+	"extends": "./tsconfig.paths.json",
+	"exclude": ["node_modules"],
 	"compilerOptions": {
 		"target": "es5",
 		"lib": ["dom", "dom.iterable", "esnext"],
@@ -15,8 +18,6 @@
 		"isolatedModules": true,
 		"noUnusedLocals": false,
 		"noEmit": true,
-		"jsx": "react-jsx",
+		"jsx": "react-jsx"
 	},
-  "extends": "./tsconfig.paths.json",
-	"include": ["src"]
 }
