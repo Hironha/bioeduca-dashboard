@@ -26,8 +26,6 @@ const formatUpdatePlantPayload = (values: UpdatePlantPayload) => {
 		if (value && value !== 'undefined') payload.set(key, value);
 	};
 
-	console.log({ deleteImages: values.delete_images });
-
 	setPayloadIfDef('popular_name', values.popular_name);
 	setPayloadIfDef('scientific_name', values.scientific_name);
 	setPayloadIfDef('delete_images', JSON.stringify(values.delete_images));
