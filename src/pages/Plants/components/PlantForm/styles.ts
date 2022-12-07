@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Space } from 'antd';
+import { Form, Space } from 'antd';
 
 export const ActionsContainer = styled.div`
 	display: flex;
@@ -12,4 +12,8 @@ export const FormInputsSpacer = styled(Space).attrs(() => ({
 	size: 'small',
 }))`
 	width: 100%;
+`;
+
+export const FormItem = styled(Form.Item)`
+	font-weight: bold;
 `;

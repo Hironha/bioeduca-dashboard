@@ -3,7 +3,7 @@ import { Button, Col, Form, Input, Row, type ButtonProps, type FormInstance } fr
 
 import { ImagesSelector } from './components/ImagesSelector';
 import { AdditionalInformationsModal } from './components/AdditionalInformationsModal';
-import { FormInputsSpacer, ActionsContainer } from './styles';
+import { FormInputsSpacer, ActionsContainer, FormItem } from './styles';
 
 import { useListPlantInformations } from '@services/hooks/plantInformation/useListPlantInformations';
 import { plantFormRules } from './utils/validations';
@@ -92,23 +92,23 @@ export const PlantForm = ({
 			<FormInputsSpacer>
 				<Row gutter={24}>
 					<Col sm={24} md={12}>
-						<Form.Item
+						<FormItem
 							name={PlantFormInputs.POPULAR_NAME}
 							label="Nome popular"
 							rules={plantFormRules.popularName}
 						>
 							<Input placeholder="Ex: Araçazeiro" />
-						</Form.Item>
+						</FormItem>
 					</Col>
 
 					<Col sm={24} md={12}>
-						<Form.Item
+						<FormItem
 							name={PlantFormInputs.SCIENTIFIC_NAME}
 							label="Nome científico"
 							rules={plantFormRules.scientificName}
 						>
 							<Input placeholder="Ex: Psidium cattleianum" />
-						</Form.Item>
+						</FormItem>
 					</Col>
 
 					{selectedPlantInformations.map((plantInformation, index) => {
@@ -117,13 +117,13 @@ export const PlantForm = ({
 						const isIndexOdd = index % 2 === 0;
 						return (
 							<Col sm={24} md={isLastIndex && isIndexOdd ? 24 : 12} key={plantInformation.id}>
-								<Form.Item
+								<FormItem
 									label={plantInformation.field_name}
 									name={[PlantFormInputs.ADDITIONAL_INFORMATIONS, plantInformation.field_name]}
 									rules={plantFormRules.additionalInformations}
 								>
 									<Input.TextArea autoSize={{ minRows: 1 }} />
-								</Form.Item>
+								</FormItem>
 							</Col>
 						);
 					})}
@@ -140,9 +140,9 @@ export const PlantForm = ({
 					</Button>
 				</Form.Item>
 
-				<Form.Item name={PlantFormInputs.IMAGES} label="Imagens">
+				<FormItem name={PlantFormInputs.IMAGES} label="Imagens">
 					<ImagesSelector />
-				</Form.Item>
+				</FormItem>
 
 				<Form.Item noStyle shouldUpdate>
 					{({ getFieldsError }) => {
