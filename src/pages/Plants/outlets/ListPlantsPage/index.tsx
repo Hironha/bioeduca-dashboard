@@ -52,7 +52,7 @@ export const ListPlantsPage = () => {
 				<ListPlants
 					perPage={12}
 					onDelete={(plantPreview) => setPlantToDelete(plantPreview)}
-					onUpdate={(plantpreview) => navigate(`/plants/${plantpreview.id}`)}
+					onUpdate={(plantpreview) => navigate(`/plants/update/${plantpreview.id}`)}
 				/>
 			</Content.Body>
 

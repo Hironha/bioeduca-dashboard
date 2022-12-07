@@ -24,6 +24,7 @@ type PlantCardProps = {
 	imageURL: string;
 	onDelete?: () => void;
 	onUpdate?: () => void;
+	onView: () =>void
 };
 
 export const PlantCard = ({
@@ -33,6 +34,7 @@ export const PlantCard = ({
 	scientificName,
 	onDelete,
 	onUpdate,
+	onView
 }: PlantCardProps) => {
 	const [showQRCode, setShowQRCode] = useState<boolean>(false);
 
@@ -44,7 +46,7 @@ export const PlantCard = ({
 						<AiOutlineQrcode size={20} />
 					</Tooltip>
 				</MenuButton>
-				<MenuButton type="primary" shape="circle">
+				<MenuButton type="primary" shape="circle" onClick={onView}>
 					<Tooltip title="Visualizar planta">
 						<AiOutlineSearch />
 					</Tooltip>

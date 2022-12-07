@@ -1,4 +1,5 @@
 import { useEffect, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Col, notification, Row } from 'antd';
 
 import { Observer } from '@components/Observer';
@@ -23,6 +24,8 @@ type ListPlantsProps = {
 };
 
 export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlantsProps) => {
+	const navigate = useNavigate();
+
 	const listPaginatedPlantsPreviewResult = useListPaginatedPlantsPreview({
 		retry: false,
 		staleTime: Infinity,
@@ -65,6 +68,18 @@ export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlan
 		<Row gutter={[24, 16]}>
 			{plantsPreview?.map((plantPreview, index) => {
 				const isLastElement = index === plantsPreview.length - 1;
+				const plantCard = (
+					<PlantCard
+						plantId={plantPreview.id}
+						popularName={plantPreview.popular_name}
+						scientificName={plantPreview.scientific_name}
+						imageURL={plantPreview.images[0] as string}
+						onDelete={onDelete && (() => onDelete(plantPreview))}
+						onUpdate={onUpdate && (() => onUpdate(plantPreview))}
+						onView={() => navigate(`/plants/${plantPreview.id}`)}
+					/>
+				);
+
 				return (
 					<Col span={8} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6} key={plantPreview.id}>
 						{isLastElement ? (
@@ -72,24 +87,10 @@ export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlan
 								callback={handleLastItemOnView}
 								options={{ root: null, rootMargin: '-10px', threshold: 1 }}
 							>
-								<PlantCard
-									plantId={plantPreview.id}
-									popularName={plantPreview.popular_name}
-									scientificName={plantPreview.scientific_name}
-									imageURL={plantPreview.images[0] as string}
-									onDelete={onDelete && (() => onDelete(plantPreview))}
-									onUpdate={onUpdate && (() => onUpdate(plantPreview))}
-								/>
+								{plantCard}
 							</Observer>
 						) : (
-							<PlantCard
-								plantId={plantPreview.id}
-								popularName={plantPreview.popular_name}
-								scientificName={plantPreview.scientific_name}
-								imageURL={plantPreview.images[0] as string}
-								onDelete={onDelete && (() => onDelete(plantPreview))}
-								onUpdate={onUpdate && (() => onUpdate(plantPreview))}
-							/>
+							plantCard
 						)}
 					</Col>
 				);
