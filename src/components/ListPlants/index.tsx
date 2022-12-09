@@ -1,12 +1,15 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, Fragment } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Col, notification, Row } from 'antd';
 
 import { Observer } from '@components/Observer';
 import { Loading } from '@components/Loading';
 import { PlantCard } from './components/PlantCard';
+import { QRCodeModal } from './components/QRCodeModal';
+import { ViewPlantModal } from './components/ViewPlantModal';
 import { LoadingContainer } from './styles';
 
+import { usePlantModal } from './hooks/usePlantModal';
 import { listPlantsPreviewNotifications } from './utils/notifications/listPlantsPreview';
 import { useListPaginatedPlantsPreview } from '@services/hooks/plant/useListPaginatedPlantsPreview';
 
@@ -25,7 +28,6 @@ type ListPlantsProps = {
 
 export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlantsProps) => {
 	const navigate = useNavigate();
-
 	const listPaginatedPlantsPreviewResult = useListPaginatedPlantsPreview({
 		retry: false,
 		staleTime: Infinity,
@@ -33,6 +35,14 @@ export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlan
 		cacheTime: 24 * 60 * 1000,
 		meta: { perPage, limit },
 	});
+	const {
+		plantPreview,
+		closeModal,
+		setQRCodeModal,
+		setViewPlantModal,
+		showQRCodeModal,
+		showViewPlantModal,
+	} = usePlantModal();
 
 	const listPaginatedPlantsPreviewPages = useMemo(() => {
 		return listPaginatedPlantsPreviewResult.data?.pages;
@@ -65,44 +75,63 @@ export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlan
 	}
 
 	return (
-		<Row gutter={[24, 16]}>
-			{plantsPreview?.map((plantPreview, index) => {
-				const isLastElement = index === plantsPreview.length - 1;
-				const plantCard = (
-					<PlantCard
-						plantId={plantPreview.id}
-						popularName={plantPreview.popular_name}
-						scientificName={plantPreview.scientific_name}
-						imageURL={plantPreview.images[0] as string}
-						onDelete={onDelete && (() => onDelete(plantPreview))}
-						onUpdate={onUpdate && (() => onUpdate(plantPreview))}
-						onView={() => navigate(`/plants/${plantPreview.id}`)}
-					/>
-				);
+		<Fragment>
+			<Row gutter={[24, 16]}>
+				{plantsPreview?.map((plantPreview, index) => {
+					const isLastElement = index === plantsPreview.length - 1;
+					const plantCard = (
+						<PlantCard
+							popularName={plantPreview.popular_name}
+							scientificName={plantPreview.scientific_name}
+							imageURL={plantPreview.images[0] as string}
+							onDelete={onDelete && (() => onDelete(plantPreview))}
+							onUpdate={onUpdate && (() => onUpdate(plantPreview))}
+							onView={() => setViewPlantModal(plantPreview)}
+							onQrCode={() => setQRCodeModal(plantPreview)}
+						/>
+					);
 
-				return (
-					<Col span={8} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6} key={plantPreview.id}>
-						{isLastElement ? (
-							<Observer
-								callback={handleLastItemOnView}
-								options={{ root: null, rootMargin: '-10px', threshold: 1 }}
-							>
-								{plantCard}
-							</Observer>
-						) : (
-							plantCard
-						)}
+					return (
+						<Col span={8} xs={24} sm={24} md={12} lg={12} xl={8} xxl={6} key={plantPreview.id}>
+							{isLastElement ? (
+								<Observer
+									callback={handleLastItemOnView}
+									options={{ root: null, rootMargin: '-10px', threshold: 1 }}
+								>
+									{plantCard}
+								</Observer>
+							) : (
+								plantCard
+							)}
+						</Col>
+					);
+				})}
+
+				{listPaginatedPlantsPreviewResult.isFetching && (
+					<Col span={24}>
+						<LoadingContainer>
+							<Loading size="medium" />
+						</LoadingContainer>
 					</Col>
-				);
-			})}
+				)}
+			</Row>
 
-			{listPaginatedPlantsPreviewResult.isFetching && (
-				<Col span={24}>
-					<LoadingContainer>
-						<Loading size="medium" />
-					</LoadingContainer>
-				</Col>
-			)}
-		</Row>
+			<QRCodeModal
+				centered
+				destroyOnClose
+				plantId={plantPreview?.id}
+				visible={showQRCodeModal}
+				onCancel={closeModal}
+				popularName={plantPreview?.popular_name}
+			/>
+
+			<ViewPlantModal
+				centered
+				destroyOnClose
+				plantId={plantPreview?.id}
+				visible={showViewPlantModal}
+				onCancel={closeModal}
+			/>
+		</Fragment>
 	);
 };

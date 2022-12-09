@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Space, Button, Typography } from 'antd';
+import { Space, Button } from 'antd';
 
 export const CardContainer = styled.div`
 	display: flex;
@@ -14,18 +14,6 @@ export const CardContainer = styled.div`
 	border-radius: ${(props) => props.theme.border.radius};
 	border-top: 4px ${(props) => props.theme.colors.primary} solid;
 	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-`;
-
-export const ModalTitle = styled(Typography.Title).attrs(() => ({ level: 4 }))`
-	text-align: center;
-`;
-
-export const QRCodeContainer = styled.div`
-	margin-top: 24px;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 `;
 
 export const MenuContainer = styled.div`
