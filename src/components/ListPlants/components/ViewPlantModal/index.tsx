@@ -1,12 +1,24 @@
 import { Modal, Typography, Divider, type ModalProps } from 'antd';
 import { ModalTitle } from './styles';
 
+import { useConsultPlant } from '@services/hooks/plant/useConsultPlant';
 export type ViewPlantModalProps = Omit<ModalProps, 'footer' | 'children'> & {
 	plantId?: string;
 };
 
 export const ViewPlantModal = ({ plantId, visible, ...props }: ViewPlantModalProps) => {
 	const isVisible = visible && plantId != null;
+
+	const consultPlantResult = useConsultPlant({
+		plantId: plantId ?? '',
+		options: {
+			retry: false,
+			refetchOnMount: true,
+			enabled: plantId != null,
+			cacheTime: 24 * 60 * 1000,
+			staleTime: Infinity,
+		},
+	});
 
 	return (
 		<Modal {...props} visible={isVisible} footer={null}>
