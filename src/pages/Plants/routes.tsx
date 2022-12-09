@@ -5,7 +5,6 @@ import { Redirect } from '@components/Redirect';
 import { AuthContext } from '@providers/AuthProvider';
 
 import { PageLayout } from '@components/Layout';
-import { ViewPlantPage } from './outlets/ViewPlantPage'
 import { ListPlantsPage } from './outlets/ListPlantsPage';
 import { CreatePlantPage } from './outlets/CreatePlantPage';
 import { UpdatePlantPage } from './outlets/UpdatePlantPage';
@@ -24,7 +23,6 @@ export const usePlantsRoutes = (): RouteObject[] => {
 			),
 			children: [
 				{ path: '/plants', element: <ListPlantsPage /> },
-				{ path: '/plants/:plantId', element: <ViewPlantPage /> },
 				{ path: '/plants/update/:plantId', element: <UpdatePlantPage /> },
 				{ path: '/plants/create', element: <CreatePlantPage /> },
 			],
