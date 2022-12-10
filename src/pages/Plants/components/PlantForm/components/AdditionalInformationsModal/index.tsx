@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Modal, Checkbox, type ModalProps, Spin, Col } from 'antd';
+import { Modal, Checkbox, type ModalProps, Col } from 'antd';
+import { Loading } from '@components/Loading';
 
 import { type IPlantInformation } from '@interfaces/models/plantInformation';
 
@@ -16,7 +17,6 @@ type AdditionalInformationsModalProps = Omit<ModalProps, 'footer'> & {
 	initialSelected?: IPlantInformation[];
 	plantInformations: IPlantInformation[];
 	loading?: boolean;
-	loadingText?: string;
 	onAddInformations: (selectedInformations: IPlantInformation[]) => void;
 };
 
@@ -24,7 +24,6 @@ export const AdditionalInformationsModal = ({
 	initialSelected,
 	loading,
 	plantInformations,
-	loadingText = 'Carregando informações...',
 	onAddInformations,
 	...modalProps
 }: AdditionalInformationsModalProps) => {
@@ -53,7 +52,7 @@ export const AdditionalInformationsModal = ({
 		<Modal {...modalProps} footer={null}>
 			{loading ? (
 				<LoadingContainer>
-					<Spin spinning tip={loadingText} />
+					<Loading size="medium" />
 				</LoadingContainer>
 			) : (
 				<AdditionalInformationsContainer>
