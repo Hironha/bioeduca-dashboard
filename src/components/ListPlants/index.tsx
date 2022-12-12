@@ -1,5 +1,4 @@
 import { useEffect, useMemo, Fragment } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { Col, notification, Row } from 'antd';
 
 import { Observer } from '@components/Observer';
