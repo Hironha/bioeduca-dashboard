@@ -7,6 +7,7 @@ export const ModalTitle = styled(Typography.Title).attrs(() => ({ level: 4 }))`
 
 export const LoadingContainer = styled.div`
 	width: 100%;
+	display: flex;
 	justify-content: center;
 	align-items: center;
 `;
