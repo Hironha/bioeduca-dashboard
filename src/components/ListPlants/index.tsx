@@ -27,7 +27,6 @@ type ListPlantsProps = {
 };
 
 export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlantsProps) => {
-	const navigate = useNavigate();
 	const listPaginatedPlantsPreviewResult = useListPaginatedPlantsPreview({
 		retry: false,
 		staleTime: Infinity,

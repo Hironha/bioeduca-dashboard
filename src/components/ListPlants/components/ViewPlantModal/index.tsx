@@ -53,7 +53,7 @@ export const ViewPlantModal = ({ plantId, visible, ...props }: ViewPlantModalPro
 
 					<Carousel dotPosition="top" draggable>
 						{consultPlantResult.data?.images.map((image) => {
-							return <img src={image} />;
+							return <img src={image} alt="Imagens da planta" />;
 						})}
 					</Carousel>
 
