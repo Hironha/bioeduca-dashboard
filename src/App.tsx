@@ -21,12 +21,14 @@ initializeApp({
 const queryClient = new QueryClient();
 
 function App() {
+	const baseName = process.env.REACT_APP_BASE_NAME;
+
 	return (
 		<QueryClientProvider client={queryClient}>
 			<ThemeProvider theme={theme}>
 				<GlobalStyle />
 				<ConfigProvider locale={ptBR}>
-					<BrowserRouter>
+					<BrowserRouter basename={baseName}>
 						<AuthProvider>
 							<PageRoutes />
 						</AuthProvider>
