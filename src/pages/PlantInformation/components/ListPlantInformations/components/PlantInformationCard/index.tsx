@@ -1,5 +1,12 @@
 import { Typography, Button } from 'antd';
-import { CardContainer, ButtonContainer, DescriptionContainer } from './styles';
+import {
+	CardContainer,
+	ButtonContainer,
+	DescriptionContainer,
+	TitleContainer,
+	Title,
+	Order,
+} from './styles';
 import { type IPlantInformation } from '@interfaces/models/plantInformation';
 
 type PlantInformationCardProps = {
@@ -13,11 +20,14 @@ export const PlantInformationCard = ({
 	onUpdate,
 	onDelete,
 }: PlantInformationCardProps) => {
-	const { field_name, description } = plantInformation;
+	const { field_name, description, order } = plantInformation;
 
 	return (
 		<CardContainer>
-			<Typography.Title level={4}>{field_name}</Typography.Title>
+			<TitleContainer>
+				<Title level={4}>{field_name}</Title>
+				<Order>[{order}]</Order>
+			</TitleContainer>
 
 			<DescriptionContainer>
 				<Typography.Paragraph ellipsis={{ rows: 3, expandable: false, symbol: '...' }}>

@@ -3,7 +3,8 @@ import { ModalTitle, LoadingContainer } from './styles';
 import { Loading } from '@components/Loading';
 
 import { useConsultPlant } from '@services/hooks/plant/useConsultPlant';
-import { Fragment, useMemo, useCallback } from 'react';
+import { Fragment, useMemo } from 'react';
+import { useListPlantInformations } from '@services/hooks/plantInformation/useListPlantInformations';
 
 export type ViewPlantModalProps = Omit<ModalProps, 'footer' | 'children'> & {
 	plantId?: string;
@@ -23,21 +24,30 @@ export const ViewPlantModal = ({ plantId, visible, ...props }: ViewPlantModalPro
 		},
 	});
 
-	const normalizeString = useCallback((str: string) => {
-		return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-	}, []);
+	const plantInformations = useListPlantInformations({
+		staleTime: Infinity,
+		refetchOnWindowFocus: false,
+		retry: false,
+		cacheTime: 24 * 60 * 1000,
+	});
 
 	const plantData = useMemo(() => {
-		return Object.entries(consultPlantResult.data?.additional_informations || []).sort(
-			([nameLeft], [nameRight]) => {
-				const normalizedNameLeft = normalizeString(nameLeft);
-				const normalizedNameRight = normalizeString(nameRight);
-				if (normalizedNameLeft > normalizedNameRight) return 1;
-				if (normalizedNameLeft < normalizedNameRight) return -1;
-				return 0;
+		if (!plantInformations.data)
+			return Object.entries(consultPlantResult.data?.additional_informations ?? {});
+
+		const nameOrderMap = Object.fromEntries(
+			plantInformations.data.map((information) => [information.field_name, information.order])
+		);
+
+		return Object.entries(consultPlantResult.data?.additional_informations ?? []).sort(
+			([left], [right]) => {
+				const leftOrder = nameOrderMap[left] ?? 0;
+				const rightOrder = nameOrderMap[right] ?? 0;
+
+				return leftOrder >= rightOrder ? 0 : -1;
 			}
 		);
-	}, [consultPlantResult.data?.additional_informations, normalizeString]);
+	}, [consultPlantResult.data?.additional_informations, plantInformations.data]);
 
 	return (
 		<Modal {...props} visible={isVisible} footer={null}>

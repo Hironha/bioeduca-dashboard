@@ -5,7 +5,10 @@ import { PlantInformationQueryKeys } from './keys';
 
 import { type IPlantInformation } from '@interfaces/models/plantInformation';
 
-export type CreatePlantInformationPayload = Pick<IPlantInformation, 'field_name' | 'description'>;
+export type CreatePlantInformationPayload = Pick<
+	IPlantInformation,
+	'field_name' | 'description' | 'order'
+>;
 
 type UseCreatePlantInformationProps = Omit<
 	UseMutationOptions<
@@ -32,7 +35,11 @@ export const useCreatePlantInformation = (props?: UseCreatePlantInformationProps
 		variables: CreatePlantInformationPayload,
 		context: [PlantInformationQueryKeys] | undefined
 	): void => {
-		queryClient.invalidateQueries([PlantInformationQueryKeys.LIST]);
+		const listKey: [PlantInformationQueryKeys] = [PlantInformationQueryKeys.LIST];
+		const previousList = queryClient.getQueryData<IPlantInformation[]>(listKey);
+
+		queryClient.setQueryData<IPlantInformation[]>(listKey, previousList?.concat(data));
+
 		if (onSuccess) onSuccess(data, variables, context);
 	};
 

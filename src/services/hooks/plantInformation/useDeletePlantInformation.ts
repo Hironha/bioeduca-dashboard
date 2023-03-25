@@ -11,7 +11,7 @@ type UseDeletePlantInformationProps = Omit<
 >;
 
 const deletePlantInformation = async (id: IPlantInformation['id']) => {
-	const response = await api.delete<{ }>(`/plant-informations/${id}`);
+	const response = await api.delete<{}>(`/plant-informations/${id}`);
 	return response.data;
 };
 
@@ -22,11 +22,18 @@ export const useDeletePlantInformation = (props?: UseDeletePlantInformationProps
 
 	const handleSuccess = (
 		data: {},
-		variables: string,
+		id: IPlantInformation['id'],
 		context: [PlantInformationQueryKeys] | undefined
 	): void => {
-		queryClient.invalidateQueries([PlantInformationQueryKeys.LIST]);
-		if (onSuccess) onSuccess(data, variables, context);
+		const listKey: [PlantInformationQueryKeys] = [PlantInformationQueryKeys.LIST];
+		const previousList = queryClient.getQueryData<IPlantInformation[]>(listKey);
+
+		queryClient.setQueryData<IPlantInformation[]>(
+			[PlantInformationQueryKeys.LIST],
+			previousList?.filter((plantInformation) => plantInformation.id !== id)
+		);
+
+		if (onSuccess) onSuccess(data, id, context);
 	};
 
 	return useMutation(queryKey, deletePlantInformation, {

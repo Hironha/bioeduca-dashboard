@@ -1,5 +1,5 @@
 import { Row, Col, notification } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Loading } from '@components/Loading';
@@ -20,36 +20,39 @@ type ListPlantInformationsProps = {
 
 export const ListPlantInformations = ({ className }: ListPlantInformationsProps) => {
 	const navigate = useNavigate();
+	const [plantInformationToDelete, setPlantInformationToDelete] =
+		useState<IPlantInformation | null>(null);
+
 	const listPlantInformationsResult = useListPlantInformations({
 		staleTime: Infinity,
 		refetchOnWindowFocus: false,
 		retry: false,
 		cacheTime: 24 * 60 * 1000,
+		onError() {
+			notification.error(fetchPlantInformationsNotifications.error());
+		},
 	});
-	const deletePlantInformation = useDeletePlantInformation({ retry: false });
 
-	const [plantInformationToDelete, setPlantInformationToDelete] =
-		useState<IPlantInformation | null>(null);
+	const deletePlantInformation = useDeletePlantInformation({
+		retry: false,
+		onError() {
+			notification.error(deletePlantInformationNotifications.error());
+		},
+		onSuccess() {
+			setPlantInformationToDelete(null);
+			notification.success(deletePlantInformationNotifications.success());
+		},
+	});
+
+	const orderedPlantInformations = useMemo(() => {
+		return listPlantInformationsResult.data?.sort((a, b) => (a.order >= b.order ? 0 : -1)) ?? [];
+	}, [listPlantInformationsResult.data]);
 
 	const handleDeletePlantInformation = async () => {
 		if (!plantInformationToDelete) return;
+
 		deletePlantInformation.mutate(plantInformationToDelete.id);
 	};
-
-	useEffect(() => {
-		if (listPlantInformationsResult.isError) {
-			notification.error(fetchPlantInformationsNotifications.error());
-		}
-	}, [listPlantInformationsResult.isError]);
-
-	useEffect(() => {
-		if (deletePlantInformation.isError) {
-			notification.error(deletePlantInformationNotifications.error());
-		} else if (deletePlantInformation.isSuccess) {
-			setPlantInformationToDelete(null);
-			notification.success(deletePlantInformationNotifications.success());
-		}
-	}, [deletePlantInformation.isError, deletePlantInformation.isSuccess]);
 
 	if (listPlantInformationsResult.isLoading || listPlantInformationsResult.isFetching) {
 		return (
@@ -61,7 +64,7 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 
 	return (
 		<Row className={className} gutter={[24, 24]}>
-			{listPlantInformationsResult.data?.map((plantInformation) => (
+			{orderedPlantInformations.map((plantInformation) => (
 				<Col span={8} xs={24} sm={24} md={12} lg={8} key={plantInformation.id}>
 					<PlantInformationCard
 						plantInformation={plantInformation}
