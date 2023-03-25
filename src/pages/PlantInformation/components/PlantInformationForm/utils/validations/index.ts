@@ -7,7 +7,10 @@ const fieldNameRules: Rule[] = [
 
 const descriptionRules: Rule[] = [{ required: true, message: 'Informe uma descrição.' }];
 
-export const plantInformationFormRules: { [key in keyof PlantInformationValues]?: Rule[] } = {
+const orderRules: Rule[] = [{ required: true, message: 'Informe a ordem de aparição do item.' }];
+
+export const formRules: { [key in keyof PlantInformationValues]?: Rule[] } = {
 	fieldName: fieldNameRules,
 	description: descriptionRules,
+	order: orderRules,
 };

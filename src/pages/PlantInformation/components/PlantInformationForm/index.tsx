@@ -4,11 +4,12 @@ import { Button, Form, Input, Space, type ButtonProps, type FormInstance } from 
 
 import { SubmitSpace } from './styles';
 
-import { plantInformationFormRules } from './utils/validations';
+import { formRules } from './utils/validations';
 
 export type PlantInformationValues = {
 	fieldName: string;
 	description: string;
+	order: string;
 };
 
 type PlantInformationFormProps = {
@@ -20,6 +21,8 @@ type PlantInformationFormProps = {
 	submitButton?: React.ReactElement<ButtonProps>;
 	disabledFields?: (keyof PlantInformationValues)[];
 };
+
+const maskOrder = (order: string): string => order.replace(/\D/g, '');
 
 export const PlantInformationForm = ({
 	className,
@@ -33,6 +36,12 @@ export const PlantInformationForm = ({
 
 	const handleBackClick = () => navigate(-1);
 
+	const handleValuesChange = (changed: Partial<PlantInformationValues>) => {
+		if (changed.order) {
+			form.setFieldsValue({ order: maskOrder(changed.order) });
+		}
+	};
+
 	return (
 		<Form
 			className={className}
@@ -41,21 +50,18 @@ export const PlantInformationForm = ({
 			layout="vertical"
 			requiredMark={false}
 			onFinish={onSubmit}
+			onValuesChange={handleValuesChange}
 		>
 			<Space direction="vertical" style={{ width: '100%' }}>
-				<Form.Item
-					name="fieldName"
-					label="Nome da informação"
-					rules={plantInformationFormRules.fieldName}
-				>
+				<Form.Item name="fieldName" label="Nome da informação" rules={formRules.fieldName}>
 					<Input placeholder="Ex: Bioma" disabled={disabledFields.includes('fieldName')} />
 				</Form.Item>
 
-				<Form.Item
-					name="description"
-					label="Descrição"
-					rules={plantInformationFormRules.description}
-				>
+				<Form.Item name="order" label="Order de aparição" rules={formRules.order}>
+					<Input placeholder="Ex: 2" disabled={disabledFields.includes('order')} type="numeric" />
+				</Form.Item>
+
+				<Form.Item name="description" label="Descrição" rules={formRules.description}>
 					<Input.TextArea
 						autoSize={{ minRows: 3 }}
 						disabled={disabledFields.includes('description')}

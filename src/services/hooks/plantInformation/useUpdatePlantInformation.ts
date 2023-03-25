@@ -5,7 +5,7 @@ import { PlantInformationQueryKeys } from './keys';
 
 import { type IPlantInformation } from '@interfaces/models/plantInformation';
 
-export type UpdatePlantInformationPayload = Pick<IPlantInformation, 'description' | 'id'>;
+export type UpdatePlantInformationPayload = Pick<IPlantInformation, 'description' | 'id' | 'order'>;
 
 type UseUpdatePlantInformationProps = Omit<
 	UseMutationOptions<
@@ -20,6 +20,7 @@ type UseUpdatePlantInformationProps = Omit<
 const updatePlantInformation = async (payload: UpdatePlantInformationPayload) => {
 	const response = await api.put<IPlantInformation>(`/plant-informations/${payload.id}`, {
 		description: payload.description,
+		order: payload.order,
 	});
 	return response.data;
 };

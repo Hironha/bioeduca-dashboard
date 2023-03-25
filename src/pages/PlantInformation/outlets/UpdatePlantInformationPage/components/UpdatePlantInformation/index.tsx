@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { Form, Button, notification } from 'antd';
 import {
 	PlantInformationForm,
@@ -13,28 +12,40 @@ type UpdatePlantInformationProps = {
 	plantInformation: IPlantInformation;
 };
 
+const parseOrder = (order: string): number => {
+	const numericOrder = parseInt(order);
+	return isNaN(numericOrder) ? 0 : numericOrder;
+};
+
 export const UpdatePlantInformation = ({ plantInformation }: UpdatePlantInformationProps) => {
 	const [form] = Form.useForm<PlantInformationValues>();
-	const updatePlantInformation = useUpdatePlantInformation({ cacheTime: 0, retry: false });
+
+	const updatePlantInformation = useUpdatePlantInformation({
+		cacheTime: 0,
+		retry: false,
+		onError() {
+			notification.error({
+				message: 'Aconteceu um erro ao atualizar os dados de informação da planta',
+			});
+		},
+		onSuccess() {
+			notification.success({ message: 'Informação da planta atualizada com succeso' });
+		},
+	});
 
 	const initialValues: PlantInformationValues = {
 		description: plantInformation.description,
 		fieldName: plantInformation.field_name,
+		order: '0',
 	};
 
-	const handleFormSubmit = (values: PlantInformationValues) => {
-		updatePlantInformation.mutate({ id: plantInformation.id, description: values.description });
+	const handleFormSubmit = ({ order, description }: PlantInformationValues) => {
+		updatePlantInformation.mutate({
+			id: plantInformation.id,
+			description: description.trim(),
+			order: parseOrder(order),
+		});
 	};
-
-	useEffect(() => {
-		if (updatePlantInformation.error) {
-			notification.error({
-				message: 'Aconteceu um erro ao atualizar os dados de informação da planta',
-			});
-		} else if (updatePlantInformation.isSuccess) {
-			notification.success({ message: 'Informação da planta atualizada com succeso' });
-		}
-	}, [updatePlantInformation.error, updatePlantInformation.isSuccess]);
 
 	return (
 		<PlantInformationForm

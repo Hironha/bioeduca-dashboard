@@ -5,7 +5,10 @@ import { PlantInformationQueryKeys } from './keys';
 
 import { type IPlantInformation } from '@interfaces/models/plantInformation';
 
-export type CreatePlantInformationPayload = Pick<IPlantInformation, 'field_name' | 'description'>;
+export type CreatePlantInformationPayload = Pick<
+	IPlantInformation,
+	'field_name' | 'description' | 'order'
+>;
 
 type UseCreatePlantInformationProps = Omit<
 	UseMutationOptions<
