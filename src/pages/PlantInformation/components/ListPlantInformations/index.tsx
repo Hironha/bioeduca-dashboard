@@ -45,7 +45,7 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 	});
 
 	const orderedPlantInformations = useMemo(() => {
-		return listPlantInformationsResult.data?.sort((a, b) => (a.order >= b.order ? 0 : 1)) ?? [];
+		return listPlantInformationsResult.data?.sort((a, b) => (a.order >= b.order ? 0 : -1)) ?? [];
 	}, [listPlantInformationsResult.data]);
 
 	const handleDeletePlantInformation = async () => {
