@@ -1,5 +1,5 @@
 import { Row, Col, notification } from 'antd';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Loading } from '@components/Loading';
@@ -20,6 +20,9 @@ type ListPlantInformationsProps = {
 
 export const ListPlantInformations = ({ className }: ListPlantInformationsProps) => {
 	const navigate = useNavigate();
+	const [plantInformationToDelete, setPlantInformationToDelete] =
+		useState<IPlantInformation | null>(null);
+
 	const listPlantInformationsResult = useListPlantInformations({
 		staleTime: Infinity,
 		refetchOnWindowFocus: false,
@@ -41,8 +44,9 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 		},
 	});
 
-	const [plantInformationToDelete, setPlantInformationToDelete] =
-		useState<IPlantInformation | null>(null);
+	const orderedPlantInformations = useMemo(() => {
+		return listPlantInformationsResult.data?.sort((a, b) => (a.order >= b.order ? 0 : 1)) ?? [];
+	}, [listPlantInformationsResult.data]);
 
 	const handleDeletePlantInformation = async () => {
 		if (!plantInformationToDelete) return;
@@ -59,7 +63,7 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 
 	return (
 		<Row className={className} gutter={[24, 24]}>
-			{listPlantInformationsResult.data?.map((plantInformation) => (
+			{orderedPlantInformations.map((plantInformation) => (
 				<Col span={8} xs={24} sm={24} md={12} lg={8} key={plantInformation.id}>
 					<PlantInformationCard
 						plantInformation={plantInformation}
