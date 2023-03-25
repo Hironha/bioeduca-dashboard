@@ -39,12 +39,12 @@ export const ViewPlantModal = ({ plantId, visible, ...props }: ViewPlantModalPro
 			plantInformations.data.map((information) => [information.field_name, information.order])
 		);
 
-		return Object.entries(consultPlantResult.data?.additional_informations || []).sort(
+		return Object.entries(consultPlantResult.data?.additional_informations ?? []).sort(
 			([left], [right]) => {
 				const leftOrder = nameOrderMap[left] ?? 0;
 				const rightOrder = nameOrderMap[right] ?? 0;
 
-				return leftOrder >= rightOrder ? 0 : 1;
+				return leftOrder >= rightOrder ? 0 : -1;
 			}
 		);
 	}, [consultPlantResult.data?.additional_informations, plantInformations.data]);
