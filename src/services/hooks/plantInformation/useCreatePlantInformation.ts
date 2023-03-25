@@ -35,7 +35,11 @@ export const useCreatePlantInformation = (props?: UseCreatePlantInformationProps
 		variables: CreatePlantInformationPayload,
 		context: [PlantInformationQueryKeys] | undefined
 	): void => {
-		queryClient.invalidateQueries([PlantInformationQueryKeys.LIST]);
+		const listKey: [PlantInformationQueryKeys] = [PlantInformationQueryKeys.LIST];
+		const previousList = queryClient.getQueryData<IPlantInformation[]>(listKey);
+
+		queryClient.setQueryData<IPlantInformation[]>(listKey, previousList?.concat(data));
+
 		if (onSuccess) onSuccess(data, variables, context);
 	};
 

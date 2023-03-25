@@ -1,5 +1,5 @@
 import { Row, Col, notification } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { Loading } from '@components/Loading';
@@ -25,8 +25,21 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 		refetchOnWindowFocus: false,
 		retry: false,
 		cacheTime: 24 * 60 * 1000,
+		onError() {
+			notification.error(fetchPlantInformationsNotifications.error());
+		},
 	});
-	const deletePlantInformation = useDeletePlantInformation({ retry: false });
+
+	const deletePlantInformation = useDeletePlantInformation({
+		retry: false,
+		onError() {
+			notification.error(deletePlantInformationNotifications.error());
+		},
+		onSuccess() {
+			setPlantInformationToDelete(null);
+			notification.success(deletePlantInformationNotifications.success());
+		},
+	});
 
 	const [plantInformationToDelete, setPlantInformationToDelete] =
 		useState<IPlantInformation | null>(null);
@@ -35,21 +48,6 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 		if (!plantInformationToDelete) return;
 		deletePlantInformation.mutate(plantInformationToDelete.id);
 	};
-
-	useEffect(() => {
-		if (listPlantInformationsResult.isError) {
-			notification.error(fetchPlantInformationsNotifications.error());
-		}
-	}, [listPlantInformationsResult.isError]);
-
-	useEffect(() => {
-		if (deletePlantInformation.isError) {
-			notification.error(deletePlantInformationNotifications.error());
-		} else if (deletePlantInformation.isSuccess) {
-			setPlantInformationToDelete(null);
-			notification.success(deletePlantInformationNotifications.success());
-		}
-	}, [deletePlantInformation.isError, deletePlantInformation.isSuccess]);
 
 	if (listPlantInformationsResult.isLoading || listPlantInformationsResult.isFetching) {
 		return (
