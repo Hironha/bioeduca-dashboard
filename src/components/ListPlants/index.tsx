@@ -1,4 +1,4 @@
-import { useEffect, useMemo, Fragment } from 'react';
+import { useMemo, Fragment } from 'react';
 import { Col, notification, Row } from 'antd';
 
 import { Observer } from '@components/Observer';
@@ -32,6 +32,9 @@ export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlan
 		refetchOnWindowFocus: false,
 		cacheTime: 24 * 60 * 1000,
 		meta: { perPage, limit },
+		onError() {
+			notification.error(listPlantsPreviewNotifications.error());
+		},
 	});
 	const {
 		plantPreview,
@@ -57,12 +60,6 @@ export const ListPlants = ({ limit, perPage = 12, onDelete, onUpdate }: ListPlan
 			listPaginatedPlantsPreviewResult.fetchNextPage();
 		}
 	};
-
-	useEffect(() => {
-		if (listPaginatedPlantsPreviewResult.error) {
-			notification.error(listPlantsPreviewNotifications.error());
-		}
-	}, [listPaginatedPlantsPreviewResult.error]);
 
 	if (listPaginatedPlantsPreviewResult.isLoading && !listPaginatedPlantsPreviewPages) {
 		return (
