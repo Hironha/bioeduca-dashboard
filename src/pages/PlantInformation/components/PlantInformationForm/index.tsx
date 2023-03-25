@@ -57,7 +57,7 @@ export const PlantInformationForm = ({
 					<Input placeholder="Ex: Bioma" disabled={disabledFields.includes('fieldName')} />
 				</Form.Item>
 
-				<Form.Item name="order" label="Order de aparição" rules={formRules.order}>
+				<Form.Item name="order" label="Ordem de aparição" rules={formRules.order}>
 					<Input placeholder="Ex: 2" disabled={disabledFields.includes('order')} type="numeric" />
 				</Form.Item>
 
