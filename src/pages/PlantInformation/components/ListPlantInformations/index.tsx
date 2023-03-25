@@ -50,6 +50,7 @@ export const ListPlantInformations = ({ className }: ListPlantInformationsProps)
 
 	const handleDeletePlantInformation = async () => {
 		if (!plantInformationToDelete) return;
+
 		deletePlantInformation.mutate(plantInformationToDelete.id);
 	};
 
