@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
 import { Content } from '@components/Content';
@@ -10,8 +11,13 @@ export const UpdatePlantInformationPage = () => {
 	const location = useLocation();
 	const plantInformation = location.state as IPlantInformation | undefined;
 
+	useEffect(() => {
+		if (!plantInformation) {
+			navigate(-1);
+		}
+	}, [plantInformation, navigate]);
+
 	if (!plantInformation) {
-		navigate(-1);
 		return null;
 	}
 
