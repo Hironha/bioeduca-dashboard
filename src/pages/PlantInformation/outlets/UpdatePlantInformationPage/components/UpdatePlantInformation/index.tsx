@@ -36,7 +36,7 @@ export const UpdatePlantInformation = ({ plantInformation }: UpdatePlantInformat
 	const initialValues: PlantInformationValues = {
 		description: plantInformation.description,
 		fieldName: plantInformation.field_name,
-		order: '0',
+		order: plantInformation.order.toString(),
 	};
 
 	const handleFormSubmit = ({ order, description }: PlantInformationValues) => {
